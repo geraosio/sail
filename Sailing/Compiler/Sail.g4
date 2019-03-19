@@ -6,8 +6,8 @@ import, fragment, lexer, parser, grammar, returns,
 locals, throws, catch, finally, mode, options, tokens.
 
 Sail reserved words:
-sail, func, return, for, in, to, through, by, if, while,
-Bool, Int, String, Character.
+sail, Sail, var, print, func, return, for, in, to, through, by, if, else, while,
+Bool, Int, Float, String, Character, Void.
 */
 
 grammar Sail;
@@ -16,73 +16,131 @@ grammar Sail;
  * Parser
  */
 
-program             : 'sail' IDENTIFIER block ;
+sail                : program+ EOF ;
+program             : SAIL IDENTIFIER block ;
 
-block               : '{' statute* '}' ;
+block               : OPEN_CURLY statute* CLOSE_CURLY ;
 statute             : basicStatute | function ;
-basicStatute        : statement | variables ;
-statement           : assignment | condition | loop | print | functionCall ;
+basicStatute        : statement | variable ;
+statement           : assignment | condition | loop | print | call ;
+stmtBlock           : OPEN_CURLY statement CLOSE_CURLY ;
 
-assignment          : IDENTIFIER '=' (logicExp | stringLiteral) ';' ;
+assignment          : IDENTIFIER (OPEN_BRACKET expression CLOSE_BRACKET)? ASSIGN (logicExp | letterLiteral) SEMICOLON ;
 
-condition           : 'if' '(' logicExp ')' conditionStmt ('else' conditionStmt)? ;
-conditionStmt       : '{' statement '}' ;
+condition           : IF OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS stmtBlock (ELSE stmtBlock)? ;
 
 loop                : forStmt | whileStmt ;
-forStmt             : 'for' IDENTIFIER 'in' varLiteral forStride varLiteral 'by' varLiteral '{' statement '}' ;
-forStride           : 'to' | 'through' ;
-whileStmt           : 'while' '(' logicExp ')' '{' statement '}' ;
+forStmt             : FOR IDENTIFIER IN expression forStride expression BY expression stmtBlock ;
+forStride           : TO | THROUGH ;
+whileStmt           : WHILE OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS stmtBlock ;
 
-print               : 'print' '(' (logicExp | stringLiteral | functionCall) ')' ';' ;
+print               : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral | call) CLOSE_PARENTHESIS SEMICOLON ;
 
-variables           : 'var' IDENTIFIER (',' IDENTIFIER)* ':' type ';' ;
+variable           : VAR IDENTIFIER (OPEN_BRACKET CONSTANT_INT CLOSE_BRACKET)? COLON type SEMICOLON ;
+type                : BOOL | INT | FLOAT | CHARACTER | STRING ;
 
-type                : typeSpec | '[' typeSpec ']' ;
-typeSpec            : 'Bool' | 'Int' | 'Float' | 'Character' | 'String' ;
+function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTHESIS ARROW (type | VOID) OPEN_CURLY basicStatute+ (RETURN IDENTIFIER SEMICOLON)? CLOSE_CURLY ;
+parameters          : parameter (COMMA parameter)* ;
+parameter           : IDENTIFIER COLON type ;
 
-function            : 'func' IDENTIFIER '(' parameters? ')' ('->' type)? '{' basicStatute+ ('return' IDENTIFIER ';')? '}' ;
-parameters          : parameter (',' parameter)* ;
-parameter           : IDENTIFIER ':' type ;
-
-functionCall        : IDENTIFIER '(' parametersDec? ')' ;
-parametersDec       : literal (',' literal)* ;
+call                : IDENTIFIER OPEN_PARENTHESIS (expression (COMMA expression)*)? CLOSE_PARENTHESIS SEMICOLON ;
 
 // Expression
 
 logicExp            : relationalExp logicExpP? ;
-logicExpP           : ('&&' | '||') logicExp ;
+logicExpP           : (AND | OR) logicExp ;
 
 relationalExp       : expression relationalExpP? ;
 relationalExpP      : relationalOp expression ;
-relationalOp        : '<' | '>' | '==' | '<=' | '>=' | '!=' ;
+relationalOp        : EQUAL | EQUAL_GREATER_THAN | EQUAL_LESS_THAN | GREATER_THAN | LESS_THAN | NOT_EQUAL ;
 
 expression          : term expressionP? ;
-expressionP         : ('+' | '-') expression ;
+expressionP         : (PLUS | MINUS) expression ;
 
 term                : factor termP? ;
-termP               : ('*' | '/') term ;
+termP               : (MULTIPLICATION | DIVISION) term ;
 
-factor              : varLiteral | ('(' logicExp ')') ;
+factor              : varLiteral | (OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS) ;
 
-literal             : varLiteral | stringLiteral ;
-varLiteral          : IDENTIFIER | INT | FLOAT | BOOLEAN ;
-stringLiteral       : STRING ;
+literal             : varLiteral | letterLiteral ;
+varLiteral          : IDENTIFIER | MINUS? CONSTANT_INT | MINUS? CONSTANT_FLOAT | CONSTANT_BOOLEAN ;
+letterLiteral       : CONSTANT_CHAR | CONSTANT_STRING ;
 
 /*
  * Lexer
  */
 
-fragment DIGIT  : [0-9] ;
-fragment LETTER : [a-zA-Z\u0080-\u00FF_] ;
-fragment CHAR   : ~ ["\\\r\n] | LETTER ;
+fragment DOUBLE_QUOTE   : '"' ;
+fragment SINGLE_QUOTE   : '\'' ;
+fragment SIGN           : '+' | '-' ;
+fragment DIGIT          : [0-9] ;
+fragment LETTER         : [a-zA-Z\u0080-\u00FF_] ;
+fragment CHAR           : ~ ["\\\r\n] | LETTER ;
 
-IDENTIFIER  : LETTER (LETTER | DIGIT)* ;
-INT         : DIGIT+ ;
-FLOAT       : [-|+]? ( '.' DIGIT+ | DIGIT+ ( '.' DIGIT* )? ) ;
-BOOLEAN     : 'true' | 'false' ;
-STRING      : '"' CHAR* '"' ;
+SAIL        : 'sail' | 'Sail' ;
+IDENTIFIER  : [a-zA-Z] ([a-zA-Z0-9_])* ;
 
-// WORD        : LETTER|DIGIT * ;
+// Types
+INT         : 'Int' ;
+FLOAT       : 'Float' ;
+BOOL        : 'Bool' ;
+CHARACTER   : 'Character' ;
+STRING      : 'String' ;
+VOID        : 'Void' ;
+
+// Reserved words
+VAR         : 'var' ;
+PRINT       : 'print' ;
+FUNC        : 'func' ;
+RETURN      : 'return' ;
+IF          : 'if' ;
+ELSE        : 'else' ;
+WHILE       : 'while' ;
+FOR         : 'for' ;
+IN          : 'in' ;
+TO          : 'to' ;
+THROUGH     : 'through' ;
+BY          : 'by' ;
+
+// Operators
+DIVISION            : '/' ;
+MINUS               : '-' ;
+MULTIPLICATION      : '*' ;
+PLUS                : '+' ;
+
+AND                 : '&&' ;
+ASSIGN              : '=' ;
+EQUAL               : '==' ;
+EQUAL_GREATER_THAN  : '>=' ;
+EQUAL_LESS_THAN     : '<=' ;
+GREATER_THAN        : '>' ;
+LESS_THAN           : '<' ;
+NOT                 : '!' ;
+NOT_EQUAL           : '!=' ;
+OR                  : '||' ;
+
+// Quotation Marks
+OPEN_BRACKET        : '[' ;
+CLOSE_BRACKET       : ']' ;
+OPEN_CURLY          : '{' ;
+CLOSE_CURLY         : '}' ;
+OPEN_PARENTHESIS    : '(' ;
+CLOSE_PARENTHESIS   : ')' ;
+
+ARROW       : '->' ;
+COLON       : ':' ;
+COMMA       : ',' ;
+DOT         : '.' ;
+SEMICOLON   : ';' ;
+
+// Constants
+CONSTANT_INT         : DIGIT+ ;
+CONSTANT_FLOAT       : (DOT DIGIT+ | DIGIT+ ( DOT DIGIT* )?) ;
+CONSTANT_BOOLEAN     : 'true' | 'false' ;
+CONSTANT_CHAR        : SINGLE_QUOTE CHAR SINGLE_QUOTE ;
+CONSTANT_STRING      : DOUBLE_QUOTE CHAR* DOUBLE_QUOTE ;
+
+// Skipable Text
+COMMENTS    : '//' ~ [\r\n]* -> skip ;
 WHITESPACE  : [ \t]+ -> skip ;
 NEWLINE     : ('\r' '\n'? | '\n') -> skip ;
-COMMENTS    : '//' ~ [\r\n]* -> skip ;

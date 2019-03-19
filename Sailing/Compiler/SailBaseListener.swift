@@ -1,4 +1,4 @@
-// Generated from Sail.g4 by ANTLR 4.7.2
+// Generated from /Users/geraosio/Documents/Developer/apple/iOS/Projects/Sailing/Sailing/Compiler/Sail.g4 by ANTLR 4.7.2
 
 import Antlr4
 
@@ -10,6 +10,19 @@ import Antlr4
  */
 open class SailBaseListener: SailListener {
      public init() { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func enterSail(_ ctx: SailParser.SailContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitSail(_ ctx: SailParser.SailContext) { }
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -80,6 +93,19 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	open func enterStmtBlock(_ ctx: SailParser.StmtBlockContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitStmtBlock(_ ctx: SailParser.StmtBlockContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	open func enterAssignment(_ ctx: SailParser.AssignmentContext) { }
 	/**
 	 * {@inheritDoc}
@@ -100,19 +126,6 @@ open class SailBaseListener: SailListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	open func exitCondition(_ ctx: SailParser.ConditionContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func enterConditionStmt(_ ctx: SailParser.ConditionStmtContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitConditionStmt(_ ctx: SailParser.ConditionStmtContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -184,13 +197,13 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterVariables(_ ctx: SailParser.VariablesContext) { }
+	open func enterVariable(_ ctx: SailParser.VariableContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitVariables(_ ctx: SailParser.VariablesContext) { }
+	open func exitVariable(_ ctx: SailParser.VariableContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -204,19 +217,6 @@ open class SailBaseListener: SailListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	open func exitType(_ ctx: SailParser.TypeContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func enterTypeSpec(_ ctx: SailParser.TypeSpecContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitTypeSpec(_ ctx: SailParser.TypeSpecContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -262,26 +262,13 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterFunctionCall(_ ctx: SailParser.FunctionCallContext) { }
+	open func enterCall(_ ctx: SailParser.CallContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitFunctionCall(_ ctx: SailParser.FunctionCallContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func enterParametersDec(_ ctx: SailParser.ParametersDecContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitParametersDec(_ ctx: SailParser.ParametersDecContext) { }
+	open func exitCall(_ ctx: SailParser.CallContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -444,13 +431,13 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterStringLiteral(_ ctx: SailParser.StringLiteralContext) { }
+	open func enterLetterLiteral(_ ctx: SailParser.LetterLiteralContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitStringLiteral(_ ctx: SailParser.StringLiteralContext) { }
+	open func exitLetterLiteral(_ ctx: SailParser.LetterLiteralContext) { }
 
 	/**
 	 * {@inheritDoc}

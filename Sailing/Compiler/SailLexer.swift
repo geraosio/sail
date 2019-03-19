@@ -1,4 +1,4 @@
-// Generated from Sail.g4 by ANTLR 4.7.2
+// Generated from /Users/geraosio/Documents/Developer/apple/iOS/Projects/Sailing/Sailing/Compiler/Sail.g4 by ANTLR 4.7.2
 import Antlr4
 
 open class SailLexer: Lexer {
@@ -15,14 +15,17 @@ open class SailLexer: Lexer {
 	internal static let _sharedContextCache = PredictionContextCache()
 
 	public
-	static let T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, 
-            T__8=9, T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, 
-            T__15=16, T__16=17, T__17=18, T__18=19, T__19=20, T__20=21, 
-            T__21=22, T__22=23, T__23=24, T__24=25, T__25=26, T__26=27, 
-            T__27=28, T__28=29, T__29=30, T__30=31, T__31=32, T__32=33, 
-            T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, T__38=39, 
-            T__39=40, T__40=41, IDENTIFIER=42, INT=43, FLOAT=44, BOOLEAN=45, 
-            STRING=46, WHITESPACE=47, NEWLINE=48, COMMENTS=49
+	static let SAIL=1, IDENTIFIER=2, INT=3, FLOAT=4, BOOL=5, CHARACTER=6, STRING=7, 
+            VOID=8, VAR=9, PRINT=10, FUNC=11, RETURN=12, IF=13, ELSE=14, 
+            WHILE=15, FOR=16, IN=17, TO=18, THROUGH=19, BY=20, DIVISION=21, 
+            MINUS=22, MULTIPLICATION=23, PLUS=24, AND=25, ASSIGN=26, EQUAL=27, 
+            EQUAL_GREATER_THAN=28, EQUAL_LESS_THAN=29, GREATER_THAN=30, 
+            LESS_THAN=31, NOT=32, NOT_EQUAL=33, OR=34, OPEN_BRACKET=35, 
+            CLOSE_BRACKET=36, OPEN_CURLY=37, CLOSE_CURLY=38, OPEN_PARENTHESIS=39, 
+            CLOSE_PARENTHESIS=40, ARROW=41, COLON=42, COMMA=43, DOT=44, 
+            SEMICOLON=45, CONSTANT_INT=46, CONSTANT_FLOAT=47, CONSTANT_BOOLEAN=48, 
+            CONSTANT_CHAR=49, CONSTANT_STRING=50, COMMENTS=51, WHITESPACE=52, 
+            NEWLINE=53
 
 	public
 	static let channelNames: [String] = [
@@ -36,28 +39,35 @@ open class SailLexer: Lexer {
 
 	public
 	static let ruleNames: [String] = [
-		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
-		"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
-		"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "T__24", 
-		"T__25", "T__26", "T__27", "T__28", "T__29", "T__30", "T__31", "T__32", 
-		"T__33", "T__34", "T__35", "T__36", "T__37", "T__38", "T__39", "T__40", 
-		"DIGIT", "LETTER", "CHAR", "IDENTIFIER", "INT", "FLOAT", "BOOLEAN", "STRING", 
-		"WHITESPACE", "NEWLINE", "COMMENTS"
+		"DOUBLE_QUOTE", "SINGLE_QUOTE", "SIGN", "DIGIT", "LETTER", "CHAR", "SAIL", 
+		"IDENTIFIER", "INT", "FLOAT", "BOOL", "CHARACTER", "STRING", "VOID", "VAR", 
+		"PRINT", "FUNC", "RETURN", "IF", "ELSE", "WHILE", "FOR", "IN", "TO", "THROUGH", 
+		"BY", "DIVISION", "MINUS", "MULTIPLICATION", "PLUS", "AND", "ASSIGN", 
+		"EQUAL", "EQUAL_GREATER_THAN", "EQUAL_LESS_THAN", "GREATER_THAN", "LESS_THAN", 
+		"NOT", "NOT_EQUAL", "OR", "OPEN_BRACKET", "CLOSE_BRACKET", "OPEN_CURLY", 
+		"CLOSE_CURLY", "OPEN_PARENTHESIS", "CLOSE_PARENTHESIS", "ARROW", "COLON", 
+		"COMMA", "DOT", "SEMICOLON", "CONSTANT_INT", "CONSTANT_FLOAT", "CONSTANT_BOOLEAN", 
+		"CONSTANT_CHAR", "CONSTANT_STRING", "COMMENTS", "WHITESPACE", "NEWLINE"
 	]
 
 	private static let _LITERAL_NAMES: [String?] = [
-		nil, "'sail'", "'{'", "'}'", "'='", "';'", "'if'", "'('", "')'", "'else'", 
-		"'for'", "'in'", "'by'", "'to'", "'through'", "'while'", "'print'", "'var'", 
-		"','", "':'", "'['", "']'", "'Bool'", "'Int'", "'Float'", "'Character'", 
-		"'String'", "'func'", "'->'", "'return'", "'&&'", "'||'", "'<'", "'>'", 
-		"'=='", "'<='", "'>='", "'!='", "'+'", "'-'", "'*'", "'/'"
+		nil, nil, nil, "'Int'", "'Float'", "'Bool'", "'Character'", "'String'", 
+		"'Void'", "'var'", "'print'", "'func'", "'return'", "'if'", "'else'", 
+		"'while'", "'for'", "'in'", "'to'", "'through'", "'by'", "'/'", "'-'", 
+		"'*'", "'+'", "'&&'", "'='", "'=='", "'>='", "'<='", "'>'", "'<'", "'!'", 
+		"'!='", "'||'", "'['", "']'", "'{'", "'}'", "'('", "')'", "'->'", "':'", 
+		"','", "'.'", "';'"
 	]
 	private static let _SYMBOLIC_NAMES: [String?] = [
-		nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 
-		nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 
-		nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 
-		"IDENTIFIER", "INT", "FLOAT", "BOOLEAN", "STRING", "WHITESPACE", "NEWLINE", 
-		"COMMENTS"
+		nil, "SAIL", "IDENTIFIER", "INT", "FLOAT", "BOOL", "CHARACTER", "STRING", 
+		"VOID", "VAR", "PRINT", "FUNC", "RETURN", "IF", "ELSE", "WHILE", "FOR", 
+		"IN", "TO", "THROUGH", "BY", "DIVISION", "MINUS", "MULTIPLICATION", "PLUS", 
+		"AND", "ASSIGN", "EQUAL", "EQUAL_GREATER_THAN", "EQUAL_LESS_THAN", "GREATER_THAN", 
+		"LESS_THAN", "NOT", "NOT_EQUAL", "OR", "OPEN_BRACKET", "CLOSE_BRACKET", 
+		"OPEN_CURLY", "CLOSE_CURLY", "OPEN_PARENTHESIS", "CLOSE_PARENTHESIS", 
+		"ARROW", "COLON", "COMMA", "DOT", "SEMICOLON", "CONSTANT_INT", "CONSTANT_FLOAT", 
+		"CONSTANT_BOOLEAN", "CONSTANT_CHAR", "CONSTANT_STRING", "COMMENTS", "WHITESPACE", 
+		"NEWLINE"
 	]
 	public
 	static let VOCABULARY = Vocabulary(_LITERAL_NAMES, _SYMBOLIC_NAMES)
