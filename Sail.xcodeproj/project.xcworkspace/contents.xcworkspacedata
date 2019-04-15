@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Sailing.xcodeproj">
+      location = "self:/Users/geraosio/Documents/Developer/ios/apps/projects/Sailing/Sail.xcodeproj">
    </FileRef>
 </Workspace>
