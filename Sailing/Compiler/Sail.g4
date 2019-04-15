@@ -16,30 +16,28 @@ grammar Sail;
  * Parser
  */
 
-sail                : program+ EOF ;
-program             : SAIL IDENTIFIER block ;
+sailProgram         : program+ EOF ;
+program             : SAIL IDENTIFIER declaration* block ;
 
-block               : OPEN_CURLY statute* CLOSE_CURLY ;
-statute             : basicStatute | function ;
-basicStatute        : statement | variable ;
+declaration         : variable | function ;
+block               : OPEN_CURLY statement* CLOSE_CURLY ;
 statement           : assignment | condition | loop | print | call ;
-stmtBlock           : OPEN_CURLY statement CLOSE_CURLY ;
 
 assignment          : IDENTIFIER (OPEN_BRACKET expression CLOSE_BRACKET)? ASSIGN (logicExp | letterLiteral) SEMICOLON ;
 
-condition           : IF OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS stmtBlock (ELSE stmtBlock)? ;
+condition           : IF OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS block (ELSE block)? ;
 
 loop                : forStmt | whileStmt ;
-forStmt             : FOR IDENTIFIER IN expression forStride expression BY expression stmtBlock ;
+forStmt             : FOR IDENTIFIER IN expression forStride expression BY expression block ;
 forStride           : TO | THROUGH ;
-whileStmt           : WHILE OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS stmtBlock ;
+whileStmt           : WHILE OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS block ;
 
-print               : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral | call) CLOSE_PARENTHESIS SEMICOLON ;
+printStmt           : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral | call) CLOSE_PARENTHESIS SEMICOLON ;
 
-variable           : VAR IDENTIFIER (OPEN_BRACKET CONSTANT_INT CLOSE_BRACKET)? COLON type SEMICOLON ;
+variable            : VAR IDENTIFIER (OPEN_BRACKET CONSTANT_INT CLOSE_BRACKET)? COLON type SEMICOLON ;
 type                : BOOL | INT | FLOAT | CHARACTER | STRING ;
 
-function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTHESIS ARROW (type | VOID) OPEN_CURLY basicStatute+ (RETURN IDENTIFIER SEMICOLON)? CLOSE_CURLY ;
+function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTHESIS ARROW (type | VOID) OPEN_CURLY statement* (RETURN literal SEMICOLON)? CLOSE_CURLY ;
 parameters          : parameter (COMMA parameter)* ;
 parameter           : IDENTIFIER COLON type ;
 
