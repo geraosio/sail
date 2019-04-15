@@ -7,43 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		740474052237E91900040F15 /* SailLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740473FA2237E91900040F15 /* SailLexer.swift */; };
-		740474062237E91900040F15 /* SailBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740473FB2237E91900040F15 /* SailBaseListener.swift */; };
-		740474072237E91900040F15 /* SailLexerATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740473FC2237E91900040F15 /* SailLexerATN.swift */; };
-		740474082237E91900040F15 /* Sail.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 740473FD2237E91900040F15 /* Sail.tokens */; };
-		740474092237E91900040F15 /* SailLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 740473FE2237E91900040F15 /* SailLexer.tokens */; };
-		7404740A2237E91900040F15 /* SailParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740473FF2237E91900040F15 /* SailParser.swift */; };
-		7404740B2237E91900040F15 /* SailListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740474002237E91900040F15 /* SailListener.swift */; };
-		7404740C2237E91900040F15 /* Sail.g4 in Resources */ = {isa = PBXBuildFile; fileRef = 740474012237E91900040F15 /* Sail.g4 */; };
-		7404740D2237E91900040F15 /* SailLexer.interp in Resources */ = {isa = PBXBuildFile; fileRef = 740474022237E91900040F15 /* SailLexer.interp */; };
-		7404740E2237E91900040F15 /* Sail.interp in Resources */ = {isa = PBXBuildFile; fileRef = 740474032237E91900040F15 /* Sail.interp */; };
-		7404740F2237E91900040F15 /* SailParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740474042237E91900040F15 /* SailParserATN.swift */; };
-		740474132237E93400040F15 /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 740473F62237E8A600040F15 /* Antlr4.framework */; };
 		74A2FC0B2237D2B2005CF54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */; };
 		74A2FC0D2237D2B2005CF54D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2FC0C2237D2B2005CF54D /* ViewController.swift */; };
 		74A2FC102237D2B2005CF54D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC0E2237D2B2005CF54D /* Main.storyboard */; };
 		74A2FC122237D2B4005CF54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC112237D2B4005CF54D /* Assets.xcassets */; };
 		74A2FC152237D2B4005CF54D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC132237D2B4005CF54D /* LaunchScreen.storyboard */; };
+		74E53F752264FBE300C875AA /* Sail.interp in Resources */ = {isa = PBXBuildFile; fileRef = 74E53F6A2264FBE300C875AA /* Sail.interp */; };
+		74E53F762264FBE300C875AA /* SailLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F6B2264FBE300C875AA /* SailLexer.swift */; };
+		74E53F772264FBE300C875AA /* SailLexer.interp in Resources */ = {isa = PBXBuildFile; fileRef = 74E53F6C2264FBE300C875AA /* SailLexer.interp */; };
+		74E53F782264FBE300C875AA /* Sail.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 74E53F6D2264FBE300C875AA /* Sail.tokens */; };
+		74E53F792264FBE300C875AA /* SailLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 74E53F6E2264FBE300C875AA /* SailLexer.tokens */; };
+		74E53F7A2264FBE300C875AA /* SailParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F6F2264FBE300C875AA /* SailParserATN.swift */; };
+		74E53F7B2264FBE300C875AA /* SailLexerATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F702264FBE300C875AA /* SailLexerATN.swift */; };
+		74E53F7C2264FBE300C875AA /* SailParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F712264FBE300C875AA /* SailParser.swift */; };
+		74E53F7D2264FBE300C875AA /* Sail.g4 in Resources */ = {isa = PBXBuildFile; fileRef = 74E53F722264FBE300C875AA /* Sail.g4 */; };
+		74E53F7E2264FBE300C875AA /* SailBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F732264FBE300C875AA /* SailBaseListener.swift */; };
+		74E53F7F2264FBE300C875AA /* SailListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F742264FBE300C875AA /* SailListener.swift */; };
+		74E53F822264FCC100C875AA /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E53F652264FAD000C875AA /* Antlr4.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		740473F52237E8A600040F15 /* PBXContainerItemProxy */ = {
+		74E53F642264FAD000C875AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 740473EE2237E8A500040F15 /* Antlr4.xcodeproj */;
+			containerPortal = 74E53F5D2264FAD000C875AA /* Antlr4.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = "Antlr4::Antlr4::Product";
 			remoteInfo = Antlr4;
 		};
-		740473F72237E8A600040F15 /* PBXContainerItemProxy */ = {
+		74E53F662264FAD000C875AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 740473EE2237E8A500040F15 /* Antlr4.xcodeproj */;
+			containerPortal = 74E53F5D2264FAD000C875AA /* Antlr4.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = "Antlr4::Antlr4Tests::Product";
 			remoteInfo = Antlr4Tests;
 		};
-		740474102237E92D00040F15 /* PBXContainerItemProxy */ = {
+		74E53F802264FCA700C875AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 740473EE2237E8A500040F15 /* Antlr4.xcodeproj */;
+			containerPortal = 74E53F5D2264FAD000C875AA /* Antlr4.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = "Antlr4::Antlr4";
 			remoteInfo = Antlr4;
@@ -51,18 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		740473EE2237E8A500040F15 /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = "../../../../../ITESM/semestre/itc/8 semester/compiladores/proyecto/antlr4/runtime/Swift/Antlr4.xcodeproj"; sourceTree = "<group>"; };
-		740473FA2237E91900040F15 /* SailLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailLexer.swift; sourceTree = "<group>"; };
-		740473FB2237E91900040F15 /* SailBaseListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailBaseListener.swift; sourceTree = "<group>"; };
-		740473FC2237E91900040F15 /* SailLexerATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailLexerATN.swift; sourceTree = "<group>"; };
-		740473FD2237E91900040F15 /* Sail.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sail.tokens; sourceTree = "<group>"; };
-		740473FE2237E91900040F15 /* SailLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SailLexer.tokens; sourceTree = "<group>"; };
-		740473FF2237E91900040F15 /* SailParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailParser.swift; sourceTree = "<group>"; };
-		740474002237E91900040F15 /* SailListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailListener.swift; sourceTree = "<group>"; };
-		740474012237E91900040F15 /* Sail.g4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sail.g4; sourceTree = "<group>"; };
-		740474022237E91900040F15 /* SailLexer.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SailLexer.interp; sourceTree = "<group>"; };
-		740474032237E91900040F15 /* Sail.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sail.interp; sourceTree = "<group>"; };
-		740474042237E91900040F15 /* SailParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailParserATN.swift; sourceTree = "<group>"; };
 		74A2FC072237D2B2005CF54D /* Sail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74A2FC0C2237D2B2005CF54D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +58,18 @@
 		74A2FC112237D2B4005CF54D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74A2FC142237D2B4005CF54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74A2FC162237D2B4005CF54D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74E53F5D2264FAD000C875AA /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = "../../../../../ITESM/semestre/itc/8 semester/compiladores/proyecto/tools/antlr4/runtime/Swift/Antlr4.xcodeproj"; sourceTree = "<group>"; };
+		74E53F6A2264FBE300C875AA /* Sail.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sail.interp; sourceTree = "<group>"; };
+		74E53F6B2264FBE300C875AA /* SailLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailLexer.swift; sourceTree = "<group>"; };
+		74E53F6C2264FBE300C875AA /* SailLexer.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SailLexer.interp; sourceTree = "<group>"; };
+		74E53F6D2264FBE300C875AA /* Sail.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sail.tokens; sourceTree = "<group>"; };
+		74E53F6E2264FBE300C875AA /* SailLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SailLexer.tokens; sourceTree = "<group>"; };
+		74E53F6F2264FBE300C875AA /* SailParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailParserATN.swift; sourceTree = "<group>"; };
+		74E53F702264FBE300C875AA /* SailLexerATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailLexerATN.swift; sourceTree = "<group>"; };
+		74E53F712264FBE300C875AA /* SailParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailParser.swift; sourceTree = "<group>"; };
+		74E53F722264FBE300C875AA /* Sail.g4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sail.g4; sourceTree = "<group>"; };
+		74E53F732264FBE300C875AA /* SailBaseListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailBaseListener.swift; sourceTree = "<group>"; };
+		74E53F742264FBE300C875AA /* SailListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailListener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,36 +77,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				740474132237E93400040F15 /* Antlr4.framework in Frameworks */,
+				74E53F822264FCC100C875AA /* Antlr4.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		740473EF2237E8A500040F15 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				740473F62237E8A600040F15 /* Antlr4.framework */,
-				740473F82237E8A600040F15 /* Antlr4Tests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		740473F92237E91900040F15 /* Compiler */ = {
 			isa = PBXGroup;
 			children = (
-				740473FA2237E91900040F15 /* SailLexer.swift */,
-				740473FB2237E91900040F15 /* SailBaseListener.swift */,
-				740473FC2237E91900040F15 /* SailLexerATN.swift */,
-				740473FD2237E91900040F15 /* Sail.tokens */,
-				740473FE2237E91900040F15 /* SailLexer.tokens */,
-				740473FF2237E91900040F15 /* SailParser.swift */,
-				740474002237E91900040F15 /* SailListener.swift */,
-				740474012237E91900040F15 /* Sail.g4 */,
-				740474022237E91900040F15 /* SailLexer.interp */,
-				740474032237E91900040F15 /* Sail.interp */,
-				740474042237E91900040F15 /* SailParserATN.swift */,
+				74E53F722264FBE300C875AA /* Sail.g4 */,
+				74E53F6A2264FBE300C875AA /* Sail.interp */,
+				74E53F6D2264FBE300C875AA /* Sail.tokens */,
+				74E53F732264FBE300C875AA /* SailBaseListener.swift */,
+				74E53F6C2264FBE300C875AA /* SailLexer.interp */,
+				74E53F6B2264FBE300C875AA /* SailLexer.swift */,
+				74E53F6E2264FBE300C875AA /* SailLexer.tokens */,
+				74E53F702264FBE300C875AA /* SailLexerATN.swift */,
+				74E53F742264FBE300C875AA /* SailListener.swift */,
+				74E53F712264FBE300C875AA /* SailParser.swift */,
+				74E53F6F2264FBE300C875AA /* SailParserATN.swift */,
 			);
 			path = Compiler;
 			sourceTree = "<group>";
@@ -121,7 +112,7 @@
 		74A2FBFE2237D2B2005CF54D = {
 			isa = PBXGroup;
 			children = (
-				740473EE2237E8A500040F15 /* Antlr4.xcodeproj */,
+				74E53F5D2264FAD000C875AA /* Antlr4.xcodeproj */,
 				74A2FC092237D2B2005CF54D /* Sail */,
 				74A2FC082237D2B2005CF54D /* Products */,
 				740474122237E93400040F15 /* Frameworks */,
@@ -150,6 +141,15 @@
 			path = Sail;
 			sourceTree = "<group>";
 		};
+		74E53F5E2264FAD000C875AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74E53F652264FAD000C875AA /* Antlr4.framework */,
+				74E53F672264FAD000C875AA /* Antlr4Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -164,7 +164,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				740474112237E92D00040F15 /* PBXTargetDependency */,
+				74E53F812264FCA700C875AA /* PBXTargetDependency */,
 			);
 			name = Sail;
 			productName = Sailing;
@@ -199,8 +199,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 740473EF2237E8A500040F15 /* Products */;
-					ProjectRef = 740473EE2237E8A500040F15 /* Antlr4.xcodeproj */;
+					ProductGroup = 74E53F5E2264FAD000C875AA /* Products */;
+					ProjectRef = 74E53F5D2264FAD000C875AA /* Antlr4.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -211,18 +211,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		740473F62237E8A600040F15 /* Antlr4.framework */ = {
+		74E53F652264FAD000C875AA /* Antlr4.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Antlr4.framework;
-			remoteRef = 740473F52237E8A600040F15 /* PBXContainerItemProxy */;
+			remoteRef = 74E53F642264FAD000C875AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		740473F82237E8A600040F15 /* Antlr4Tests.xctest */ = {
+		74E53F672264FAD000C875AA /* Antlr4Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = file;
 			path = Antlr4Tests.xctest;
-			remoteRef = 740473F72237E8A600040F15 /* PBXContainerItemProxy */;
+			remoteRef = 74E53F662264FAD000C875AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -232,13 +232,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74E53F782264FBE300C875AA /* Sail.tokens in Resources */,
+				74E53F7D2264FBE300C875AA /* Sail.g4 in Resources */,
+				74E53F752264FBE300C875AA /* Sail.interp in Resources */,
+				74E53F792264FBE300C875AA /* SailLexer.tokens in Resources */,
+				74E53F772264FBE300C875AA /* SailLexer.interp in Resources */,
 				74A2FC152237D2B4005CF54D /* LaunchScreen.storyboard in Resources */,
 				74A2FC122237D2B4005CF54D /* Assets.xcassets in Resources */,
-				740474092237E91900040F15 /* SailLexer.tokens in Resources */,
-				7404740C2237E91900040F15 /* Sail.g4 in Resources */,
-				7404740E2237E91900040F15 /* Sail.interp in Resources */,
-				740474082237E91900040F15 /* Sail.tokens in Resources */,
-				7404740D2237E91900040F15 /* SailLexer.interp in Resources */,
 				74A2FC102237D2B2005CF54D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,22 +252,22 @@
 			files = (
 				74A2FC0D2237D2B2005CF54D /* ViewController.swift in Sources */,
 				74A2FC0B2237D2B2005CF54D /* AppDelegate.swift in Sources */,
-				740474052237E91900040F15 /* SailLexer.swift in Sources */,
-				740474062237E91900040F15 /* SailBaseListener.swift in Sources */,
-				740474072237E91900040F15 /* SailLexerATN.swift in Sources */,
-				7404740B2237E91900040F15 /* SailListener.swift in Sources */,
-				7404740A2237E91900040F15 /* SailParser.swift in Sources */,
-				7404740F2237E91900040F15 /* SailParserATN.swift in Sources */,
+				74E53F762264FBE300C875AA /* SailLexer.swift in Sources */,
+				74E53F7A2264FBE300C875AA /* SailParserATN.swift in Sources */,
+				74E53F7F2264FBE300C875AA /* SailListener.swift in Sources */,
+				74E53F7E2264FBE300C875AA /* SailBaseListener.swift in Sources */,
+				74E53F7B2264FBE300C875AA /* SailLexerATN.swift in Sources */,
+				74E53F7C2264FBE300C875AA /* SailParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		740474112237E92D00040F15 /* PBXTargetDependency */ = {
+		74E53F812264FCA700C875AA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Antlr4;
-			targetProxy = 740474102237E92D00040F15 /* PBXContainerItemProxy */;
+			targetProxy = 74E53F802264FCA700C875AA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -414,6 +414,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BAMJW4XM3J;
 				INFOPLIST_FILE = "$(SRCROOT)/Sail/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -432,6 +433,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BAMJW4XM3J;
 				INFOPLIST_FILE = "$(SRCROOT)/Sail/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

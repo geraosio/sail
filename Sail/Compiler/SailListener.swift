@@ -1,4 +1,4 @@
-// Generated from /Users/geraosio/Documents/Developer/apple/iOS/Projects/Sailing/Sailing/Compiler/Sail.g4 by ANTLR 4.7.2
+// Generated from Sail.g4 by ANTLR 4.7.2
 import Antlr4
 
 /**
@@ -6,18 +6,6 @@ import Antlr4
  * {@link SailParser}.
  */
 public protocol SailListener: ParseTreeListener {
-	/**
-	 * Enter a parse tree produced by {@link SailParser#sail}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterSail(_ ctx: SailParser.SailContext)
-	/**
-	 * Exit a parse tree produced by {@link SailParser#sail}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitSail(_ ctx: SailParser.SailContext)
 	/**
 	 * Enter a parse tree produced by {@link SailParser#program}.
 	 - Parameters:
@@ -31,6 +19,30 @@ public protocol SailListener: ParseTreeListener {
 	 */
 	func exitProgram(_ ctx: SailParser.ProgramContext)
 	/**
+	 * Enter a parse tree produced by {@link SailParser#sail}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func enterSail(_ ctx: SailParser.SailContext)
+	/**
+	 * Exit a parse tree produced by {@link SailParser#sail}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func exitSail(_ ctx: SailParser.SailContext)
+	/**
+	 * Enter a parse tree produced by {@link SailParser#declaration}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func enterDeclaration(_ ctx: SailParser.DeclarationContext)
+	/**
+	 * Exit a parse tree produced by {@link SailParser#declaration}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func exitDeclaration(_ ctx: SailParser.DeclarationContext)
+	/**
 	 * Enter a parse tree produced by {@link SailParser#block}.
 	 - Parameters:
 	   - ctx: the parse tree
@@ -43,30 +55,6 @@ public protocol SailListener: ParseTreeListener {
 	 */
 	func exitBlock(_ ctx: SailParser.BlockContext)
 	/**
-	 * Enter a parse tree produced by {@link SailParser#statute}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterStatute(_ ctx: SailParser.StatuteContext)
-	/**
-	 * Exit a parse tree produced by {@link SailParser#statute}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitStatute(_ ctx: SailParser.StatuteContext)
-	/**
-	 * Enter a parse tree produced by {@link SailParser#basicStatute}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterBasicStatute(_ ctx: SailParser.BasicStatuteContext)
-	/**
-	 * Exit a parse tree produced by {@link SailParser#basicStatute}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitBasicStatute(_ ctx: SailParser.BasicStatuteContext)
-	/**
 	 * Enter a parse tree produced by {@link SailParser#statement}.
 	 - Parameters:
 	   - ctx: the parse tree
@@ -78,18 +66,6 @@ public protocol SailListener: ParseTreeListener {
 	   - ctx: the parse tree
 	 */
 	func exitStatement(_ ctx: SailParser.StatementContext)
-	/**
-	 * Enter a parse tree produced by {@link SailParser#stmtBlock}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterStmtBlock(_ ctx: SailParser.StmtBlockContext)
-	/**
-	 * Exit a parse tree produced by {@link SailParser#stmtBlock}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitStmtBlock(_ ctx: SailParser.StmtBlockContext)
 	/**
 	 * Enter a parse tree produced by {@link SailParser#assignment}.
 	 - Parameters:
@@ -163,17 +139,17 @@ public protocol SailListener: ParseTreeListener {
 	 */
 	func exitWhileStmt(_ ctx: SailParser.WhileStmtContext)
 	/**
-	 * Enter a parse tree produced by {@link SailParser#print}.
+	 * Enter a parse tree produced by {@link SailParser#printStmt}.
 	 - Parameters:
 	   - ctx: the parse tree
 	 */
-	func enterPrint(_ ctx: SailParser.PrintContext)
+	func enterPrintStmt(_ ctx: SailParser.PrintStmtContext)
 	/**
-	 * Exit a parse tree produced by {@link SailParser#print}.
+	 * Exit a parse tree produced by {@link SailParser#printStmt}.
 	 - Parameters:
 	   - ctx: the parse tree
 	 */
-	func exitPrint(_ ctx: SailParser.PrintContext)
+	func exitPrintStmt(_ ctx: SailParser.PrintStmtContext)
 	/**
 	 * Enter a parse tree produced by {@link SailParser#variable}.
 	 - Parameters:

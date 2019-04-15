@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Sailing
+//  Sail
 //
 //  Created by Gerardo Osio on 3/12/19.
 //  Copyright © 2019 Gerardo Osio. All rights reserved.

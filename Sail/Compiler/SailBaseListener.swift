@@ -1,4 +1,4 @@
-// Generated from /Users/geraosio/Documents/Developer/apple/iOS/Projects/Sailing/Sailing/Compiler/Sail.g4 by ANTLR 4.7.2
+// Generated from Sail.g4 by ANTLR 4.7.2
 
 import Antlr4
 
@@ -10,6 +10,19 @@ import Antlr4
  */
 open class SailBaseListener: SailListener {
      public init() { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func enterProgram(_ ctx: SailParser.ProgramContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitProgram(_ ctx: SailParser.ProgramContext) { }
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -28,13 +41,13 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterProgram(_ ctx: SailParser.ProgramContext) { }
+	open func enterDeclaration(_ ctx: SailParser.DeclarationContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitProgram(_ ctx: SailParser.ProgramContext) { }
+	open func exitDeclaration(_ ctx: SailParser.DeclarationContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -54,32 +67,6 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterStatute(_ ctx: SailParser.StatuteContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitStatute(_ ctx: SailParser.StatuteContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func enterBasicStatute(_ ctx: SailParser.BasicStatuteContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitBasicStatute(_ ctx: SailParser.BasicStatuteContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	open func enterStatement(_ ctx: SailParser.StatementContext) { }
 	/**
 	 * {@inheritDoc}
@@ -87,19 +74,6 @@ open class SailBaseListener: SailListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	open func exitStatement(_ ctx: SailParser.StatementContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func enterStmtBlock(_ ctx: SailParser.StmtBlockContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitStmtBlock(_ ctx: SailParser.StmtBlockContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -184,13 +158,13 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterPrint(_ ctx: SailParser.PrintContext) { }
+	open func enterPrintStmt(_ ctx: SailParser.PrintStmtContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitPrint(_ ctx: SailParser.PrintContext) { }
+	open func exitPrintStmt(_ ctx: SailParser.PrintStmtContext) { }
 
 	/**
 	 * {@inheritDoc}
