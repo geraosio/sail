@@ -16,12 +16,12 @@ grammar Sail;
  * Parser
  */
 
-sailProgram         : program+ EOF ;
-program             : SAIL IDENTIFIER declaration* block ;
+program             : declaration* sail EOF ;
+sail                : SAIL block ;
 
 declaration         : variable | function ;
 block               : OPEN_CURLY statement* CLOSE_CURLY ;
-statement           : assignment | condition | loop | print | call ;
+statement           : assignment | condition | loop | printStmt | (call SEMICOLON) ;
 
 assignment          : IDENTIFIER (OPEN_BRACKET expression CLOSE_BRACKET)? ASSIGN (logicExp | letterLiteral) SEMICOLON ;
 
@@ -41,7 +41,7 @@ function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTH
 parameters          : parameter (COMMA parameter)* ;
 parameter           : IDENTIFIER COLON type ;
 
-call                : IDENTIFIER OPEN_PARENTHESIS (expression (COMMA expression)*)? CLOSE_PARENTHESIS SEMICOLON ;
+call                : IDENTIFIER OPEN_PARENTHESIS (expression (COMMA expression)*)? CLOSE_PARENTHESIS ;
 
 // Expression
 
@@ -68,15 +68,7 @@ letterLiteral       : CONSTANT_CHAR | CONSTANT_STRING ;
  * Lexer
  */
 
-fragment DOUBLE_QUOTE   : '"' ;
-fragment SINGLE_QUOTE   : '\'' ;
-fragment SIGN           : '+' | '-' ;
-fragment DIGIT          : [0-9] ;
-fragment LETTER         : [a-zA-Z\u0080-\u00FF_] ;
-fragment CHAR           : ~ ["\\\r\n] | LETTER ;
-
 SAIL        : 'sail' | 'Sail' ;
-IDENTIFIER  : [a-zA-Z] ([a-zA-Z0-9_])* ;
 
 // Types
 INT         : 'Int' ;
@@ -138,7 +130,14 @@ CONSTANT_BOOLEAN     : 'true' | 'false' ;
 CONSTANT_CHAR        : SINGLE_QUOTE CHAR SINGLE_QUOTE ;
 CONSTANT_STRING      : DOUBLE_QUOTE CHAR* DOUBLE_QUOTE ;
 
-// Skipable Text
+IDENTIFIER  : [a-zA-Z] ([a-zA-Z0-9_])* ;
 COMMENTS    : '//' ~ [\r\n]* -> skip ;
 WHITESPACE  : [ \t]+ -> skip ;
 NEWLINE     : ('\r' '\n'? | '\n') -> skip ;
+
+fragment DOUBLE_QUOTE   : '"' ;
+fragment SINGLE_QUOTE   : '\'' ;
+fragment SIGN           : '+' | '-' ;
+fragment DIGIT          : [0-9] ;
+fragment LETTER         : [a-zA-Z\u0080-\u00FF_] ;
+fragment CHAR           : ~ ["\\\r\n] | LETTER ;
