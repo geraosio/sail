@@ -28,19 +28,6 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterSail(_ ctx: SailParser.SailContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitSail(_ ctx: SailParser.SailContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	open func enterDeclaration(_ ctx: SailParser.DeclarationContext) { }
 	/**
 	 * {@inheritDoc}

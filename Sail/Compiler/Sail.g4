@@ -16,8 +16,7 @@ grammar Sail;
  * Parser
  */
 
-program             : declaration* sail EOF ;
-sail                : SAIL block ;
+program             : declaration* SAIL block EOF ;
 
 declaration         : variable | function ;
 block               : OPEN_CURLY statement* CLOSE_CURLY ;

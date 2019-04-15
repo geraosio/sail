@@ -19,18 +19,6 @@ public protocol SailListener: ParseTreeListener {
 	 */
 	func exitProgram(_ ctx: SailParser.ProgramContext)
 	/**
-	 * Enter a parse tree produced by {@link SailParser#sail}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterSail(_ ctx: SailParser.SailContext)
-	/**
-	 * Exit a parse tree produced by {@link SailParser#sail}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitSail(_ ctx: SailParser.SailContext)
-	/**
 	 * Enter a parse tree produced by {@link SailParser#declaration}.
 	 - Parameters:
 	   - ctx: the parse tree
