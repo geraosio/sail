@@ -1,5 +1,5 @@
 //
-//  VerboseErrorListener.swift
+//  NavigatorErrorListener.swift
 //  Sail
 //
 //  Created by Gerardo Osio on 4/20/19.
@@ -9,9 +9,7 @@
 import Foundation
 import Antlr4
 
-class VerboseErrorListener: BaseErrorListener {
-    
-    public static var errorMessagesStack = [String]()
+class NavigatorErrorListener: BaseErrorListener {
     
     override func syntaxError<T>(_ recognizer: Recognizer<T>,
                              _ offendingSymbol: AnyObject?,
@@ -20,6 +18,6 @@ class VerboseErrorListener: BaseErrorListener {
                              _ msg: String,
                              _ e: AnyObject?
         ) {
-        VerboseErrorListener.errorMessagesStack.append("line \(line):\(charPositionInLine) \(msg)")
+        Navigator.shared.errors.append("line \(line):\(charPositionInLine) \(msg)")
     }
 }

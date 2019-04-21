@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		740D1B7B226BEAA80074E6DE /* VerboseErrorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D1B7A226BEAA80074E6DE /* VerboseErrorListener.swift */; };
+		740D1B7B226BEAA80074E6DE /* NavigatorErrorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D1B7A226BEAA80074E6DE /* NavigatorErrorListener.swift */; };
+		745223AE226C1A16007A4943 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745223AD226C1A15007A4943 /* Navigator.swift */; };
 		747C902F2266EC2100A7C96B /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E53F652264FAD000C875AA /* Antlr4.framework */; };
 		747C90302266EC2100A7C96B /* Antlr4.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74E53F652264FAD000C875AA /* Antlr4.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		74A214ED226CD6A80044B1AD /* NavigatorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A214EC226CD6A80044B1AD /* NavigatorListener.swift */; };
+		74A214EF226CE2E70044B1AD /* SemanticCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A214EE226CE2E70044B1AD /* SemanticCube.swift */; };
+		74A214F4226CE52D0044B1AD /* Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A214F3226CE52D0044B1AD /* Operator.swift */; };
+		74A214F9226CEA830044B1AD /* DataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A214F8226CEA830044B1AD /* DataType.swift */; };
 		74A2FC0B2237D2B2005CF54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */; };
 		74A2FC102237D2B2005CF54D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC0E2237D2B2005CF54D /* Main.storyboard */; };
 		74A2FC122237D2B4005CF54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC112237D2B4005CF54D /* Assets.xcassets */; };
@@ -74,7 +79,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		740D1B7A226BEAA80074E6DE /* VerboseErrorListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerboseErrorListener.swift; sourceTree = "<group>"; };
+		740D1B7A226BEAA80074E6DE /* NavigatorErrorListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorErrorListener.swift; sourceTree = "<group>"; };
+		745223AD226C1A15007A4943 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		74A214EC226CD6A80044B1AD /* NavigatorListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorListener.swift; sourceTree = "<group>"; };
+		74A214EE226CE2E70044B1AD /* SemanticCube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticCube.swift; sourceTree = "<group>"; };
+		74A214F3226CE52D0044B1AD /* Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operator.swift; sourceTree = "<group>"; };
+		74A214F8226CEA830044B1AD /* DataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataType.swift; sourceTree = "<group>"; };
 		74A2FC072237D2B2005CF54D /* Sail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74A2FC0F2237D2B2005CF54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -122,6 +132,8 @@
 				74E53F742264FBE300C875AA /* SailListener.swift */,
 				74E53F712264FBE300C875AA /* SailParser.swift */,
 				74E53F6F2264FBE300C875AA /* SailParserATN.swift */,
+				74A214F2226CE3440044B1AD /* Enums */,
+				74A214F1226CE3150044B1AD /* Structures */,
 			);
 			path = Compiler;
 			sourceTree = "<group>";
@@ -131,6 +143,30 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		74A214E8226CD5CB0044B1AD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		74A214F1226CE3150044B1AD /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				74A214EE226CE2E70044B1AD /* SemanticCube.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		74A214F2226CE3440044B1AD /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				74A214F8226CEA830044B1AD /* DataType.swift */,
+				74A214F3226CE52D0044B1AD /* Operator.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		74A2FBFE2237D2B2005CF54D = {
@@ -156,12 +192,15 @@
 			children = (
 				74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */,
 				74BDB0962266DCBA006F7D24 /* EditorViewController.swift */,
-				740D1B7A226BEAA80074E6DE /* VerboseErrorListener.swift */,
+				74A214EC226CD6A80044B1AD /* NavigatorListener.swift */,
+				745223AD226C1A15007A4943 /* Navigator.swift */,
+				740D1B7A226BEAA80074E6DE /* NavigatorErrorListener.swift */,
 				74A2FC0E2237D2B2005CF54D /* Main.storyboard */,
 				74A2FC112237D2B4005CF54D /* Assets.xcassets */,
 				74A2FC132237D2B4005CF54D /* LaunchScreen.storyboard */,
 				74A2FC162237D2B4005CF54D /* Info.plist */,
 				740473F92237E91900040F15 /* Compiler */,
+				74A214E8226CD5CB0044B1AD /* Extensions */,
 			);
 			path = Sail;
 			sourceTree = "<group>";
@@ -278,13 +317,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				74A2FC0B2237D2B2005CF54D /* AppDelegate.swift in Sources */,
+				745223AE226C1A16007A4943 /* Navigator.swift in Sources */,
+				74A214F4226CE52D0044B1AD /* Operator.swift in Sources */,
 				74BDB0972266DCBA006F7D24 /* EditorViewController.swift in Sources */,
 				74E53F762264FBE300C875AA /* SailLexer.swift in Sources */,
-				740D1B7B226BEAA80074E6DE /* VerboseErrorListener.swift in Sources */,
+				740D1B7B226BEAA80074E6DE /* NavigatorErrorListener.swift in Sources */,
 				74E53F7A2264FBE300C875AA /* SailParserATN.swift in Sources */,
 				74E53F7F2264FBE300C875AA /* SailListener.swift in Sources */,
 				74E53F7E2264FBE300C875AA /* SailBaseListener.swift in Sources */,
+				74A214EF226CE2E70044B1AD /* SemanticCube.swift in Sources */,
 				74E53F7B2264FBE300C875AA /* SailLexerATN.swift in Sources */,
+				74A214F9226CEA830044B1AD /* DataType.swift in Sources */,
+				74A214ED226CD6A80044B1AD /* NavigatorListener.swift in Sources */,
 				74E53F7C2264FBE300C875AA /* SailParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

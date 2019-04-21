@@ -7,10 +7,11 @@
 //
 
 import UIKit
-import Antlr4
 
 class EditorViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    
     @IBOutlet weak var editorTextView: UITextView!
     @IBOutlet weak var consoleTextView: UITextView!
     @IBOutlet weak var runBarButton: UIBarButtonItem!
@@ -19,42 +20,34 @@ class EditorViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    // MARK: - Actions
+    
     @IBAction func runCode(_ sender: Any) {
-        do {
-            clearConsole()
-            
-            let lexer = SailLexer(ANTLRInputStream(editorTextView.text)) // Create the lexer
-            let tokens = CommonTokenStream(lexer) // Create a buffer of tokens from lexer
-            let parser = try SailParser(tokens) // Create a parser that feeds of the tokens buffer
-            parser.removeErrorListeners()
-            parser.addErrorListener(VerboseErrorListener())
-            let tree = try parser.program()
-            
-            let walker = ParseTreeWalker()
-            let listener = SailBaseListener()
-            try walker.walk(listener, tree)
-            
-            printParseErrorMessages(to: consoleTextView)
-        } catch {
-            consoleTextView.text = "Parse error: \(error.localizedDescription)"
-        }
+
+        clearConsole()
+        
+        Navigator.shared.run(code: editorTextView.text)
+        
+        showMessagesInConsole()
         
         self.view.endEditing(true)
     }
     
+    // MARK: - Private Methods
+    
     private func clearConsole() {
         consoleTextView.text = ""
-        VerboseErrorListener.errorMessagesStack.removeAll()
+        Navigator.shared.errors.removeAll()
     }
     
-    private func printParseErrorMessages(to textView: UITextView) {
-        if VerboseErrorListener.errorMessagesStack.isEmpty {
+    private func showMessagesInConsole() {
+        if Navigator.shared.errors.isEmpty {
             consoleTextView.textColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
             consoleTextView.text += "🎉\n"
         } else {
             consoleTextView.textColor = UIColor(red: 242/255, green: 135/255, blue: 39/255, alpha: 1)
-            consoleTextView.text += "\(VerboseErrorListener.errorMessagesStack.count) parsing error(s):\n"
-            for errorMessage in VerboseErrorListener.errorMessagesStack {
+            consoleTextView.text += "\(Navigator.shared.errors.count) error(s):\n"
+            for errorMessage in Navigator.shared.errors {
                 consoleTextView.text += errorMessage + "\n"
             }
         }
