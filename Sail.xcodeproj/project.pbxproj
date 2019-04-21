@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		740D1B7B226BEAA80074E6DE /* VerboseErrorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D1B7A226BEAA80074E6DE /* VerboseErrorListener.swift */; };
 		747C902F2266EC2100A7C96B /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E53F652264FAD000C875AA /* Antlr4.framework */; };
 		747C90302266EC2100A7C96B /* Antlr4.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74E53F652264FAD000C875AA /* Antlr4.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74A2FC0B2237D2B2005CF54D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */; };
 		74A2FC102237D2B2005CF54D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC0E2237D2B2005CF54D /* Main.storyboard */; };
 		74A2FC122237D2B4005CF54D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC112237D2B4005CF54D /* Assets.xcassets */; };
 		74A2FC152237D2B4005CF54D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74A2FC132237D2B4005CF54D /* LaunchScreen.storyboard */; };
-		74BDB0972266DCBA006F7D24 /* CompilerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDB0962266DCBA006F7D24 /* CompilerViewController.swift */; };
+		74BDB0972266DCBA006F7D24 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDB0962266DCBA006F7D24 /* EditorViewController.swift */; };
 		74E53F752264FBE300C875AA /* Sail.interp in Resources */ = {isa = PBXBuildFile; fileRef = 74E53F6A2264FBE300C875AA /* Sail.interp */; };
 		74E53F762264FBE300C875AA /* SailLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F6B2264FBE300C875AA /* SailLexer.swift */; };
 		74E53F772264FBE300C875AA /* SailLexer.interp in Resources */ = {isa = PBXBuildFile; fileRef = 74E53F6C2264FBE300C875AA /* SailLexer.interp */; };
@@ -61,7 +62,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		747C90332266EC2100A7C96B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
@@ -73,13 +74,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		740D1B7A226BEAA80074E6DE /* VerboseErrorListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerboseErrorListener.swift; sourceTree = "<group>"; };
 		74A2FC072237D2B2005CF54D /* Sail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74A2FC0F2237D2B2005CF54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		74A2FC112237D2B4005CF54D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74A2FC142237D2B4005CF54D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74A2FC162237D2B4005CF54D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		74BDB0962266DCBA006F7D24 /* CompilerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerViewController.swift; sourceTree = "<group>"; };
+		74BDB0962266DCBA006F7D24 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		74E53F5D2264FAD000C875AA /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = "../../../../../ITESM/semestre/itc/8 semester/compiladores/proyecto/tools/antlr4/runtime/Swift/Antlr4.xcodeproj"; sourceTree = "<group>"; };
 		74E53F6A2264FBE300C875AA /* Sail.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sail.interp; sourceTree = "<group>"; };
 		74E53F6B2264FBE300C875AA /* SailLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailLexer.swift; sourceTree = "<group>"; };
@@ -153,7 +155,8 @@
 			isa = PBXGroup;
 			children = (
 				74A2FC0A2237D2B2005CF54D /* AppDelegate.swift */,
-				74BDB0962266DCBA006F7D24 /* CompilerViewController.swift */,
+				74BDB0962266DCBA006F7D24 /* EditorViewController.swift */,
+				740D1B7A226BEAA80074E6DE /* VerboseErrorListener.swift */,
 				74A2FC0E2237D2B2005CF54D /* Main.storyboard */,
 				74A2FC112237D2B4005CF54D /* Assets.xcassets */,
 				74A2FC132237D2B4005CF54D /* LaunchScreen.storyboard */,
@@ -275,8 +278,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				74A2FC0B2237D2B2005CF54D /* AppDelegate.swift in Sources */,
-				74BDB0972266DCBA006F7D24 /* CompilerViewController.swift in Sources */,
+				74BDB0972266DCBA006F7D24 /* EditorViewController.swift in Sources */,
 				74E53F762264FBE300C875AA /* SailLexer.swift in Sources */,
+				740D1B7B226BEAA80074E6DE /* VerboseErrorListener.swift in Sources */,
 				74E53F7A2264FBE300C875AA /* SailParserATN.swift in Sources */,
 				74E53F7F2264FBE300C875AA /* SailListener.swift in Sources */,
 				74E53F7E2264FBE300C875AA /* SailBaseListener.swift in Sources */,

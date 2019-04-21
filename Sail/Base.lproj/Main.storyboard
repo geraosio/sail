@@ -13,7 +13,7 @@
         <!--Sail-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CompilerViewController" customModule="Sail" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="EditorViewController" customModule="Sail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,13 +30,11 @@ sail {
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES" smartQuotesType="no"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOb-l3-7i6">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" text="Console" translatesAutoresizingMaskIntoConstraints="NO" id="MOb-l3-7i6">
                                 <rect key="frame" x="0.0" y="536" width="414" height="326"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Console
-Missing a "," in line 2!</string>
                                 <color key="textColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                         </subviews>
@@ -56,14 +54,14 @@ Missing a "," in line 2!</string>
                     <navigationItem key="navigationItem" title="Sail" id="qSe-Uj-U8q">
                         <barButtonItem key="rightBarButtonItem" systemItem="play" id="3Kp-K7-zID">
                             <connections>
-                                <action selector="runCode:" destination="BYZ-38-t0r" id="nl2-Cv-27K"/>
+                                <action selector="runCode:" destination="BYZ-38-t0r" id="y8m-lX-tIO"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="codeTextView" destination="Y0P-m1-idr" id="Nbw-qv-agd"/>
-                        <outlet property="consoleTextView" destination="MOb-l3-7i6" id="85E-TG-LK4"/>
-                        <outlet property="runBarButton" destination="3Kp-K7-zID" id="55Q-4p-6gf"/>
+                        <outlet property="consoleTextView" destination="MOb-l3-7i6" id="daF-IW-19s"/>
+                        <outlet property="editorTextView" destination="Y0P-m1-idr" id="ZHW-qI-g6E"/>
+                        <outlet property="runBarButton" destination="3Kp-K7-zID" id="sbL-UZ-M0z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -81,7 +79,7 @@ Missing a "," in line 2!</string>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <color key="textColor" red="0.035294117647058823" green="0.33333333333333331" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
