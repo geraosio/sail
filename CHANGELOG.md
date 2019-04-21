@@ -7,9 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ## [0.1.1] - 2019-04-20
-- Add CHANGELOG to project to document every major change
-- Create a simple view to test grammar in app
-- Add parse capability in-app
+### Added
+- CHANGELOG to project to document every major change
+- Simple view to test grammar in app
+- Parse capability in-app
 - Show parsing errors in the console text view.
 
 ## [0.1.0] - 2019-04-15
