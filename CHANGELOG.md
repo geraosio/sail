@@ -6,11 +6,18 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1] - 2019-04-20
+- Add CHANGELOG to project to document every major change
+- Create a simple view to test grammar in app
+- Add parse capability in-app
+- Show parsing errors in the console text view.
+
 ## [0.1.0] - 2019-04-15
 ### Added
 - Sail definition grammar in ANTLR4.
 - Xcode project for the Sail compiler iOS app.
 - Added ANTLR4 frameworks and dependencies to work in the iOS app.
 
-[Unreleased]: https://github.com/geraosio/Sail/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/geraosio/Sail/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/geraosio/Sail/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/geraosio/Sail/releases/tag/v0.1.0
