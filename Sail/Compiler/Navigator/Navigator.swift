@@ -9,25 +9,39 @@
 import Foundation
 import Antlr4
 
-// Controls compilation process
-
 class Navigator {
 
     // MARK: - Singleton
+    // There will only be an instance of Navigator to access it from every class in the app.
     static let shared = Navigator()
 
+    
+    
     // MARK: - Properties
-
+    
+    // MARK: Output
+    var results: [String]!
     var errors: [String]!
+    
+    // MARK: Compilation
+    var functionTable: [String: Function]!
+    var globalVariables: [String: Variable]!
 
+    
+    
     // MARK: - Initializers
 
     init() {
         errors = []
+        
+        functionTable = [:]     // Also works as the scope
+        globalVariables = [:]
     }
 
-    // MARK: - Compile Function
-
+    
+    
+    // MARK: - Methods
+    
     func run(code: String) {
         do {
             let lexer = SailLexer(ANTLRInputStream(code)) // Create the lexer
@@ -45,8 +59,5 @@ class Navigator {
             errors.append("Error: \(error.localizedDescription)")
         }
     }
-    
-    // MARK: - Base Listener Helper Functions
-    
     
 }
