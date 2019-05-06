@@ -25,12 +25,13 @@ class Navigator {
     
     // MARK: Compilation
     var currentFunction: Function!
+    var globalFunction: Function!
     var functionTable: [String: Function]!
-    var globalVariables: [String: Variable]!
     
     // MARK: Code Generation
     var quadruples: [Quadruple]!
     var temporalCounter: Int!
+    var variableCounter: Int!
     
     // MARK: Expression Stacks
     var operands: [Int]!                // PilaO
@@ -78,10 +79,10 @@ class Navigator {
         errors = []
         
         functionTable = [:]     // Also works as the scope
-        globalVariables = [:]
         
         quadruples = []
         temporalCounter = 0
+        variableCounter = 100
         
         operands = []
         operandDataTypes = []
@@ -97,13 +98,29 @@ extension Navigator {
     
     func getVariable(name: String) -> Variable? {
         
-        // If inside a function look in the parameters' names
-        if let currentFunctionParameters = currentFunction.parameters {
-            return currentFunctionParameters[name]
+        // Look in the current function
+        if let variable = currentFunction.getVariable(name: name) {
+            return variable
         }
         
         // Lastly check in the global variables
-        return globalVariables[name]
+        return globalFunction.getVariable(name: name)
+    }
+    
+    func getDataType(from: SailParser.TypeContext) -> DataType {
+        if from.BOOL() != nil {
+            return .bool
+        } else if from.CHARACTER() != nil {
+            return .character
+        } else if from.FLOAT() != nil {
+            return .float
+        } else if from.INT() != nil {
+            return .int
+        } else if from.STRING() != nil {
+            return .string
+        }
+        
+        return .error
     }
     
     

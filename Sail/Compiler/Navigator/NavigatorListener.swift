@@ -23,33 +23,10 @@ class NavigatorListener: SailBaseListener {
         print("End of program!")
     }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterDeclaration(_ ctx: SailParser.DeclarationContext) {
-        
-    }
-    
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
+    override func enterDeclaration(_ ctx: SailParser.DeclarationContext) { }
     override func exitDeclaration(_ ctx: SailParser.DeclarationContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterBlock(_ ctx: SailParser.BlockContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitBlock(_ ctx: SailParser.BlockContext) { }
     
     /**
@@ -156,17 +133,34 @@ class NavigatorListener: SailBaseListener {
      */
     override func exitPrintStmt(_ ctx: SailParser.PrintStmtContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterVariable(_ ctx: SailParser.VariableContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
+    override func enterVariable(_ ctx: SailParser.VariableContext) {
+        
+        let variableName = ctx.IDENTIFIER()!.getText()
+        
+        print(variableName + " saved")
+        
+        if navigator.getVariable(name: variableName) != nil {
+            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(variableName)\" already exists")
+            navigator.errors.append(error)
+            return
+        }
+        
+        let variableType = navigator.getDataType(from: ctx.type()!)
+        
+        
+        // If it is not a vector
+        
+        let variable = Variable(name: variableName, type: variableType, address: navigator.variableCounter + 1) // TODO: Memory - Assign address to variable
+        navigator.variableCounter += 1
+        
+        guard var currentFunctionVariables = navigator.currentFunction.variables else {
+            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "the current scope does not allow decalaration of variables")
+            navigator.errors.append(error)
+            return
+        }
+        currentFunctionVariables[variable.name] = variable
+        
+    }
     override func exitVariable(_ ctx: SailParser.VariableContext) { }
     
     /**
@@ -237,8 +231,7 @@ class NavigatorListener: SailBaseListener {
     override func enterLogicExp(_ ctx: SailParser.LogicExpContext) { }
     override func exitLogicExp(_ ctx: SailParser.LogicExpContext) { }
     
-    override func enterLogicExpP(_ ctx: SailParser.LogicExpPContext) { }
-    override func exitLogicExpP(_ ctx: SailParser.LogicExpPContext) {
+    override func enterLogicExpP(_ ctx: SailParser.LogicExpPContext) {
         
         if ctx.AND() != nil {
             navigator.operators.append(.and)
@@ -248,6 +241,7 @@ class NavigatorListener: SailBaseListener {
             navigator.operators.append(.or)
         }
     }
+    override func exitLogicExpP(_ ctx: SailParser.LogicExpPContext) { }
     
     override func enterRelationalExp(_ ctx: SailParser.RelationalExpContext) { }
     override func exitRelationalExp(_ ctx: SailParser.RelationalExpContext) {
@@ -272,8 +266,7 @@ class NavigatorListener: SailBaseListener {
     override func enterRelationalExpP(_ ctx: SailParser.RelationalExpPContext) { }
     override func exitRelationalExpP(_ ctx: SailParser.RelationalExpPContext) { }
     
-    override func enterRelationalOp(_ ctx: SailParser.RelationalOpContext) { }
-    override func exitRelationalOp(_ ctx: SailParser.RelationalOpContext) {
+    override func enterRelationalOp(_ ctx: SailParser.RelationalOpContext) {
         
         if ctx.EQUAL() != nil {
             navigator.operators.append(.equal)
@@ -289,6 +282,7 @@ class NavigatorListener: SailBaseListener {
             navigator.operators.append(.notEqual)
         }
     }
+    override func exitRelationalOp(_ ctx: SailParser.RelationalOpContext) { }
     
     override func enterExpression(_ ctx: SailParser.ExpressionContext) { }
     override func exitExpression(_ ctx: SailParser.ExpressionContext) {
@@ -310,9 +304,8 @@ class NavigatorListener: SailBaseListener {
         }
     }
     
-    override func enterExpressionP(_ ctx: SailParser.ExpressionPContext) { }
-    override func exitExpressionP(_ ctx: SailParser.ExpressionPContext) {
-
+    override func enterExpressionP(_ ctx: SailParser.ExpressionPContext) {
+        
         if ctx.PLUS() != nil {
             navigator.operators.append(.addition)
         }
@@ -321,6 +314,7 @@ class NavigatorListener: SailBaseListener {
             navigator.operators.append(.subtraction)
         }
     }
+    override func exitExpressionP(_ ctx: SailParser.ExpressionPContext) { }
     
     override func enterTerm(_ ctx: SailParser.TermContext) { }
     override func exitTerm(_ ctx: SailParser.TermContext) {
@@ -343,8 +337,7 @@ class NavigatorListener: SailBaseListener {
         }
     }
     
-    override func enterTermP(_ ctx: SailParser.TermPContext) { }
-    override func exitTermP(_ ctx: SailParser.TermPContext) {
+    override func enterTermP(_ ctx: SailParser.TermPContext) {
         
         if ctx.MULTIPLICATION() != nil {
             navigator.operators.append(.multiplication)
@@ -354,6 +347,7 @@ class NavigatorListener: SailBaseListener {
             navigator.operators.append(.division)
         }
     }
+    override func exitTermP(_ ctx: SailParser.TermPContext) { }
     
     override func enterFactor(_ ctx: SailParser.FactorContext) { }
     override func exitFactor(_ ctx: SailParser.FactorContext) {

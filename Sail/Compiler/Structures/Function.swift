@@ -14,6 +14,7 @@ class Function {
     
     var name: String!
     var parameters: [String: Variable]?
+    var variables: [String: Variable]?
     var returnType: DataType?
     
     
@@ -27,6 +28,8 @@ class Function {
         // If it has parameters initialize Dictionary parameters
         if hasParameters {
             self.parameters = [:]
+        } else {
+            self.variables = [:]
         }
         
         self.returnType = returnType
@@ -38,6 +41,18 @@ class Function {
     
     func isMain() -> Bool {
         return parameters != nil && returnType != nil
+    }
+    
+    func getVariable(name: String) -> Variable? {
+        if let parameters = self.parameters {
+            return parameters[name]
+        }
+        
+        if let variables = self.variables {
+            return variables[name]
+        }
+        
+        return nil
     }
     
     // MARK: Operator Overloading
