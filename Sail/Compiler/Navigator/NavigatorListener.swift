@@ -14,8 +14,9 @@ class NavigatorListener: SailBaseListener {
     let navigator = Navigator.shared
     
     override func enterProgram(_ ctx: SailParser.ProgramContext) {
-        navigator.currentFunction = Function(name: "sail")
-        navigator.functionTable[navigator.currentFunction.name] = navigator.currentFunction
+        navigator.globalFunction = Function(name: "sail")
+        navigator.currentFunction = navigator.globalFunction
+        navigator.functionTable[navigator.globalFunction.name] = navigator.globalFunction
     }
     
     override func exitProgram(_ ctx: SailParser.ProgramContext) {
@@ -42,18 +43,43 @@ class NavigatorListener: SailBaseListener {
      */
     override func exitStatement(_ ctx: SailParser.StatementContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterAssignment(_ ctx: SailParser.AssignmentContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func exitAssignment(_ ctx: SailParser.AssignmentContext) { }
+    override func enterAssignment(_ ctx: SailParser.AssignmentContext) {
+        
+        if let idNode = ctx.IDENTIFIER() {
+            let variableName = idNode.getText()
+            
+            guard let variable = navigator.getVariable(name: variableName) else {
+                let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\(variableName) does not exists")
+                navigator.errors.append(error)
+                return
+            }
+            
+            if ctx.OPEN_BRACKET() != nil {
+                // TODO: Vector - Get vector address and add to operands
+            } else {
+                navigator.operands.append(variable.address)
+                navigator.operandDataTypes.append(variable.type)
+            }
+        }
+    }
+    override func exitAssignment(_ ctx: SailParser.AssignmentContext) {
+        
+        let resultAddress = navigator.operands.popLast()!
+        let resultDataType = navigator.operandDataTypes.popLast()!
+        let idAddress = navigator.operands.popLast()!
+        let idDataType = navigator.operandDataTypes.popLast()!
+        
+        let assignmentDataType = SemanticCube.check(op: .assign, leftType: idDataType, rightType: resultDataType)
+        
+        if assignmentDataType == .error {
+            let error = NavigatorError.init(type: .semantic, atLine: ctx.ASSIGN()?.getSymbol()?.getLine(), positionInLine: ctx.ASSIGN()?.getSymbol()?.getCharPositionInLine(), description: "\(resultDataType.string) can not be assigned to a \(idDataType.string)")
+            navigator.errors.append(error)
+            return
+        } else {
+            let quadruple = Quadruple(op: .assign, left: resultAddress, right: nil, result: idAddress)
+            navigator.quadruples.append(quadruple)
+        }
+    }
     
     /**
      * {@inheritDoc}
@@ -120,24 +146,19 @@ class NavigatorListener: SailBaseListener {
      */
     override func exitWhileStmt(_ ctx: SailParser.WhileStmtContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterPrintStmt(_ ctx: SailParser.PrintStmtContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func exitPrintStmt(_ ctx: SailParser.PrintStmtContext) { }
+    override func exitPrintStmt(_ ctx: SailParser.PrintStmtContext) {
+        
+        let printOperandAddress = navigator.operands.popLast()
+        navigator.operandDataTypes.popLast() // We don't need the data type
+        
+        let quadruple = Quadruple(op: .print, left: nil, right: nil, result: printOperandAddress)
+        navigator.quadruples.append(quadruple)
+    }
     
     override func enterVariable(_ ctx: SailParser.VariableContext) {
         
         let variableName = ctx.IDENTIFIER()!.getText()
-        
-        print(variableName + " saved")
         
         if navigator.getVariable(name: variableName) != nil {
             let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(variableName)\" already exists")
@@ -388,43 +409,65 @@ class NavigatorListener: SailBaseListener {
         }
     }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterLiteral(_ ctx: SailParser.LiteralContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitLiteral(_ ctx: SailParser.LiteralContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterVarLiteral(_ ctx: SailParser.VarLiteralContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
+    override func enterVarLiteral(_ ctx: SailParser.VarLiteralContext) {
+       
+        if let boolNode = ctx.CONSTANT_BOOLEAN() {
+            var bool: Bool
+            
+            switch boolNode.getText() {
+            case "true": bool = true
+            default: bool = false
+            }
+            
+            // TODO: Memory - If it not saved get an address from memory and add operand and type
+            // TODO: Memory - Else get address and add operand and type
+        }
+        
+        if let floatNode = ctx.CONSTANT_FLOAT() {
+            var float = Float(floatNode.getText())!
+            
+            if ctx.MINUS() != nil { float = -float }
+            
+            // TODO: Memory - If it not saved get an address from memory and add operand and type
+            // TODO: Memory - Else get address and add operand and type
+        }
+        
+        if let intNode = ctx.CONSTANT_INT() {
+            var int = Int(intNode.getText())!
+            
+            if ctx.MINUS() != nil { int = -int }
+            
+            // TODO: Memory - If it not saved get an address from memory and add operand and type
+            // TODO: Memory - Else get address and add operand and type
+        }
+    }
     override func exitVarLiteral(_ ctx: SailParser.VarLiteralContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterLetterLiteral(_ ctx: SailParser.LetterLiteralContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
+    override func enterLetterLiteral(_ ctx: SailParser.LetterLiteralContext) {
+        
+        if let characterNode = ctx.CONSTANT_CHAR() {
+            var characterText = characterNode.getText()
+            // Remove the open single quote
+            characterText.removeFirst()
+            let character = characterText.removeFirst()
+            
+            // TODO: Memory - If it not saved get an address from memory and add operand and type
+            // TODO: Memory - Else get address and add operand and type
+        }
+        
+        if let stringNode = ctx.CONSTANT_STRING() {
+            var string = stringNode.getText()
+            // Remove the double quotes
+            string.removeFirst()
+            string.popLast()
+            
+            // TODO: Memory - If it not saved get an address from memory and add operand and type
+            // TODO: Memory - Else get address and add operand and type
+        }
+    }
     override func exitLetterLiteral(_ ctx: SailParser.LetterLiteralContext) { }
     
     
@@ -434,7 +477,6 @@ class NavigatorListener: SailBaseListener {
             return
         }
     }
-    
     override func exitEveryRule(_ ctx: ParserRuleContext) { }
     
     override func visitTerminal(_ node: TerminalNode) { }

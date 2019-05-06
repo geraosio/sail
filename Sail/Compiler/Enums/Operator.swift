@@ -29,6 +29,9 @@ enum Operator: String {
     case greaterEqual       = ">="
     case lessEqual          = "<="
     
+    // MARK: - Language Functions
+    case print              = "print"
+    
     // MARK: - Others
     case assign             = "="
     case falseBottom        = "("

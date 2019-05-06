@@ -130,14 +130,14 @@ extension Navigator {
     func generateExpressionQuadruple() throws {
         print("Entered generating expression quad")
         
-        let rightOperand = operands.popLast()
-        let rightDataType = operandDataTypes.popLast()
-        let leftOperand = operands.popLast()
-        let leftDataType = operandDataTypes.popLast()
+        let rightOperand = operands.popLast()!
+        let rightDataType = operandDataTypes.popLast()!
+        let leftOperand = operands.popLast()!
+        let leftDataType = operandDataTypes.popLast()!
         
         let op = operators.popLast()!
         
-        let resultDataType = SemanticCube.check(op: op, leftType: leftDataType!, rightType: rightDataType!)
+        let resultDataType = SemanticCube.check(op: op, leftType: leftDataType, rightType: rightDataType)
         
         guard resultDataType != .error else {
             throw NavigatorError(type: .semantic, description: "Type mismatch")
