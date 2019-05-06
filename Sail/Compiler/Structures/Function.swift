@@ -13,7 +13,7 @@ class Function {
     // MARK: - Properties
     
     var name: String!
-    var parameters: [String: Variable]? // Since the grammar doesn't allow local variables this Dictionary will also work as the Local Variables
+    var parameters: [String: Variable]?
     var returnType: DataType?
     
     

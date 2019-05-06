@@ -29,11 +29,11 @@ class SemanticCube {
         case (.multiplication, .int, .character): return .error
         case (.multiplication, .int, .string): return .error
 
-        case (.substraction, .int, .int): return .int
-        case (.substraction, .int, .float): return .float
-        case (.substraction, .int, .bool): return .error
-        case (.substraction, .int, .character): return .error
-        case (.substraction, .int, .string): return .error
+        case (.subtraction, .int, .int): return .int
+        case (.subtraction, .int, .float): return .float
+        case (.subtraction, .int, .bool): return .error
+        case (.subtraction, .int, .character): return .error
+        case (.subtraction, .int, .string): return .error
 
         case (.division, .int, .int): return .int
         case (.division, .int, .float): return .float
@@ -111,11 +111,11 @@ class SemanticCube {
         case (.multiplication, .float, .character): return .error
         case (.multiplication, .float, .string): return .error
 
-        case (.substraction, .float, .int): return .float
-        case (.substraction, .float, .float): return .float
-        case (.substraction, .float, .bool): return .error
-        case (.substraction, .float, .character): return .error
-        case (.substraction, .float, .string): return .error
+        case (.subtraction, .float, .int): return .float
+        case (.subtraction, .float, .float): return .float
+        case (.subtraction, .float, .bool): return .error
+        case (.subtraction, .float, .character): return .error
+        case (.subtraction, .float, .string): return .error
 
         case (.division, .float, .int): return .float
         case (.division, .float, .float): return .float
@@ -193,11 +193,11 @@ class SemanticCube {
         case (.multiplication, .bool, .character): return .error
         case (.multiplication, .bool, .string): return .error
 
-        case (.substraction, .bool, .int): return .error
-        case (.substraction, .bool, .float): return .error
-        case (.substraction, .bool, .bool): return .error
-        case (.substraction, .bool, .character): return .error
-        case (.substraction, .bool, .string): return .error
+        case (.subtraction, .bool, .int): return .error
+        case (.subtraction, .bool, .float): return .error
+        case (.subtraction, .bool, .bool): return .error
+        case (.subtraction, .bool, .character): return .error
+        case (.subtraction, .bool, .string): return .error
 
         case (.division, .bool, .int): return .error
         case (.division, .bool, .float): return .error
@@ -275,11 +275,11 @@ class SemanticCube {
         case (.multiplication, .character, .character): return .error
         case (.multiplication, .character, .string): return .error
 
-        case (.substraction, .character, .int): return .error
-        case (.substraction, .character, .float): return .error
-        case (.substraction, .character, .bool): return .error
-        case (.substraction, .character, .character): return .error
-        case (.substraction, .character, .string): return .error
+        case (.subtraction, .character, .int): return .error
+        case (.subtraction, .character, .float): return .error
+        case (.subtraction, .character, .bool): return .error
+        case (.subtraction, .character, .character): return .error
+        case (.subtraction, .character, .string): return .error
 
         case (.division, .character, .int): return .error
         case (.division, .character, .float): return .error
@@ -357,11 +357,11 @@ class SemanticCube {
         case (.multiplication, .string, .character): return .error
         case (.multiplication, .string, .string): return .error
 
-        case (.substraction, .string, .int): return .error
-        case (.substraction, .string, .float): return .error
-        case (.substraction, .string, .bool): return .error
-        case (.substraction, .string, .character): return .error
-        case (.substraction, .string, .string): return .error
+        case (.subtraction, .string, .int): return .error
+        case (.subtraction, .string, .float): return .error
+        case (.subtraction, .string, .bool): return .error
+        case (.subtraction, .string, .character): return .error
+        case (.subtraction, .string, .string): return .error
 
         case (.division, .string, .int): return .error
         case (.division, .string, .float): return .error

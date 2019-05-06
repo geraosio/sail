@@ -14,14 +14,14 @@ class Variable {
     
     var name: String!
     var type: DataType!
-    var address: Int?
+    var address: Int!
     var arraySize: Int?
     
     
     
     // MARK: - Initializers
     
-    init(name: String, type: DataType, address: Int? = nil, arraySize: Int? = nil) {
+    init(name: String, type: DataType, address: Int, arraySize: Int? = nil) {
         self.name = name
         self.type = type
         self.address = address

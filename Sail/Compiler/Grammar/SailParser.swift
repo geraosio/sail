@@ -1792,8 +1792,8 @@ open class SailParser: Parser {
 				return getRuleContext(RelationalOpContext.self, 0)
 			}
 			open
-			func expression() -> ExpressionContext? {
-				return getRuleContext(ExpressionContext.self, 0)
+			func relationalExp() -> RelationalExpContext? {
+				return getRuleContext(RelationalExpContext.self, 0)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -1824,7 +1824,7 @@ open class SailParser: Parser {
 		 	setState(224)
 		 	try relationalOp()
 		 	setState(225)
-		 	try expression()
+		 	try relationalExp()
 
 		}
 		catch ANTLRException.recognition(let re) {

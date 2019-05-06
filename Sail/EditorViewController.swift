@@ -37,7 +37,6 @@ class EditorViewController: UIViewController {
     
     private func clearConsole() {
         consoleTextView.text = ""
-        Navigator.shared.errors.removeAll()
     }
     
     private func showMessagesInConsole() {
@@ -47,8 +46,8 @@ class EditorViewController: UIViewController {
         } else {
             consoleTextView.textColor = UIColor(red: 242/255, green: 135/255, blue: 39/255, alpha: 1)
             consoleTextView.text += "\(Navigator.shared.errors.count) error(s):\n"
-            for errorMessage in Navigator.shared.errors {
-                consoleTextView.text += errorMessage + "\n"
+            for error in Navigator.shared.errors {
+                consoleTextView.text += error.message + "\n"
             }
         }
     }

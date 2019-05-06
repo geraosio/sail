@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		740D1B7B226BEAA80074E6DE /* NavigatorErrorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D1B7A226BEAA80074E6DE /* NavigatorErrorListener.swift */; };
+		743665742280073900100F8B /* NavigatorError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743665732280073900100F8B /* NavigatorError.swift */; };
 		745223AE226C1A16007A4943 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745223AD226C1A15007A4943 /* Navigator.swift */; };
 		747C902F2266EC2100A7C96B /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E53F652264FAD000C875AA /* Antlr4.framework */; };
 		747C90302266EC2100A7C96B /* Antlr4.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74E53F652264FAD000C875AA /* Antlr4.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		74962846227E79DE008EED9A /* Quadruple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74962845227E79DE008EED9A /* Quadruple.swift */; };
 		74A214EF226CE2E70044B1AD /* SemanticCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A214EE226CE2E70044B1AD /* SemanticCube.swift */; };
 		74A214F4226CE52D0044B1AD /* Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A214F3226CE52D0044B1AD /* Operator.swift */; };
 		74A214F9226CEA830044B1AD /* DataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A214F8226CEA830044B1AD /* DataType.swift */; };
@@ -32,6 +34,7 @@
 		74E53F7F2264FBE300C875AA /* SailListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E53F742264FBE300C875AA /* SailListener.swift */; };
 		74E82CCC227E48A10085D401 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E82CCB227E48A10085D401 /* Variable.swift */; };
 		74E82CCE227E4ECF0085D401 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E82CCD227E4ECF0085D401 /* Function.swift */; };
+		74E82CD3227E637B0085D401 /* NavigatorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E82CD2227E637B0085D401 /* NavigatorListener.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +84,9 @@
 
 /* Begin PBXFileReference section */
 		740D1B7A226BEAA80074E6DE /* NavigatorErrorListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorErrorListener.swift; sourceTree = "<group>"; };
+		743665732280073900100F8B /* NavigatorError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorError.swift; sourceTree = "<group>"; };
 		745223AD226C1A15007A4943 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		74962845227E79DE008EED9A /* Quadruple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadruple.swift; sourceTree = "<group>"; };
 		74A214EE226CE2E70044B1AD /* SemanticCube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticCube.swift; sourceTree = "<group>"; };
 		74A214F3226CE52D0044B1AD /* Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operator.swift; sourceTree = "<group>"; };
 		74A214F8226CEA830044B1AD /* DataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataType.swift; sourceTree = "<group>"; };
@@ -106,6 +111,7 @@
 		74E53F742264FBE300C875AA /* SailListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailListener.swift; sourceTree = "<group>"; };
 		74E82CCB227E48A10085D401 /* Variable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		74E82CCD227E4ECF0085D401 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
+		74E82CD2227E637B0085D401 /* NavigatorListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorListener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +150,7 @@
 				74E82CCD227E4ECF0085D401 /* Function.swift */,
 				74A214EE226CE2E70044B1AD /* SemanticCube.swift */,
 				74E82CCB227E48A10085D401 /* Variable.swift */,
+				74962845227E79DE008EED9A /* Quadruple.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -220,7 +227,9 @@
 			isa = PBXGroup;
 			children = (
 				745223AD226C1A15007A4943 /* Navigator.swift */,
+				743665732280073900100F8B /* NavigatorError.swift */,
 				740D1B7A226BEAA80074E6DE /* NavigatorErrorListener.swift */,
+				74E82CD2227E637B0085D401 /* NavigatorListener.swift */,
 			);
 			path = Navigator;
 			sourceTree = "<group>";
@@ -334,12 +343,15 @@
 				74BDB0972266DCBA006F7D24 /* EditorViewController.swift in Sources */,
 				74E53F762264FBE300C875AA /* SailLexer.swift in Sources */,
 				740D1B7B226BEAA80074E6DE /* NavigatorErrorListener.swift in Sources */,
+				74E82CD3227E637B0085D401 /* NavigatorListener.swift in Sources */,
+				743665742280073900100F8B /* NavigatorError.swift in Sources */,
 				74E53F7A2264FBE300C875AA /* SailParserATN.swift in Sources */,
 				74E53F7F2264FBE300C875AA /* SailListener.swift in Sources */,
 				74E82CCE227E4ECF0085D401 /* Function.swift in Sources */,
 				74E53F7E2264FBE300C875AA /* SailBaseListener.swift in Sources */,
 				74A214EF226CE2E70044B1AD /* SemanticCube.swift in Sources */,
 				74E53F7B2264FBE300C875AA /* SailLexerATN.swift in Sources */,
+				74962846227E79DE008EED9A /* Quadruple.swift in Sources */,
 				74A214F9226CEA830044B1AD /* DataType.swift in Sources */,
 				74E53F7C2264FBE300C875AA /* SailParser.swift in Sources */,
 			);

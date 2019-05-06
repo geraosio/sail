@@ -48,7 +48,7 @@ logicExp            : relationalExp logicExpP? ;
 logicExpP           : (AND | OR) logicExp ;
 
 relationalExp       : expression relationalExpP? ;
-relationalExpP      : relationalOp expression ;
+relationalExpP      : relationalOp relationalExp;
 relationalOp        : EQUAL | EQUAL_GREATER_THAN | EQUAL_LESS_THAN | GREATER_THAN | LESS_THAN | NOT_EQUAL ;
 
 expression          : term expressionP? ;

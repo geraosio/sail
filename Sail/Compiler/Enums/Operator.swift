@@ -13,7 +13,7 @@ enum Operator: String {
     // MARK: - Arithmetic
     case addition           = "+"
     case multiplication     = "*"
-    case substraction       = "-"
+    case subtraction       = "-"
     case division           = "/"
 
     // MARK: - Logical
@@ -31,4 +31,5 @@ enum Operator: String {
     
     // MARK: - Others
     case assign             = "="
+    case falseBottom        = "("
 }

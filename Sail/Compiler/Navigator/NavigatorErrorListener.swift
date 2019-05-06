@@ -18,6 +18,8 @@ class NavigatorErrorListener: BaseErrorListener {
                              _ msg: String,
                              _ e: AnyObject?
         ) {
-        Navigator.shared.errors.append("line \(line):\(charPositionInLine) \(msg)")
+        
+        let parseError = NavigatorError(type: .syntax, atLine: line, positionInLine: charPositionInLine, description: msg)
+        Navigator.shared.errors.append(parseError)
     }
 }
