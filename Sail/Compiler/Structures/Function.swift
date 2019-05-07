@@ -39,7 +39,7 @@ class Function {
     
     // MARK: - Methods
     
-    func isMain() -> Bool {
+    func isGlobal() -> Bool {
         return parameters != nil && returnType != nil
     }
     

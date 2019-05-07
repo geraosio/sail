@@ -150,7 +150,7 @@ class NavigatorListener: SailBaseListener {
     override func exitPrintStmt(_ ctx: SailParser.PrintStmtContext) {
         
         let printOperandAddress = navigator.operands.popLast()
-        navigator.operandDataTypes.popLast() // We don't need the data type
+        _ = navigator.operandDataTypes.popLast()
         
         let quadruple = Quadruple(op: .print, left: nil, right: nil, result: printOperandAddress)
         navigator.quadruples.append(quadruple)
@@ -168,18 +168,27 @@ class NavigatorListener: SailBaseListener {
         
         let variableType = navigator.getDataType(from: ctx.type()!)
         
+        // TODO: Vector
         
-        // If it is not a vector
-        
-        let variable = Variable(name: variableName, type: variableType, address: navigator.variableCounter + 1) // TODO: Memory - Assign address to variable
-        navigator.variableCounter += 1
-        
-        guard var currentFunctionVariables = navigator.currentFunction.variables else {
-            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "the current scope does not allow decalaration of variables")
+        // Save Variable
+        do {
+            let variableAddress = try navigator.getAddress(for: variableType)
+            
+            let variable = Variable(name: variableName, type: variableType, address: variableAddress)
+            
+            guard var currentFunctionVariables = navigator.currentFunction.variables else {
+                let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "the current scope does not allow decalaration of variables")
+                navigator.errors.append(error)
+                return
+            }
+            
+            currentFunctionVariables[variable.name] = variable
+        } catch let error as NavigatorError {
+            error.atLine = ctx.getStart()?.getLine()
+            error.positionInLine = ctx.getStart()?.getCharPositionInLine()
             navigator.errors.append(error)
             return
-        }
-        currentFunctionVariables[variable.name] = variable
+        } catch { }
         
     }
     override func exitVariable(_ ctx: SailParser.VariableContext) { }
@@ -422,8 +431,15 @@ class NavigatorListener: SailBaseListener {
             default: bool = false
             }
             
-            // TODO: Memory - If it not saved get an address from memory and add operand and type
-            // TODO: Memory - Else get address and add operand and type
+            // Get address for constant
+            if let boolAddress = navigator.constantsMemory.findConstant(bool: bool) {
+                navigator.operands.append(boolAddress)
+                navigator.operandDataTypes.append(.bool)
+            } else {
+                let boolAddress = navigator.constantsMemory.save(bool: bool)
+                navigator.operands.append(boolAddress)
+                navigator.operandDataTypes.append(.bool)
+            }
         }
         
         if let floatNode = ctx.CONSTANT_FLOAT() {
@@ -431,8 +447,15 @@ class NavigatorListener: SailBaseListener {
             
             if ctx.MINUS() != nil { float = -float }
             
-            // TODO: Memory - If it not saved get an address from memory and add operand and type
-            // TODO: Memory - Else get address and add operand and type
+            // Get address for constant
+            if let floatAddress = navigator.constantsMemory.findConstant(float: float) {
+                navigator.operands.append(floatAddress)
+                navigator.operandDataTypes.append(.float)
+            } else {
+                let floatAddress = navigator.constantsMemory.save(float: float)
+                navigator.operands.append(floatAddress)
+                navigator.operandDataTypes.append(.float)
+            }
         }
         
         if let intNode = ctx.CONSTANT_INT() {
@@ -440,8 +463,15 @@ class NavigatorListener: SailBaseListener {
             
             if ctx.MINUS() != nil { int = -int }
             
-            // TODO: Memory - If it not saved get an address from memory and add operand and type
-            // TODO: Memory - Else get address and add operand and type
+            // Get address for constant
+            if let intAddress = navigator.constantsMemory.findConstant(int: int) {
+                navigator.operands.append(intAddress)
+                navigator.operandDataTypes.append(.int)
+            } else {
+                let intAddress = navigator.constantsMemory.save(int: int)
+                navigator.operands.append(intAddress)
+                navigator.operandDataTypes.append(.int)
+            }
         }
     }
     override func exitVarLiteral(_ ctx: SailParser.VarLiteralContext) { }
@@ -454,18 +484,32 @@ class NavigatorListener: SailBaseListener {
             characterText.removeFirst()
             let character = characterText.removeFirst()
             
-            // TODO: Memory - If it not saved get an address from memory and add operand and type
-            // TODO: Memory - Else get address and add operand and type
+            // Get address for constant
+            if let characterAddress = navigator.constantsMemory.findConstant(character: character) {
+                navigator.operands.append(characterAddress)
+                navigator.operandDataTypes.append(.character)
+            } else {
+                let characterAddress = navigator.constantsMemory.save(character: character)
+                navigator.operands.append(characterAddress)
+                navigator.operandDataTypes.append(.character)
+            }
         }
         
         if let stringNode = ctx.CONSTANT_STRING() {
             var string = stringNode.getText()
             // Remove the double quotes
             string.removeFirst()
-            string.popLast()
+            _ = string.popLast()
             
-            // TODO: Memory - If it not saved get an address from memory and add operand and type
-            // TODO: Memory - Else get address and add operand and type
+            // Get address for constant
+            if let stringAddress = navigator.constantsMemory.findConstant(string: string) {
+                navigator.operands.append(stringAddress)
+                navigator.operandDataTypes.append(.string)
+            } else {
+                let stringAddress = navigator.constantsMemory.save(string: string)
+                navigator.operands.append(stringAddress)
+                navigator.operandDataTypes.append(.string)
+            }
         }
     }
     override func exitLetterLiteral(_ ctx: SailParser.LetterLiteralContext) { }

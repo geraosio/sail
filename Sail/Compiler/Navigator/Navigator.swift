@@ -28,21 +28,39 @@ class Navigator {
     var globalFunction: Function!
     var functionTable: [String: Function]!
     
-    // MARK: Code Generation
-    var quadruples: [Quadruple]!
-    var temporalCounter: Int!
-    var variableCounter: Int!
-    
     // MARK: Expression Stacks
     var operands: [Int]!                // PilaO
     var operandDataTypes: [DataType]!   // PTypes
     var operators: [Operator]!          // POper
+    
+    // MARK: Code Generation
+    var quadruples: [Quadruple]!
+    
+    // MARK: Memory
+    
+    // MARK: Memory Base Addresses
+    let constantsBaseAddress        = 0
+    let globalBaseAddress           = 20_000
+    let localBaseAddress            = 40_000
+    let temporalGloablBaseAddress   = 60_000
+    let temporalLocalBaseAddress    = 80_000
+    
+    var constantsMemory: Memory!
+    var globalMemory: Memory!
+    var localMemory: Memory!
+    var temporalGlobalMemory: Memory!
+    var temporalLocalMemory: Memory!
     
     
     
     // MARK: - Initializers
 
     init() {
+        constantsMemory = Memory(baseAddress: constantsBaseAddress)
+        globalMemory = Memory(baseAddress: globalBaseAddress)
+        localMemory = Memory(baseAddress: localBaseAddress)
+        temporalGlobalMemory = Memory(baseAddress: temporalGloablBaseAddress)
+        temporalLocalMemory = Memory(baseAddress: temporalLocalBaseAddress)
     }
     
     
@@ -51,7 +69,7 @@ class Navigator {
     
     func run(code: String) {
         do {
-            reset()
+            clear()
             
             let lexer = SailLexer(ANTLRInputStream(code))   // Create the lexer
             let tokens = CommonTokenStream(lexer)           // Create a buffer of tokens from lexer
@@ -74,19 +92,19 @@ class Navigator {
     
     // MARK: Private Methods
     
-    private func reset() {
+    private func clear() {
         results = []
         errors = []
         
         functionTable = [:]     // Also works as the scope
         
-        quadruples = []
-        temporalCounter = 0
-        variableCounter = 100
-        
         operands = []
         operandDataTypes = []
         operators = []
+        
+        quadruples = []
+        
+        constantsMemory.clear()
     }
     
 }
@@ -123,6 +141,37 @@ extension Navigator {
         return .error
     }
     
+    func getAddress(for dataType: DataType) throws -> Int {
+        
+        var address: Int
+        if currentFunction.isGlobal() {
+            address = globalMemory.getAddress(for: dataType)
+        } else {
+            address = localMemory.getAddress(for: dataType)
+        }
+        
+        if address == -1 {
+            throw NavigatorError(description: "Couldn't get an address for a \(dataType.string)")
+        }
+        
+        return address
+    }
+    
+    func getTemporalAddress(for dataType: DataType) throws -> Int {
+        
+        var address: Int
+        if currentFunction.isGlobal() {
+            address = temporalGlobalMemory.getAddress(for: dataType)
+        } else {
+            address = temporalLocalMemory.getAddress(for: dataType)
+        }
+        
+        if address == -1 {
+            throw NavigatorError(description: "Couldn't get a temporal address for a \(dataType.string)")
+        }
+        
+        return address
+    }
     
     
     // MARK: - Quadruples
@@ -143,14 +192,16 @@ extension Navigator {
             throw NavigatorError(type: .semantic, description: "Type mismatch")
         }
         
-        let resultOperand = temporalCounter + 1 // TODO: Memory - Generate a temporal address for the result operand
+        // Generate a temporal address for the result operand
+        let resultOperand = try getTemporalAddress(for: resultDataType)
+        
         let quadruple = Quadruple(op: op, left: leftOperand, right: rightOperand, result: resultOperand)
         quadruples.append(quadruple)
         
         operands.append(resultOperand)
         operandDataTypes.append(resultDataType)
         
-        // TODO: Memory - If any operand had a temporal space, return space to available
+        // TODO: Memory - If any of the operands had a temporal space release it
     }
     
     func printQuadruples() {
