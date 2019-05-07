@@ -55,6 +55,14 @@ class Function {
         return nil
     }
     
+    func save(variable: Variable) {
+        if variables != nil {
+            variables?.updateValue(variable, forKey: variable.name)
+        } else {
+            parameters?.updateValue(variable, forKey: variable.name)
+        }
+    }
+    
     // MARK: Operator Overloading
     static func ==(left: Function, right: Function) -> Bool {
         return left.name == right.name

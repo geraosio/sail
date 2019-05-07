@@ -96,7 +96,10 @@ class Navigator {
         results = []
         errors = []
         
-        functionTable = [:]     // Also works as the scope
+        globalFunction = Function(name: "sail")
+        currentFunction = globalFunction
+        functionTable = [:]
+        functionTable[globalFunction.name] = globalFunction
         
         operands = []
         operandDataTypes = []
@@ -234,4 +237,26 @@ extension Navigator {
         }
     }
     
+    // MARK: - Debugging
+    
+    func debugExpressions() {
+        print("\(operands.count) Operands")
+        for operand in operands {
+            print(operand)
+        }
+        
+        print("\(operandDataTypes.count) Operand Data Types")
+        for type in operandDataTypes {
+            print(type.string)
+        }
+        
+        print("\(operators.count) Operators")
+        for op in operators {
+            print(op)
+        }
+    }
+    
+    func debugFunctions() {
+        
+    }
 }

@@ -35,4 +35,6 @@ enum Operator: String {
     // MARK: - Others
     case assign             = "="
     case falseBottom        = "("
+    
+    case end                = "end"
 }

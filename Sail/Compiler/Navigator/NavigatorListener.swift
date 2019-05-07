@@ -13,14 +13,14 @@ class NavigatorListener: SailBaseListener {
     
     let navigator = Navigator.shared
     
-    override func enterProgram(_ ctx: SailParser.ProgramContext) {
-        navigator.globalFunction = Function(name: "sail")
-        navigator.currentFunction = navigator.globalFunction
-        navigator.functionTable[navigator.globalFunction.name] = navigator.globalFunction
-    }
+    override func enterProgram(_ ctx: SailParser.ProgramContext) { }
     
     override func exitProgram(_ ctx: SailParser.ProgramContext) {
+        let endQuadruple = Quadruple(op: .end, left: nil, right: nil, result: nil)
+        navigator.quadruples.append(endQuadruple)
+        
         navigator.printQuadruples()
+        
         print("End of program!")
     }
     
@@ -168,21 +168,16 @@ class NavigatorListener: SailBaseListener {
         
         let variableType = navigator.getDataType(from: ctx.type()!)
         
-        // TODO: Vector
+        // TODO: VECTOR
         
-        // Save Variable
+        // VARIABLE
         do {
             let variableAddress = try navigator.getAddress(for: variableType)
             
             let variable = Variable(name: variableName, type: variableType, address: variableAddress)
             
-            guard var currentFunctionVariables = navigator.currentFunction.variables else {
-                let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "the current scope does not allow decalaration of variables")
-                navigator.errors.append(error)
-                return
-            }
+            navigator.currentFunction.save(variable: variable)
             
-            currentFunctionVariables[variable.name] = variable
         } catch let error as NavigatorError {
             error.atLine = ctx.getStart()?.getLine()
             error.positionInLine = ctx.getStart()?.getCharPositionInLine()
