@@ -203,43 +203,31 @@ extension Navigator {
         
         operands.append(resultOperand)
         operandDataTypes.append(resultDataType)
-        
-        // TODO: Memory - If any of the operands had a temporal space release it
-    }
-    
-    func printQuadruples() {
-        for quadruple in quadruples {
-            let emptyBlock = "______"
-            let quadLeft: String
-            let quadRight: String
-            let quadResult: String
-            
-            if let left = quadruple.left {
-                quadLeft = String(left)
-            } else {
-                quadLeft = emptyBlock
-            }
-            
-            if let right = quadruple.right {
-                quadRight = String(right)
-            } else {
-                quadRight = emptyBlock
-            }
-            
-            if let result = quadruple.result {
-                quadResult = String(result)
-            } else {
-                quadResult = emptyBlock
-            }
-            
-            print("Operator \t Left \t Right Address \t Result Address")
-            print("\(quadruple.op) \t \(quadLeft) \t \(quadRight) \t \(quadResult)")
-        }
     }
     
     // MARK: - Debugging
     
+    func printQuadruples() {
+        
+        print("#".withCString{ String(format: "%-4s ", $0) }, "Operator".withCString{ String(format: "%-14s ", $0) }, "Left Address".withCString{ String(format: "%-14s ", $0) }, "Right Address".withCString{ String(format: "%-14s ", $0) }, "Result".withCString{ String(format: "%-14s", $0) })
+        print("-------------------------------------------------------------")
+        
+        let emptyBlock = "_____"
+        
+        for quadrupleNumber in 0 ..< quadruples.count {
+            let quadruple = quadruples[quadrupleNumber]
+            let leftOperand: String = quadruple.left?.description ?? emptyBlock
+            let rightOperand: String = quadruple.right?.description ?? emptyBlock
+            let result: String = quadruple.result?.description ?? emptyBlock
+            
+            let quadrupleNumberDescription: String = String(quadrupleNumber)
+            
+            print(quadrupleNumberDescription.withCString{ String(format: "%-4s ", $0) }, quadruple.op.string.withCString{ String(format: "%-14s ", $0) }, leftOperand.withCString{ String(format: "%-14s ", $0) }, rightOperand.withCString{ String(format: "%-14s ", $0) }, result.withCString{ String(format: "%-14s", $0) })
+        }
+    }
+    
     func debugExpressions() {
+        
         print("\(operands.count) Operands")
         for operand in operands {
             print(operand)
@@ -257,6 +245,6 @@ extension Navigator {
     }
     
     func debugFunctions() {
-        
+        // TODO: Print functions contents
     }
 }

@@ -20,8 +20,6 @@ class NavigatorListener: SailBaseListener {
         navigator.quadruples.append(endQuadruple)
         
         navigator.printQuadruples()
-        
-        print("End of program!")
     }
     
     override func enterDeclaration(_ ctx: SailParser.DeclarationContext) { }

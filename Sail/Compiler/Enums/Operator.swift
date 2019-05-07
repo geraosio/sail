@@ -13,7 +13,7 @@ enum Operator: String {
     // MARK: - Arithmetic
     case addition           = "+"
     case multiplication     = "*"
-    case subtraction       = "-"
+    case subtraction        = "-"
     case division           = "/"
 
     // MARK: - Logical
@@ -37,4 +37,10 @@ enum Operator: String {
     case falseBottom        = "("
     
     case end                = "end"
+    
+    var string: String {
+        get {
+            return self.rawValue
+        }
+    }
 }
