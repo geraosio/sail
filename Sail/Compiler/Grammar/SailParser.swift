@@ -343,10 +343,6 @@ open class SailParser: Parser {
 			func call() -> CallContext? {
 				return getRuleContext(CallContext.self, 0)
 			}
-			open
-			func SEMICOLON() -> TerminalNode? {
-				return getToken(SailParser.Tokens.SEMICOLON.rawValue, 0)
-			}
 		override open
 		func getRuleIndex() -> Int {
 			return SailParser.RULE_statement
@@ -372,7 +368,7 @@ open class SailParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(94)
+		 	setState(92)
 		 	try _errHandler.sync(self)
 		 	switch(try getInterpreter().adaptivePredict(_input,3, _ctx)) {
 		 	case 1:
@@ -403,9 +399,6 @@ open class SailParser: Parser {
 		 		try enterOuterAlt(_localctx, 5)
 		 		setState(91)
 		 		try call()
-		 		setState(92)
-		 		try match(SailParser.Tokens.SEMICOLON.rawValue)
-
 
 		 		break
 		 	default: break
@@ -480,9 +473,9 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(96)
+		 	setState(94)
 		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
-		 	setState(101)
+		 	setState(99)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -490,18 +483,18 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.OPEN_BRACKET.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(97)
+		 		setState(95)
 		 		try match(SailParser.Tokens.OPEN_BRACKET.rawValue)
-		 		setState(98)
+		 		setState(96)
 		 		try expression()
-		 		setState(99)
+		 		setState(97)
 		 		try match(SailParser.Tokens.CLOSE_BRACKET.rawValue)
 
 		 	}
 
-		 	setState(103)
+		 	setState(101)
 		 	try match(SailParser.Tokens.ASSIGN.rawValue)
-		 	setState(106)
+		 	setState(104)
 		 	try _errHandler.sync(self)
 		 	switch (SailParser.Tokens(rawValue: try _input.LA(1))!) {
 		 	case .MINUS:fallthrough
@@ -510,20 +503,20 @@ open class SailParser: Parser {
 		 	case .CONSTANT_FLOAT:fallthrough
 		 	case .CONSTANT_BOOLEAN:fallthrough
 		 	case .IDENTIFIER:
-		 		setState(104)
+		 		setState(102)
 		 		try logicExp()
 
 		 		break
 		 	case .CONSTANT_CHAR:fallthrough
 		 	case .CONSTANT_STRING:
-		 		setState(105)
+		 		setState(103)
 		 		try letterLiteral()
 
 		 		break
 		 	default:
 		 		throw ANTLRException.recognition(e: NoViableAltException(self))
 		 	}
-		 	setState(108)
+		 	setState(106)
 		 	try match(SailParser.Tokens.SEMICOLON.rawValue)
 
 		}
@@ -600,19 +593,19 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(110)
+		 	setState(108)
 		 	try match(SailParser.Tokens.IF.rawValue)
-		 	setState(111)
+		 	setState(109)
 		 	try match(SailParser.Tokens.OPEN_PARENTHESIS.rawValue)
-		 	setState(112)
+		 	setState(110)
 		 	try logicExp()
-		 	setState(113)
+		 	setState(111)
 		 	try match(SailParser.Tokens.CLOSE_PARENTHESIS.rawValue)
-		 	setState(114)
+		 	setState(112)
 		 	try conditionAction()
-		 	setState(115)
+		 	setState(113)
 		 	try block()
-		 	setState(120)
+		 	setState(118)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -620,11 +613,11 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.ELSE.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(116)
+		 		setState(114)
 		 		try conditionElseAction()
-		 		setState(117)
+		 		setState(115)
 		 		try match(SailParser.Tokens.ELSE.rawValue)
-		 		setState(118)
+		 		setState(116)
 		 		try block()
 
 		 	}
@@ -750,19 +743,19 @@ open class SailParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(128)
+		 	setState(126)
 		 	try _errHandler.sync(self)
 		 	switch (SailParser.Tokens(rawValue: try _input.LA(1))!) {
 		 	case .FOR:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(126)
+		 		setState(124)
 		 		try forStmt()
 
 		 		break
 
 		 	case .WHILE:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(127)
+		 		setState(125)
 		 		try whileStmt()
 
 		 		break
@@ -838,23 +831,23 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(130)
+		 	setState(128)
 		 	try match(SailParser.Tokens.FOR.rawValue)
-		 	setState(131)
+		 	setState(129)
 		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
-		 	setState(132)
+		 	setState(130)
 		 	try match(SailParser.Tokens.IN.rawValue)
+		 	setState(131)
+		 	try expression()
+		 	setState(132)
+		 	try forStride()
 		 	setState(133)
 		 	try expression()
 		 	setState(134)
-		 	try forStride()
+		 	try match(SailParser.Tokens.BY.rawValue)
 		 	setState(135)
 		 	try expression()
 		 	setState(136)
-		 	try match(SailParser.Tokens.BY.rawValue)
-		 	setState(137)
-		 	try expression()
-		 	setState(138)
 		 	try block()
 
 		}
@@ -903,7 +896,7 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(140)
+		 	setState(138)
 		 	_la = try _input.LA(1)
 		 	if (!(//closure
 		 	 { () -> Bool in
@@ -978,17 +971,17 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(142)
+		 	setState(140)
 		 	try match(SailParser.Tokens.WHILE.rawValue)
-		 	setState(143)
+		 	setState(141)
 		 	try match(SailParser.Tokens.OPEN_PARENTHESIS.rawValue)
-		 	setState(144)
+		 	setState(142)
 		 	try logicExp()
-		 	setState(145)
+		 	setState(143)
 		 	try match(SailParser.Tokens.CLOSE_PARENTHESIS.rawValue)
-		 	setState(146)
+		 	setState(144)
 		 	try conditionAction()
-		 	setState(147)
+		 	setState(145)
 		 	try block()
 
 		}
@@ -1056,33 +1049,33 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(149)
+		 	setState(147)
 		 	try match(SailParser.Tokens.PRINT.rawValue)
-		 	setState(150)
+		 	setState(148)
 		 	try match(SailParser.Tokens.OPEN_PARENTHESIS.rawValue)
-		 	setState(154)
+		 	setState(152)
 		 	try _errHandler.sync(self)
 		 	switch(try getInterpreter().adaptivePredict(_input,8, _ctx)) {
 		 	case 1:
-		 		setState(151)
+		 		setState(149)
 		 		try logicExp()
 
 		 		break
 		 	case 2:
-		 		setState(152)
+		 		setState(150)
 		 		try letterLiteral()
 
 		 		break
 		 	case 3:
-		 		setState(153)
+		 		setState(151)
 		 		try call()
 
 		 		break
 		 	default: break
 		 	}
-		 	setState(156)
+		 	setState(154)
 		 	try match(SailParser.Tokens.CLOSE_PARENTHESIS.rawValue)
-		 	setState(157)
+		 	setState(155)
 		 	try match(SailParser.Tokens.SEMICOLON.rawValue)
 
 		}
@@ -1155,11 +1148,11 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(159)
+		 	setState(157)
 		 	try match(SailParser.Tokens.VAR.rawValue)
-		 	setState(160)
+		 	setState(158)
 		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
-		 	setState(164)
+		 	setState(162)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -1167,20 +1160,20 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.OPEN_BRACKET.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(161)
+		 		setState(159)
 		 		try match(SailParser.Tokens.OPEN_BRACKET.rawValue)
-		 		setState(162)
+		 		setState(160)
 		 		try match(SailParser.Tokens.CONSTANT_INT.rawValue)
-		 		setState(163)
+		 		setState(161)
 		 		try match(SailParser.Tokens.CLOSE_BRACKET.rawValue)
 
 		 	}
 
-		 	setState(166)
+		 	setState(164)
 		 	try match(SailParser.Tokens.COLON.rawValue)
-		 	setState(167)
+		 	setState(165)
 		 	try type()
-		 	setState(168)
+		 	setState(166)
 		 	try match(SailParser.Tokens.SEMICOLON.rawValue)
 
 		}
@@ -1241,7 +1234,7 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(170)
+		 	setState(168)
 		 	_la = try _input.LA(1)
 		 	if (!(//closure
 		 	 { () -> Bool in
@@ -1322,12 +1315,16 @@ open class SailParser: Parser {
 				return getToken(SailParser.Tokens.RETURN.rawValue, 0)
 			}
 			open
-			func literal() -> LiteralContext? {
-				return getRuleContext(LiteralContext.self, 0)
-			}
-			open
 			func SEMICOLON() -> TerminalNode? {
 				return getToken(SailParser.Tokens.SEMICOLON.rawValue, 0)
+			}
+			open
+			func logicExp() -> LogicExpContext? {
+				return getRuleContext(LogicExpContext.self, 0)
+			}
+			open
+			func letterLiteral() -> LetterLiteralContext? {
+				return getRuleContext(LetterLiteralContext.self, 0)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -1356,13 +1353,13 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(172)
+		 	setState(170)
 		 	try match(SailParser.Tokens.FUNC.rawValue)
-		 	setState(173)
+		 	setState(171)
 		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
-		 	setState(174)
+		 	setState(172)
 		 	try match(SailParser.Tokens.OPEN_PARENTHESIS.rawValue)
-		 	setState(176)
+		 	setState(174)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -1370,16 +1367,16 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.IDENTIFIER.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(175)
+		 		setState(173)
 		 		try parameters()
 
 		 	}
 
-		 	setState(178)
+		 	setState(176)
 		 	try match(SailParser.Tokens.CLOSE_PARENTHESIS.rawValue)
-		 	setState(179)
+		 	setState(177)
 		 	try match(SailParser.Tokens.ARROW.rawValue)
-		 	setState(182)
+		 	setState(180)
 		 	try _errHandler.sync(self)
 		 	switch (SailParser.Tokens(rawValue: try _input.LA(1))!) {
 		 	case .INT:fallthrough
@@ -1387,22 +1384,22 @@ open class SailParser: Parser {
 		 	case .BOOL:fallthrough
 		 	case .CHARACTER:fallthrough
 		 	case .STRING:
-		 		setState(180)
+		 		setState(178)
 		 		try type()
 
 		 		break
 
 		 	case .VOID:
-		 		setState(181)
+		 		setState(179)
 		 		try match(SailParser.Tokens.VOID.rawValue)
 
 		 		break
 		 	default:
 		 		throw ANTLRException.recognition(e: NoViableAltException(self))
 		 	}
-		 	setState(184)
+		 	setState(182)
 		 	try match(SailParser.Tokens.OPEN_CURLY.rawValue)
-		 	setState(188)
+		 	setState(186)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	while (//closure
@@ -1413,15 +1410,15 @@ open class SailParser: Parser {
 		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(185)
+		 		setState(183)
 		 		try statement()
 
 
-		 		setState(190)
+		 		setState(188)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 	}
-		 	setState(195)
+		 	setState(196)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -1429,16 +1426,36 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.RETURN.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(191)
+		 		setState(189)
 		 		try match(SailParser.Tokens.RETURN.rawValue)
 		 		setState(192)
-		 		try literal()
-		 		setState(193)
+		 		try _errHandler.sync(self)
+		 		switch (SailParser.Tokens(rawValue: try _input.LA(1))!) {
+		 		case .MINUS:fallthrough
+		 		case .OPEN_PARENTHESIS:fallthrough
+		 		case .CONSTANT_INT:fallthrough
+		 		case .CONSTANT_FLOAT:fallthrough
+		 		case .CONSTANT_BOOLEAN:fallthrough
+		 		case .IDENTIFIER:
+		 			setState(190)
+		 			try logicExp()
+
+		 			break
+		 		case .CONSTANT_CHAR:fallthrough
+		 		case .CONSTANT_STRING:
+		 			setState(191)
+		 			try letterLiteral()
+
+		 			break
+		 		default:
+		 			throw ANTLRException.recognition(e: NoViableAltException(self))
+		 		}
+		 		setState(194)
 		 		try match(SailParser.Tokens.SEMICOLON.rawValue)
 
 		 	}
 
-		 	setState(197)
+		 	setState(198)
 		 	try match(SailParser.Tokens.CLOSE_CURLY.rawValue)
 
 		}
@@ -1495,9 +1512,9 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(199)
+		 	setState(200)
 		 	try parameter()
-		 	setState(204)
+		 	setState(205)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	while (//closure
@@ -1505,13 +1522,13 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.COMMA.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(200)
-		 		try match(SailParser.Tokens.COMMA.rawValue)
 		 		setState(201)
+		 		try match(SailParser.Tokens.COMMA.rawValue)
+		 		setState(202)
 		 		try parameter()
 
 
-		 		setState(206)
+		 		setState(207)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 	}
@@ -1565,11 +1582,11 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(207)
-		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
 		 	setState(208)
-		 	try match(SailParser.Tokens.COLON.rawValue)
+		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
 		 	setState(209)
+		 	try match(SailParser.Tokens.COLON.rawValue)
+		 	setState(210)
 		 	try type()
 
 		}
@@ -1594,6 +1611,10 @@ open class SailParser: Parser {
 			open
 			func CLOSE_PARENTHESIS() -> TerminalNode? {
 				return getToken(SailParser.Tokens.CLOSE_PARENTHESIS.rawValue, 0)
+			}
+			open
+			func SEMICOLON() -> TerminalNode? {
+				return getToken(SailParser.Tokens.SEMICOLON.rawValue, 0)
 			}
 			open
 			func expression() -> [ExpressionContext] {
@@ -1638,11 +1659,11 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(211)
-		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
 		 	setState(212)
+		 	try match(SailParser.Tokens.IDENTIFIER.rawValue)
+		 	setState(213)
 		 	try match(SailParser.Tokens.OPEN_PARENTHESIS.rawValue)
-		 	setState(221)
+		 	setState(222)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -1653,9 +1674,9 @@ open class SailParser: Parser {
 		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(213)
+		 		setState(214)
 		 		try expression()
-		 		setState(218)
+		 		setState(219)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		while (//closure
@@ -1663,21 +1684,23 @@ open class SailParser: Parser {
 		 		      let testSet: Bool = _la == SailParser.Tokens.COMMA.rawValue
 		 		      return testSet
 		 		 }()) {
-		 			setState(214)
-		 			try match(SailParser.Tokens.COMMA.rawValue)
 		 			setState(215)
+		 			try match(SailParser.Tokens.COMMA.rawValue)
+		 			setState(216)
 		 			try expression()
 
 
-		 			setState(220)
+		 			setState(221)
 		 			try _errHandler.sync(self)
 		 			_la = try _input.LA(1)
 		 		}
 
 		 	}
 
-		 	setState(223)
+		 	setState(224)
 		 	try match(SailParser.Tokens.CLOSE_PARENTHESIS.rawValue)
+		 	setState(225)
+		 	try match(SailParser.Tokens.SEMICOLON.rawValue)
 
 		}
 		catch ANTLRException.recognition(let re) {
@@ -1725,9 +1748,9 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(225)
-		 	try relationalExp()
 		 	setState(227)
+		 	try relationalExp()
+		 	setState(229)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -1735,7 +1758,7 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.AND.rawValue || _la == SailParser.Tokens.OR.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(226)
+		 		setState(228)
 		 		try logicExpP()
 
 		 	}
@@ -1791,7 +1814,7 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(229)
+		 	setState(231)
 		 	_la = try _input.LA(1)
 		 	if (!(//closure
 		 	 { () -> Bool in
@@ -1804,7 +1827,7 @@ open class SailParser: Parser {
 		 		_errHandler.reportMatch(self)
 		 		try consume()
 		 	}
-		 	setState(230)
+		 	setState(232)
 		 	try logicExp()
 
 		}
@@ -1853,9 +1876,9 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(232)
-		 	try expression()
 		 	setState(234)
+		 	try expression()
+		 	setState(236)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -1866,7 +1889,7 @@ open class SailParser: Parser {
 		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(233)
+		 		setState(235)
 		 		try relationalExpP()
 
 		 	}
@@ -1917,9 +1940,9 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(236)
+		 	setState(238)
 		 	try relationalOp()
-		 	setState(237)
+		 	setState(239)
 		 	try relationalExp()
 
 		}
@@ -1984,7 +2007,7 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(239)
+		 	setState(241)
 		 	_la = try _input.LA(1)
 		 	if (!(//closure
 		 	 { () -> Bool in
@@ -2047,9 +2070,9 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(241)
-		 	try term()
 		 	setState(243)
+		 	try term()
+		 	setState(245)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -2057,7 +2080,7 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.MINUS.rawValue || _la == SailParser.Tokens.PLUS.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(242)
+		 		setState(244)
 		 		try expressionP()
 
 		 	}
@@ -2113,7 +2136,7 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(245)
+		 	setState(247)
 		 	_la = try _input.LA(1)
 		 	if (!(//closure
 		 	 { () -> Bool in
@@ -2126,7 +2149,7 @@ open class SailParser: Parser {
 		 		_errHandler.reportMatch(self)
 		 		try consume()
 		 	}
-		 	setState(246)
+		 	setState(248)
 		 	try expression()
 
 		}
@@ -2175,9 +2198,9 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(248)
-		 	try factor()
 		 	setState(250)
+		 	try factor()
+		 	setState(252)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -2185,7 +2208,7 @@ open class SailParser: Parser {
 		 	      let testSet: Bool = _la == SailParser.Tokens.DIVISION.rawValue || _la == SailParser.Tokens.MULTIPLICATION.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(249)
+		 		setState(251)
 		 		try termP()
 
 		 	}
@@ -2241,7 +2264,7 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(252)
+		 	setState(254)
 		 	_la = try _input.LA(1)
 		 	if (!(//closure
 		 	 { () -> Bool in
@@ -2254,7 +2277,7 @@ open class SailParser: Parser {
 		 		_errHandler.reportMatch(self)
 		 		try consume()
 		 	}
-		 	setState(253)
+		 	setState(255)
 		 	try term()
 
 		}
@@ -2309,7 +2332,7 @@ open class SailParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(260)
+		 	setState(262)
 		 	try _errHandler.sync(self)
 		 	switch (SailParser.Tokens(rawValue: try _input.LA(1))!) {
 		 	case .MINUS:fallthrough
@@ -2318,18 +2341,18 @@ open class SailParser: Parser {
 		 	case .CONSTANT_BOOLEAN:fallthrough
 		 	case .IDENTIFIER:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(255)
+		 		setState(257)
 		 		try varLiteral()
 
 		 		break
 
 		 	case .OPEN_PARENTHESIS:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(256)
-		 		try match(SailParser.Tokens.OPEN_PARENTHESIS.rawValue)
-		 		setState(257)
-		 		try logicExp()
 		 		setState(258)
+		 		try match(SailParser.Tokens.OPEN_PARENTHESIS.rawValue)
+		 		setState(259)
+		 		try logicExp()
+		 		setState(260)
 		 		try match(SailParser.Tokens.CLOSE_PARENTHESIS.rawValue)
 
 
@@ -2381,7 +2404,7 @@ open class SailParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(264)
+		 	setState(266)
 		 	try _errHandler.sync(self)
 		 	switch (SailParser.Tokens(rawValue: try _input.LA(1))!) {
 		 	case .MINUS:fallthrough
@@ -2390,14 +2413,14 @@ open class SailParser: Parser {
 		 	case .CONSTANT_BOOLEAN:fallthrough
 		 	case .IDENTIFIER:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(262)
+		 		setState(264)
 		 		try varLiteral()
 
 		 		break
 		 	case .CONSTANT_CHAR:fallthrough
 		 	case .CONSTANT_STRING:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(263)
+		 		setState(265)
 		 		try letterLiteral()
 
 		 		break
@@ -2461,18 +2484,18 @@ open class SailParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(276)
+		 	setState(278)
 		 	try _errHandler.sync(self)
-		 	switch(try getInterpreter().adaptivePredict(_input,25, _ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,26, _ctx)) {
 		 	case 1:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(266)
+		 		setState(268)
 		 		try match(SailParser.Tokens.IDENTIFIER.rawValue)
 
 		 		break
 		 	case 2:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(268)
+		 		setState(270)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		if (//closure
@@ -2480,18 +2503,18 @@ open class SailParser: Parser {
 		 		      let testSet: Bool = _la == SailParser.Tokens.MINUS.rawValue
 		 		      return testSet
 		 		 }()) {
-		 			setState(267)
+		 			setState(269)
 		 			try match(SailParser.Tokens.MINUS.rawValue)
 
 		 		}
 
-		 		setState(270)
+		 		setState(272)
 		 		try match(SailParser.Tokens.CONSTANT_INT.rawValue)
 
 		 		break
 		 	case 3:
 		 		try enterOuterAlt(_localctx, 3)
-		 		setState(272)
+		 		setState(274)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		if (//closure
@@ -2499,18 +2522,18 @@ open class SailParser: Parser {
 		 		      let testSet: Bool = _la == SailParser.Tokens.MINUS.rawValue
 		 		      return testSet
 		 		 }()) {
-		 			setState(271)
+		 			setState(273)
 		 			try match(SailParser.Tokens.MINUS.rawValue)
 
 		 		}
 
-		 		setState(274)
+		 		setState(276)
 		 		try match(SailParser.Tokens.CONSTANT_FLOAT.rawValue)
 
 		 		break
 		 	case 4:
 		 		try enterOuterAlt(_localctx, 4)
-		 		setState(275)
+		 		setState(277)
 		 		try match(SailParser.Tokens.CONSTANT_BOOLEAN.rawValue)
 
 		 		break
@@ -2562,7 +2585,7 @@ open class SailParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(278)
+		 	setState(280)
 		 	_la = try _input.LA(1)
 		 	if (!(//closure
 		 	 { () -> Bool in

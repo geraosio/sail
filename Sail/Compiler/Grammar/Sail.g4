@@ -20,7 +20,7 @@ program             : declaration* SAIL block EOF ;
 
 declaration         : variable | function ;
 block               : OPEN_CURLY statement* CLOSE_CURLY ;
-statement           : assignment | condition | loop | printStmt | (call SEMICOLON) ;
+statement           : assignment | condition | loop | printStmt | call ;
 
 assignment          : IDENTIFIER (OPEN_BRACKET expression CLOSE_BRACKET)? ASSIGN (logicExp | letterLiteral) SEMICOLON ;
 
@@ -38,11 +38,11 @@ printStmt           : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral | call) C
 variable            : VAR IDENTIFIER (OPEN_BRACKET CONSTANT_INT CLOSE_BRACKET)? COLON type SEMICOLON ;
 type                : BOOL | INT | FLOAT | CHARACTER | STRING ;
 
-function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTHESIS ARROW (type | VOID) OPEN_CURLY statement* (RETURN literal SEMICOLON)? CLOSE_CURLY ;
+function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTHESIS ARROW (type | VOID) OPEN_CURLY statement* (RETURN (logicExp | letterLiteral) SEMICOLON)? CLOSE_CURLY ;
 parameters          : parameter (COMMA parameter)* ;
 parameter           : IDENTIFIER COLON type ;
 
-call                : IDENTIFIER OPEN_PARENTHESIS (expression (COMMA expression)*)? CLOSE_PARENTHESIS ;
+call                : IDENTIFIER OPEN_PARENTHESIS (expression (COMMA expression)*)? CLOSE_PARENTHESIS SEMICOLON;
 
 // Expression
 

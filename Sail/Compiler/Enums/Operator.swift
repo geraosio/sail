@@ -43,6 +43,13 @@ enum Operator: String {
     case gotoFalse          = "gotof"
     case gotoTrue           = "gotot"
     
+    // MARK: - Functions
+    case era                = "era"
+    case parameter          = "param"
+    case gosub              = "gosub"
+    case returnValue        = "return"
+    case endFunction        = "endFunction"
+    
     // MARK: - End of Program
     case end                = "end"
     

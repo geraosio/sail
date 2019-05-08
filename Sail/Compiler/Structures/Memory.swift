@@ -85,8 +85,6 @@ class Memory {
         }
     }
     
-    // MARK: Constants
-    
     func save(bool: Bool? = nil, character: Character? = nil, float: Float? = nil, int: Int? = nil, string: String? = nil) -> Int {
         
         if let boolValue = bool {
@@ -108,6 +106,8 @@ class Memory {
             return -1
         }
     }
+    
+    // MARK: Constants
     
     func findConstant(bool: Bool) -> Int? {
         

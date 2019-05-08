@@ -13,13 +13,26 @@ class NavigatorListener: SailBaseListener {
     
     let navigator = Navigator.shared
     
-    override func enterProgram(_ ctx: SailParser.ProgramContext) { }
+    override func enterProgram(_ ctx: SailParser.ProgramContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let quadruple = Quadruple(op: .goto)
+        navigator.quadruples.append(quadruple)
+        
+        // Save quadruple to fill it with the beginning quadruples of the main function
+        navigator.jumps.append(navigator.quadruples.count - 1)
+    }
     
     override func exitProgram(_ ctx: SailParser.ProgramContext) {
         
         guard navigator.errors.isEmpty else { return }
         
-        let endQuadruple = Quadruple(op: .end, left: nil, right: nil, result: nil)
+        if let pendingJump = navigator.jumps.popLast() {
+            navigator.quadruples[pendingJump].result = navigator.quadruples.count
+        }
+        
+        let endQuadruple = Quadruple(op: .end)
         navigator.quadruples.append(endQuadruple)
         
         navigator.printQuadruples()
@@ -28,20 +41,22 @@ class NavigatorListener: SailBaseListener {
     override func enterDeclaration(_ ctx: SailParser.DeclarationContext) { }
     override func exitDeclaration(_ ctx: SailParser.DeclarationContext) { }
     
-    override func enterBlock(_ ctx: SailParser.BlockContext) { }
+    override func enterBlock(_ ctx: SailParser.BlockContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        // If it's the beginning of the main fill the first goto with the current quadruple count
+        if (ctx.parent as? SailParser.ProgramContext) != nil {
+            guard let firstGotoIndex = navigator.jumps.popLast() else {
+                return
+            }
+            
+            navigator.quadruples[firstGotoIndex].result = navigator.quadruples.count
+        }
+    }
     override func exitBlock(_ ctx: SailParser.BlockContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterStatement(_ ctx: SailParser.StatementContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitStatement(_ ctx: SailParser.StatementContext) { }
     
     override func enterAssignment(_ ctx: SailParser.AssignmentContext) {
@@ -133,10 +148,10 @@ class NavigatorListener: SailBaseListener {
     override func exitLoop(_ ctx: SailParser.LoopContext) { }
     
     override func enterForStmt(_ ctx: SailParser.ForStmtContext) {
-        // TODO: Implement For
+        // TODO: Implement For Statement
     }
     override func exitForStmt(_ ctx: SailParser.ForStmtContext) {
-        // TODO: Implement For
+        // TODO: Implement For Statement
     }
     
     override func enterForStride(_ ctx: SailParser.ForStrideContext) { }
@@ -208,69 +223,119 @@ class NavigatorListener: SailBaseListener {
     }
     override func exitVariable(_ ctx: SailParser.VariableContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterType(_ ctx: SailParser.TypeContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitType(_ ctx: SailParser.TypeContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterFunction(_ ctx: SailParser.FunctionContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func exitFunction(_ ctx: SailParser.FunctionContext) { }
+    override func enterFunction(_ ctx: SailParser.FunctionContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let functionName = ctx.IDENTIFIER()?.getText()
+        
+        guard navigator.functionTable[functionName!] == nil else {
+            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Function \"\(functionName!)\" already defined")
+            navigator.errors.append(error)
+            return
+        }
+        
+        guard navigator.currentFunction.getVariable(name: functionName!) == nil else {
+            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(functionName!)\" is a variable")
+            navigator.errors.append(error)
+            return
+        }
+        
+        navigator.localMemory.clear()
+        
+        var functionReturnType: DataType
+        
+        if ctx.VOID() != nil {
+            functionReturnType = .void
+        } else {
+            functionReturnType = navigator.getDataType(from: ctx.type()!)
+        }
+        
+        let startQuadrupleIndex = navigator.quadruples.count
+        
+        let function = Function(name: functionName!, hasParameters: true, returnType: functionReturnType, quadrupleIndex: startQuadrupleIndex)
+        
+        navigator.currentFunction = function
+        navigator.functionTable.updateValue(function, forKey: function.name)
+        
+        let functionVariableAddress = navigator.globalMemory.getAddress(for: functionReturnType)
+        let functionVariable = Variable(name: functionName!, type: functionReturnType, address: functionVariableAddress)
+        navigator.globalFunction.save(variable: functionVariable)
+    }
+    override func exitFunction(_ ctx: SailParser.FunctionContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let functionName = ctx.IDENTIFIER()?.getText()
+        
+        if ctx.RETURN() != nil {
+            guard let typeNode = ctx.type() else {
+                let error = NavigatorError(type: .semantic, atLine: ctx.RETURN()?.getSymbol()?.getLine(), positionInLine: ctx.RETURN()?.getSymbol()?.getCharPositionInLine(), description: "Function declared as Void can not return a value, try changing the return type to any other than Void or delete the return statement.")
+                navigator.errors.append(error)
+                return
+            }
+            
+            let returnFunctionDataType = navigator.getDataType(from: typeNode)
+            let returnValueAddress = navigator.operands.popLast()!
+            let returnValueDataType = navigator.operandDataTypes.popLast()!
+            
+            guard returnFunctionDataType == returnValueDataType else {
+                let error = NavigatorError(type: .semantic, atLine: ctx.RETURN()?.getSymbol()?.getLine(), positionInLine: ctx.RETURN()?.getSymbol()?.getCharPositionInLine(), description: "Return type must be the same as defined in function \"\(functionName!)\". Return value type is \(returnValueDataType.string) and it is defined in the function as \(returnFunctionDataType.string).")
+                navigator.errors.append(error)
+                return
+            }
+            
+            let quadruple = Quadruple(op: .returnValue, left: nil, right: nil, result: returnValueAddress)
+            navigator.quadruples.append(quadruple)
+        } else {
+            guard ctx.VOID() != nil else {
+                let error = NavigatorError(type: .semantic, atLine: ctx.CLOSE_CURLY()?.getSymbol()?.getLine(), positionInLine: ctx.CLOSE_CURLY()?.getSymbol()?.getCharPositionInLine(), description: "Missing a return statement in function \(functionName!).")
+                navigator.errors.append(error)
+                return
+            }
+        }
+        
+        navigator.currentFunction = navigator.globalFunction
+        
+        let quadruple = Quadruple(op: .endFunction)
+        navigator.quadruples.append(quadruple)
+    }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterParameters(_ ctx: SailParser.ParametersContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitParameters(_ ctx: SailParser.ParametersContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterParameter(_ ctx: SailParser.ParameterContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
+    override func enterParameter(_ ctx: SailParser.ParameterContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let parameterName = ctx.IDENTIFIER()?.getText()
+        let parameterType = navigator.getDataType(from: ctx.type()!)
+        
+        guard navigator.getVariable(name: parameterName!) == nil else {
+            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Variable \"\(parameterName!)\" already exists")
+            navigator.errors.append(error)
+            return
+        }
+        
+        do {
+            let parameterAddress = try navigator.getAddress(for: parameterType)
+            
+            let variable = Variable(name: parameterName!, type: parameterType, address: parameterAddress)
+            
+            navigator.currentFunction.save(variable: variable)
+        } catch let error as NavigatorError {
+            error.atLine = ctx.getStart()?.getLine()
+            error.positionInLine = ctx.getStart()?.getCharPositionInLine()
+            navigator.errors.append(error)
+            return
+        } catch { }
+    }
     override func exitParameter(_ ctx: SailParser.ParameterContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterCall(_ ctx: SailParser.CallContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitCall(_ ctx: SailParser.CallContext) { }
     
     override func enterLogicExp(_ ctx: SailParser.LogicExpContext) { }
@@ -419,7 +484,7 @@ class NavigatorListener: SailBaseListener {
         
         if let id = ctx.varLiteral()?.IDENTIFIER() {
             guard let variable = navigator.getVariable(name: id.getText()) else {
-                let error = NavigatorError(type: .compile, atLine: id.getSymbol()?.getLine() ?? 0, positionInLine: id.getSymbol()?.getCharPositionInLine() ?? 0, description: "\"\(id.getText())\" not declared")
+                let error = NavigatorError(type: .compile, atLine: id.getSymbol()?.getLine(), positionInLine: id.getSymbol()?.getCharPositionInLine(), description: "\"\(id.getText())\" not declared")
                 navigator.errors.append(error)
                 return
             }

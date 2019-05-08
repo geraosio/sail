@@ -21,6 +21,11 @@ class EditorViewController: UIViewController {
         editorTextView.text =
         """
         var x: Int;
+        
+        func addOne(a: Int) -> Int {
+            return a + 1;
+        }
+        
         sail {
             x = 1;
             while (x < 5) {

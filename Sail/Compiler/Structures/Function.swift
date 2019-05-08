@@ -16,12 +16,13 @@ class Function {
     var parameters: [String: Variable]?
     var variables: [String: Variable]?
     var returnType: DataType?
+    var quadrupleIndex: Int?
     
     
     
     // MARK: - Initializers
     
-    init(name: String, hasParameters: Bool = false, returnType: DataType? = nil) {
+    init(name: String, hasParameters: Bool = false, returnType: DataType? = nil, quadrupleIndex: Int? = nil) {
         
         self.name = name
         
@@ -33,6 +34,7 @@ class Function {
         }
         
         self.returnType = returnType
+        self.quadrupleIndex = quadrupleIndex
     }
     
     
@@ -61,10 +63,5 @@ class Function {
         } else {
             parameters?.updateValue(variable, forKey: variable.name)
         }
-    }
-    
-    // MARK: Operator Overloading
-    static func ==(left: Function, right: Function) -> Bool {
-        return left.name == right.name
     }
 }
