@@ -132,30 +132,14 @@ class NavigatorListener: SailBaseListener {
     override func enterLoop(_ ctx: SailParser.LoopContext) { }
     override func exitLoop(_ ctx: SailParser.LoopContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterForStmt(_ ctx: SailParser.ForStmtContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func exitForStmt(_ ctx: SailParser.ForStmtContext) { }
+    override func enterForStmt(_ ctx: SailParser.ForStmtContext) {
+        // TODO: Implement For
+    }
+    override func exitForStmt(_ ctx: SailParser.ForStmtContext) {
+        // TODO: Implement For
+    }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterForStride(_ ctx: SailParser.ForStrideContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitForStride(_ ctx: SailParser.ForStrideContext) { }
     
     override func enterWhileStmt(_ ctx: SailParser.WhileStmtContext) {
