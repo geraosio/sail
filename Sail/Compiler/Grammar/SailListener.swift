@@ -79,6 +79,30 @@ public protocol SailListener: ParseTreeListener {
 	 */
 	func exitCondition(_ ctx: SailParser.ConditionContext)
 	/**
+	 * Enter a parse tree produced by {@link SailParser#conditionAction}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func enterConditionAction(_ ctx: SailParser.ConditionActionContext)
+	/**
+	 * Exit a parse tree produced by {@link SailParser#conditionAction}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func exitConditionAction(_ ctx: SailParser.ConditionActionContext)
+	/**
+	 * Enter a parse tree produced by {@link SailParser#conditionElseAction}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func enterConditionElseAction(_ ctx: SailParser.ConditionElseActionContext)
+	/**
+	 * Exit a parse tree produced by {@link SailParser#conditionElseAction}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func exitConditionElseAction(_ ctx: SailParser.ConditionElseActionContext)
+	/**
 	 * Enter a parse tree produced by {@link SailParser#loop}.
 	 - Parameters:
 	   - ctx: the parse tree

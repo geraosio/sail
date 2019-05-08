@@ -16,6 +16,9 @@ class NavigatorListener: SailBaseListener {
     override func enterProgram(_ ctx: SailParser.ProgramContext) { }
     
     override func exitProgram(_ ctx: SailParser.ProgramContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
         let endQuadruple = Quadruple(op: .end, left: nil, right: nil, result: nil)
         navigator.quadruples.append(endQuadruple)
         
@@ -43,6 +46,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterAssignment(_ ctx: SailParser.AssignmentContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         if let idNode = ctx.IDENTIFIER() {
             let variableName = idNode.getText()
             
@@ -62,6 +67,8 @@ class NavigatorListener: SailBaseListener {
     }
     override func exitAssignment(_ ctx: SailParser.AssignmentContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         let resultAddress = navigator.operands.popLast()!
         let resultDataType = navigator.operandDataTypes.popLast()!
         let idAddress = navigator.operands.popLast()!
@@ -79,18 +86,48 @@ class NavigatorListener: SailBaseListener {
         }
     }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterCondition(_ ctx: SailParser.ConditionContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func exitCondition(_ ctx: SailParser.ConditionContext) { }
+    override func exitCondition(_ ctx: SailParser.ConditionContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        // Get the pending jump quadruple index
+        let endConditionJumpIndex = navigator.jumps.popLast()!
+        // Fill in the result address property of the quadruple with the last quadruple index
+        navigator.quadruples[endConditionJumpIndex].result = navigator.quadruples.count
+    }
+    
+    override func enterConditionAction(_ ctx: SailParser.ConditionActionContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let expressionType = navigator.operandDataTypes.popLast()
+        
+        if expressionType != .bool {
+            let ctxParent = ctx.parent as! SailParser.ConditionContext
+            let error = NavigatorError(type: .compile, atLine: ctxParent.CLOSE_PARENTHESIS()?.getSymbol()?.getLine(), positionInLine: ctxParent.CLOSE_PARENTHESIS()?.getSymbol()?.getCharPositionInLine(), description: "Conditional expression data type is a(n) \(expressionType!.string), it must be a Bool")
+            navigator.errors.append(error)
+            return
+        }
+        
+        let expressionResult = navigator.operands.popLast()
+        let quadruple = Quadruple(op: .gotoFalse, left: expressionResult, right: nil, result: nil)
+        navigator.jumps.append(navigator.quadruples.count)
+        navigator.quadruples.append(quadruple)
+    }
+    override func exitConditionAction(_ ctx: SailParser.ConditionActionContext) { }
+    
+    override func enterConditionElseAction(_ ctx: SailParser.ConditionElseActionContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let quadruple = Quadruple(op: .goto)
+        let falseJumpIndex = navigator.jumps.popLast()!
+        navigator.jumps.append(navigator.quadruples.count)
+        navigator.quadruples.append(quadruple)
+        navigator.quadruples[falseJumpIndex].result = navigator.quadruples.count
+    }
+    override func exitConditionElseAction(_ ctx: SailParser.ConditionElseActionContext) { }
     
     /**
      * {@inheritDoc}
@@ -147,6 +184,8 @@ class NavigatorListener: SailBaseListener {
     override func enterPrintStmt(_ ctx: SailParser.PrintStmtContext) { }
     override func exitPrintStmt(_ ctx: SailParser.PrintStmtContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         let printOperandAddress = navigator.operands.popLast()
         _ = navigator.operandDataTypes.popLast()
         
@@ -155,6 +194,8 @@ class NavigatorListener: SailBaseListener {
     }
     
     override func enterVariable(_ ctx: SailParser.VariableContext) {
+        
+        guard navigator.errors.isEmpty else { return }
         
         let variableName = ctx.IDENTIFIER()!.getText()
         
@@ -256,6 +297,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterLogicExpP(_ ctx: SailParser.LogicExpPContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         if ctx.AND() != nil {
             navigator.operators.append(.and)
         }
@@ -268,6 +311,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterRelationalExp(_ ctx: SailParser.RelationalExpContext) { }
     override func exitRelationalExp(_ ctx: SailParser.RelationalExpContext) {
+        
+        guard navigator.errors.isEmpty else { return }
         
         if let lastOperator = navigator.operators.last {
             switch lastOperator {
@@ -291,6 +336,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterRelationalOp(_ ctx: SailParser.RelationalOpContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         if ctx.EQUAL() != nil {
             navigator.operators.append(.equal)
         } else if ctx.EQUAL_GREATER_THAN() != nil {
@@ -309,6 +356,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterExpression(_ ctx: SailParser.ExpressionContext) { }
     override func exitExpression(_ ctx: SailParser.ExpressionContext) {
+        
+        guard navigator.errors.isEmpty else { return }
         
         if let lastOperator = navigator.operators.last {
             switch lastOperator {
@@ -329,6 +378,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterExpressionP(_ ctx: SailParser.ExpressionPContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         if ctx.PLUS() != nil {
             navigator.operators.append(.addition)
         }
@@ -341,6 +392,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterTerm(_ ctx: SailParser.TermContext) { }
     override func exitTerm(_ ctx: SailParser.TermContext) {
+        
+        guard navigator.errors.isEmpty else { return }
         
         if let lastOperator = navigator.operators.last {
             
@@ -362,6 +415,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterTermP(_ ctx: SailParser.TermPContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         if ctx.MULTIPLICATION() != nil {
             navigator.operators.append(.multiplication)
         }
@@ -374,6 +429,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterFactor(_ ctx: SailParser.FactorContext) { }
     override func exitFactor(_ ctx: SailParser.FactorContext) {
+        
+        guard navigator.errors.isEmpty else { return }
         
         if ctx.OPEN_PARENTHESIS() != nil {
             navigator.operators.append(.falseBottom)
@@ -415,6 +472,8 @@ class NavigatorListener: SailBaseListener {
     override func exitLiteral(_ ctx: SailParser.LiteralContext) { }
     
     override func enterVarLiteral(_ ctx: SailParser.VarLiteralContext) {
+        
+        guard navigator.errors.isEmpty else { return }
        
         if let boolNode = ctx.CONSTANT_BOOLEAN() {
             var bool: Bool
@@ -471,6 +530,8 @@ class NavigatorListener: SailBaseListener {
     
     override func enterLetterLiteral(_ ctx: SailParser.LetterLiteralContext) {
         
+        guard navigator.errors.isEmpty else { return }
+        
         if let characterNode = ctx.CONSTANT_CHAR() {
             var characterText = characterNode.getText()
             // Remove the open single quote
@@ -510,10 +571,9 @@ class NavigatorListener: SailBaseListener {
     
     
     override func enterEveryRule(_ ctx: ParserRuleContext) {
-        if !navigator.errors.isEmpty {
-            return
-        }
+        guard navigator.errors.isEmpty else { return }
     }
+    
     override func exitEveryRule(_ ctx: ParserRuleContext) { }
     
     override func visitTerminal(_ node: TerminalNode) { }

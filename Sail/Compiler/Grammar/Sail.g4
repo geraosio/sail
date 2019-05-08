@@ -24,7 +24,9 @@ statement           : assignment | condition | loop | printStmt | (call SEMICOLO
 
 assignment          : IDENTIFIER (OPEN_BRACKET expression CLOSE_BRACKET)? ASSIGN (logicExp | letterLiteral) SEMICOLON ;
 
-condition           : IF OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS block (ELSE block)? ;
+condition           : IF OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS conditionAction block (conditionElseAction ELSE block)? ;
+conditionAction     : ;
+conditionElseAction : ;
 
 loop                : forStmt | whileStmt ;
 forStmt             : FOR IDENTIFIER IN expression forStride expression BY expression block ;

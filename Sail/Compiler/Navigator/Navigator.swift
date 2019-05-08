@@ -28,10 +28,11 @@ class Navigator {
     var globalFunction: Function!
     var functionTable: [String: Function]!
     
-    // MARK: Expression Stacks
-    var operands: [Int]!                // PilaO
-    var operandDataTypes: [DataType]!   // PTypes
-    var operators: [Operator]!          // POper
+    // MARK: Code Generation Stacks
+    var operands: [Int]!                // PilaO as seen in class
+    var operandDataTypes: [DataType]!   // PTypes as seen in class
+    var operators: [Operator]!          // POper as seen in class
+    var jumps: [Int]!                   // PJumps as seen in class
     
     // MARK: Code Generation
     var quadruples: [Quadruple]!
@@ -104,6 +105,7 @@ class Navigator {
         operands = []
         operandDataTypes = []
         operators = []
+        jumps = []
         
         quadruples = []
         
@@ -144,6 +146,8 @@ extension Navigator {
         return .error
     }
     
+    // MARK: - Memory Management Helper Functionsß
+    
     func getAddress(for dataType: DataType) throws -> Int {
         
         var address: Int
@@ -180,7 +184,6 @@ extension Navigator {
     // MARK: - Quadruples
     
     func generateExpressionQuadruple() throws {
-        print("Entered generating expression quad")
         
         let rightOperand = operands.popLast()!
         let rightDataType = operandDataTypes.popLast()!
@@ -209,6 +212,7 @@ extension Navigator {
     
     func printQuadruples() {
         
+        print("")
         print("#".withCString{ String(format: "%-4s ", $0) }, "Operator".withCString{ String(format: "%-14s ", $0) }, "Left Address".withCString{ String(format: "%-14s ", $0) }, "Right Address".withCString{ String(format: "%-14s ", $0) }, "Result".withCString{ String(format: "%-14s", $0) })
         print("-------------------------------------------------------------")
         
@@ -224,6 +228,7 @@ extension Navigator {
             
             print(quadrupleNumberDescription.withCString{ String(format: "%-4s ", $0) }, quadruple.op.string.withCString{ String(format: "%-14s ", $0) }, leftOperand.withCString{ String(format: "%-14s ", $0) }, rightOperand.withCString{ String(format: "%-14s ", $0) }, result.withCString{ String(format: "%-14s", $0) })
         }
+        print("")
     }
     
     func debugExpressions() {

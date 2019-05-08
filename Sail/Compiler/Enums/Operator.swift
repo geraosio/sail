@@ -29,14 +29,24 @@ enum Operator: String {
     case greaterEqual       = ">="
     case lessEqual          = "<="
     
-    // MARK: - Language Functions
-    case print              = "print"
-    
-    // MARK: - Others
-    case assign             = "="
+    // MARK: - Expressions
     case falseBottom        = "("
     
+    // MARK: - Special Functions
+    case print              = "print"
+    
+    // MARK: - Variables
+    case assign             = "="
+    
+    // MARK: - Jumps
+    case goto               = "goto"
+    case gotoFalse          = "gotof"
+    case gotoTrue           = "gotot"
+    
+    // MARK: - End of Program
     case end                = "end"
+    
+    // MARK: - Computed Properties
     
     var string: String {
         get {

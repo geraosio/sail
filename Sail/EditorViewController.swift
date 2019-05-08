@@ -18,6 +18,16 @@ class EditorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        editorTextView.text =
+        """
+        var x: Int;
+        sail {
+            if (5 * 2 == 10) {
+                print("end");
+            }
+            x = 4 / 5 + 2;
+        }
+        """
     }
     
     // MARK: - Actions

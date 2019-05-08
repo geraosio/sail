@@ -93,6 +93,32 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	open func enterConditionAction(_ ctx: SailParser.ConditionActionContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitConditionAction(_ ctx: SailParser.ConditionActionContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func enterConditionElseAction(_ ctx: SailParser.ConditionElseActionContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitConditionElseAction(_ ctx: SailParser.ConditionElseActionContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	open func enterLoop(_ ctx: SailParser.LoopContext) { }
 	/**
 	 * {@inheritDoc}

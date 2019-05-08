@@ -40,7 +40,7 @@ class Function {
     // MARK: - Methods
     
     func isGlobal() -> Bool {
-        return parameters != nil && returnType != nil
+        return name == "sail" || name == "Sail"
     }
     
     func getVariable(name: String) -> Variable? {
