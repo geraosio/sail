@@ -22,8 +22,9 @@ class EditorViewController: UIViewController {
         """
         var x: Int;
         sail {
-            if (5 * 2 == 10) {
-                print("end");
+            x = 1;
+            while (x < 5) {
+                x = x + 1;
             }
             x = 4 / 5 + 2;
         }

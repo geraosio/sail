@@ -31,7 +31,7 @@ conditionElseAction : ;
 loop                : forStmt | whileStmt ;
 forStmt             : FOR IDENTIFIER IN expression forStride expression BY expression block ;
 forStride           : TO | THROUGH ;
-whileStmt           : WHILE OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS block ;
+whileStmt           : WHILE OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS conditionAction block ;
 
 printStmt           : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral | call) CLOSE_PARENTHESIS SEMICOLON ;
 

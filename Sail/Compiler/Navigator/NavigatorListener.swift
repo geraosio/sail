@@ -129,17 +129,7 @@ class NavigatorListener: SailBaseListener {
     }
     override func exitConditionElseAction(_ ctx: SailParser.ConditionElseActionContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func enterLoop(_ ctx: SailParser.LoopContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     override func exitLoop(_ ctx: SailParser.LoopContext) { }
     
     /**
@@ -168,18 +158,25 @@ class NavigatorListener: SailBaseListener {
      */
     override func exitForStride(_ ctx: SailParser.ForStrideContext) { }
     
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func enterWhileStmt(_ ctx: SailParser.WhileStmtContext) { }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    override func exitWhileStmt(_ ctx: SailParser.WhileStmtContext) { }
+    override func enterWhileStmt(_ ctx: SailParser.WhileStmtContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        // Save reference to begin of while
+        navigator.jumps.append(navigator.quadruples.count)
+    }
+    override func exitWhileStmt(_ ctx: SailParser.WhileStmtContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let startWhileIndex = navigator.jumps.popLast()!
+        let redoWhileIndex = navigator.jumps.popLast()!
+        
+        let quadruple = Quadruple(op: .goto, left: nil, right: nil, result: redoWhileIndex)
+        navigator.quadruples.append(quadruple)
+        
+        navigator.quadruples[startWhileIndex].result = navigator.quadruples.count
+    }
     
     override func enterPrintStmt(_ ctx: SailParser.PrintStmtContext) { }
     override func exitPrintStmt(_ ctx: SailParser.PrintStmtContext) {
