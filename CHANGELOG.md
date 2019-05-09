@@ -6,6 +6,11 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] - 2019-05-09
+### Added
+
+### Changed
+
 ## [0.2.0] - 2019-05-04
 ### Added
 - Navigator class that controls the compilation process.
@@ -29,7 +34,8 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Xcode project for the Sail compiler iOS app.
 - ANTLR4 frameworks and dependencies to work in the iOS app.
 
-[Unreleased]: https://github.com/geraosio/Sail/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/geraosio/Sail/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/geraosio/Sail/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/geraosio/Sail/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/geraosio/Sail/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/geraosio/Sail/releases/tag/v0.1.0
