@@ -20,7 +20,7 @@ program             : declaration* SAIL block EOF ;
 
 declaration         : variable | function ;
 block               : OPEN_CURLY statement* CLOSE_CURLY ;
-statement           : assignment | condition | loop | printStmt | call ;
+statement           : assignment | condition | loop | printStmt | call SEMICOLON ;
 
 assignment          : IDENTIFIER (OPEN_BRACKET expression CLOSE_BRACKET)? ASSIGN (logicExp | letterLiteral) SEMICOLON ;
 
@@ -33,7 +33,7 @@ forStmt             : FOR IDENTIFIER IN expression forStride expression BY expre
 forStride           : TO | THROUGH ;
 whileStmt           : WHILE OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS conditionAction block ;
 
-printStmt           : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral | call) CLOSE_PARENTHESIS SEMICOLON ;
+printStmt           : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral) CLOSE_PARENTHESIS SEMICOLON ;
 
 variable            : VAR IDENTIFIER (OPEN_BRACKET CONSTANT_INT CLOSE_BRACKET)? COLON type SEMICOLON ;
 type                : BOOL | INT | FLOAT | CHARACTER | STRING ;
@@ -42,7 +42,9 @@ function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTH
 parameters          : parameter (COMMA parameter)* ;
 parameter           : IDENTIFIER COLON type ;
 
-call                : IDENTIFIER OPEN_PARENTHESIS (expression (COMMA expression)*)? CLOSE_PARENTHESIS SEMICOLON;
+call                : IDENTIFIER OPEN_PARENTHESIS callParameters? CLOSE_PARENTHESIS ;
+callParameters      : callParameter (COMMA callParameter)* ;
+callParameter       : (logicExp | letterLiteral) ;
 
 // Expression
 
@@ -62,7 +64,7 @@ termP               : (MULTIPLICATION | DIVISION) term ;
 factor              : varLiteral | (OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS) ;
 
 literal             : varLiteral | letterLiteral ;
-varLiteral          : IDENTIFIER | MINUS? CONSTANT_INT | MINUS? CONSTANT_FLOAT | CONSTANT_BOOLEAN ;
+varLiteral          : call | IDENTIFIER | MINUS? CONSTANT_INT | MINUS? CONSTANT_FLOAT | CONSTANT_BOOLEAN ;
 letterLiteral       : CONSTANT_CHAR | CONSTANT_STRING ;
 
 /*

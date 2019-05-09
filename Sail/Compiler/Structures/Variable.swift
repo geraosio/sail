@@ -16,16 +16,18 @@ class Variable {
     var type: DataType!
     var address: Int!
     var arraySize: Int?
+    var parameterIndex: Int?
     
     
     
     // MARK: - Initializers
     
-    init(name: String, type: DataType, address: Int, arraySize: Int? = nil) {
+    init(name: String, type: DataType, address: Int, arraySize: Int? = nil, parameterIndex: Int? = nil) {
         self.name = name
         self.type = type
         self.address = address
         self.arraySize = arraySize
+        self.parameterIndex = parameterIndex
     }
     
     

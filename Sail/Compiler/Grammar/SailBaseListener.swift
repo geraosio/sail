@@ -262,6 +262,32 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	open func enterCallParameters(_ ctx: SailParser.CallParametersContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitCallParameters(_ ctx: SailParser.CallParametersContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func enterCallParameter(_ ctx: SailParser.CallParameterContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitCallParameter(_ ctx: SailParser.CallParameterContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	open func enterLogicExp(_ ctx: SailParser.LogicExpContext) { }
 	/**
 	 * {@inheritDoc}

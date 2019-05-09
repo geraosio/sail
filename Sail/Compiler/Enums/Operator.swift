@@ -48,7 +48,7 @@ enum Operator: String {
     case parameter          = "param"
     case gosub              = "gosub"
     case returnValue        = "return"
-    case endFunction        = "endFunction"
+    case endFunction        = "endFunc"
     
     // MARK: - End of Program
     case end                = "end"

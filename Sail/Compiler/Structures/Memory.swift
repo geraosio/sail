@@ -25,11 +25,11 @@ class Memory {
     
     // MARK: Data Type Arrays
     
-    private var bools: [Bool?]!
     private var characters: [Character?]!
     private var floats: [Float?]!
     private var ints: [Int?]!
     private var strings: [String?]!
+    private var bools: [Bool?]!
     
     
     
@@ -53,11 +53,11 @@ class Memory {
     // MARK: - Methods
     
     func clear() {
-        bools = []
         characters = []
         floats = []
         ints = []
         strings = []
+        bools = []
     }
     
     // MARK: Variables

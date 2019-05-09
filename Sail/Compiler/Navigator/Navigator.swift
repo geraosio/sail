@@ -36,6 +36,7 @@ class Navigator {
     
     // MARK: Code Generation
     var quadruples: [Quadruple]!
+    var parameterCounter: Int!
     
     // MARK: Memory
     
@@ -110,6 +111,10 @@ class Navigator {
         quadruples = []
         
         constantsMemory.clear()
+        globalMemory.clear()
+        localMemory.clear()
+        temporalGlobalMemory.clear()
+        temporalLocalMemory.clear()
     }
     
 }
@@ -146,7 +151,7 @@ extension Navigator {
         return .error
     }
     
-    // MARK: - Memory Management Helper Functionsß
+    // MARK: - Memory Management Helper Functions
     
     func getAddress(for dataType: DataType) throws -> Int {
         
@@ -252,4 +257,5 @@ extension Navigator {
     func debugFunctions() {
         // TODO: Print functions contents
     }
+    
 }

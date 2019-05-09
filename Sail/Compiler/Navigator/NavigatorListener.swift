@@ -255,8 +255,9 @@ class NavigatorListener: SailBaseListener {
         }
         
         let startQuadrupleIndex = navigator.quadruples.count
+        let startAddress = navigator.functionTable.count
         
-        let function = Function(name: functionName!, hasParameters: true, returnType: functionReturnType, quadrupleIndex: startQuadrupleIndex)
+        let function = Function(name: functionName!, hasParameters: true, returnType: functionReturnType, quadrupleIndex: startQuadrupleIndex, address: startAddress)
         
         navigator.currentFunction = function
         navigator.functionTable.updateValue(function, forKey: function.name)
@@ -299,6 +300,8 @@ class NavigatorListener: SailBaseListener {
         }
         
         navigator.currentFunction = navigator.globalFunction
+        navigator.temporalLocalMemory.clear()
+        navigator.localMemory.clear()
         
         let quadruple = Quadruple(op: .endFunction)
         navigator.quadruples.append(quadruple)
@@ -335,8 +338,118 @@ class NavigatorListener: SailBaseListener {
     }
     override func exitParameter(_ ctx: SailParser.ParameterContext) { }
     
-    override func enterCall(_ ctx: SailParser.CallContext) { }
-    override func exitCall(_ ctx: SailParser.CallContext) { }
+    override func enterCall(_ ctx: SailParser.CallContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let functionName = ctx.IDENTIFIER()?.getText()
+        
+        // Verify procedure is in Function Table
+        guard let function = navigator.functionTable[functionName!] else {
+            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Function \"\(functionName!)\" does not exist.")
+            navigator.errors.append(error)
+            return
+        }
+        
+        let returnDataType = function.returnType!
+        
+        if (ctx.parent as? SailParser.StatementContext) != nil {
+            guard returnDataType == .void else {
+                let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Function \(functionName!) has a return value of type \(returnDataType.string) not being used.")
+                navigator.errors.append(error)
+                return
+            }
+        } else {
+            guard returnDataType != .void else {
+                let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Function \"\(functionName!)\" has a return type of Void and does not return any value.")
+                navigator.errors.append(error)
+                return
+            }
+        }
+        
+        let quadruple = Quadruple(op: .era, left: nil, right: nil, result: function.address)
+        navigator.quadruples.append(quadruple)
+        
+        // Start parameter counter in 0 (Zero-index)
+        navigator.parameterCounter = 0
+        // Add a pointer to the first parameter type in the parameter table
+        
+        // Add a false bottom in the operators to begin fresh the expresions
+//        navigator.operators.append(.falseBottom)
+    }
+    override func exitCall(_ ctx: SailParser.CallContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let functionName = ctx.IDENTIFIER()?.getText()
+        let function = navigator.functionTable[functionName!]
+        
+        guard navigator.parameterCounter == function?.parameters?.count else {
+            let error = NavigatorError(type: .semantic, atLine: ctx.CLOSE_PARENTHESIS()?.getSymbol()?.getLine(), positionInLine: ctx.CLOSE_PARENTHESIS()?.getSymbol()?.getCharPositionInLine(), description: "There are missing arguments.")
+            navigator.errors.append(error)
+            return
+        }
+        
+        let quadruple = Quadruple(op: .gosub, left: nil, right: nil, result: function?.address)
+        navigator.quadruples.append(quadruple)
+        
+        guard let functionReturnDataType = function?.returnType else {
+            return
+        }
+        
+        // If it has a return value save it in temporals
+        if functionReturnDataType != .void {
+            do {
+                let temporalAddress = try navigator.getTemporalAddress(for: functionReturnDataType)
+                
+                let quadruple = Quadruple(op: .assign, left: function?.address, right: nil, result: temporalAddress)
+                navigator.quadruples.append(quadruple)
+                
+                navigator.operands.append(temporalAddress)
+                navigator.operandDataTypes.append(functionReturnDataType)
+            } catch let error as NavigatorError {
+                error.atLine = ctx.getStart()?.getLine()
+                error.positionInLine = ctx.getStart()?.getCharPositionInLine()
+                navigator.errors.append(error)
+                return
+            } catch { }
+        }
+    }
+    
+    override func enterCallParameters(_ ctx: SailParser.CallParametersContext) { }
+    override func exitCallParameters(_ ctx: SailParser.CallParametersContext) { }
+    
+    override func enterCallParameter(_ ctx: SailParser.CallParameterContext) { }
+    override func exitCallParameter(_ ctx: SailParser.CallParameterContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        let ctxFunctionCall = ctx.parent?.parent as? SailParser.CallContext
+        let functionName = ctxFunctionCall?.IDENTIFIER()?.getText()
+        
+        guard let argumentAddress = navigator.operands.popLast(), let argumentDataType = navigator.operandDataTypes.popLast() else {
+            let error = NavigatorError(type: .other, atLine: ctxFunctionCall?.CLOSE_PARENTHESIS()?.getSymbol()?.getLine(), positionInLine: ctxFunctionCall?.CLOSE_PARENTHESIS()?.getSymbol()?.getCharPositionInLine(), description: "Function \"\(functionName!)\" does not accept parameters.")
+            navigator.errors.append(error)
+            return
+        }
+        
+        guard let parameter = navigator.functionTable[functionName!]?.parameters?[navigator.parameterCounter] else {
+            let error = NavigatorError(type: .other, atLine: ctxFunctionCall?.CLOSE_PARENTHESIS()?.getSymbol()?.getLine(), positionInLine: ctxFunctionCall?.CLOSE_PARENTHESIS()?.getSymbol()?.getCharPositionInLine(), description: "Could not get the parameters from function \"\(functionName!)\".")
+            navigator.errors.append(error)
+            return
+        }
+        
+        guard parameter.type == argumentDataType else {
+            let error = NavigatorError(type: .semantic, atLine: ctxFunctionCall?.CLOSE_PARENTHESIS()?.getSymbol()?.getLine(), positionInLine: ctxFunctionCall?.CLOSE_PARENTHESIS()?.getSymbol()?.getCharPositionInLine(), description: "The argument type in the function call \"\(functionName!)\" does not match the parameter \"\(String(describing: parameter.name))\" type defined in the function.")
+            navigator.errors.append(error)
+            return
+        }
+        
+        let quadruple = Quadruple(op: .parameter, left: argumentAddress, right: nil, result: parameter.address)
+        navigator.quadruples.append(quadruple)
+        
+        navigator.parameterCounter += 1
+    }
     
     override func enterLogicExp(_ ctx: SailParser.LogicExpContext) { }
     override func exitLogicExp(_ ctx: SailParser.LogicExpContext) { }
