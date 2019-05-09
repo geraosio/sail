@@ -34,9 +34,9 @@ class EditorViewController: UIViewController {
 
         clearConsole()
         
-        Navigator.shared.run(code: editorTextView.text)
+        let (results, errors) = Navigator.shared.run(code: editorTextView.text)
         
-        showMessagesInConsole()
+        showOutputInConsole(results: results, errors: errors)
         
         self.view.endEditing(true)
     }
@@ -47,15 +47,18 @@ class EditorViewController: UIViewController {
         consoleTextView.text = ""
     }
     
-    private func showMessagesInConsole() {
-        if Navigator.shared.errors.isEmpty {
+    private func showOutputInConsole(results: [String], errors: [NavigatorError]) {
+        if errors.isEmpty {
             consoleTextView.textColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
-            consoleTextView.text += "🎉\n"
+            for result in results {
+                consoleTextView.text += result + "\n"
+            }
+            consoleTextView.text += "\n"
             printQuadruplesInConsole()
         } else {
             consoleTextView.textColor = UIColor(red: 242/255, green: 135/255, blue: 39/255, alpha: 1)
-            consoleTextView.text += "\(Navigator.shared.errors.count) error(s):\n"
-            for error in Navigator.shared.errors {
+            consoleTextView.text += "\(errors.count) error(s):\n"
+            for error in errors {
                 consoleTextView.text += error.message + "\n\n"
             }
         }

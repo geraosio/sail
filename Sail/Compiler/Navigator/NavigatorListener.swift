@@ -36,6 +36,9 @@ class NavigatorListener: SailBaseListener {
         navigator.quadruples.append(endQuadruple)
         
         navigator.printQuadruples()
+        
+        // Go through the quadruples
+        navigator.sail()
     }
     
     override func enterDeclaration(_ ctx: SailParser.DeclarationContext) { }

@@ -60,6 +60,58 @@ class Memory {
         bools = []
     }
     
+    func copy(contents memory: Memory) {
+        
+        self.characters = memory.characters
+        self.floats = memory.floats
+        self.ints = memory.ints
+        self.strings = memory.strings
+        self.bools = memory.bools        
+    }
+    
+    // MARK: - Virtual Machine
+    
+    func allocate() {
+        
+        for _ in 1...self.addressSize {
+            characters.append(nil)
+            floats.append(nil)
+            ints.append(nil)
+            strings.append(nil)
+            bools.append(nil)
+        }
+    }
+    
+    func getValue(inAddress address: Int) -> (Any, DataType) {
+        switch address {
+        case ..<floatBaseAddress:
+            return (characters[address - characterBaseAddress]!, .character)
+        case ..<intBaseAddress:
+            return (floats[address - floatBaseAddress]!, .float)
+        case ..<stringBaseAddress:
+            return (ints[address - intBaseAddress]!, .int)
+        case ..<boolBaseAddress:
+            return (strings[address - stringBaseAddress]!, .string)
+        default:
+            return (bools[address - boolBaseAddress]!, .bool)
+        }
+    }
+    
+    func save(value: Any, inAddress address: Int) {
+        switch address {
+        case ..<floatBaseAddress:
+            characters[address - characterBaseAddress] = value as? Character
+        case ..<intBaseAddress:
+            floats[address - floatBaseAddress] = value as? Float
+        case ..<stringBaseAddress:
+            ints[address - intBaseAddress] = value as? Int
+        case ..<boolBaseAddress:
+            strings[address - stringBaseAddress] = value as? String
+        default:
+            bools[address - boolBaseAddress] = value as? Bool
+        }
+    }
+        
     // MARK: Variables
     
     func getAddress(for dataType: DataType) -> Int {
@@ -153,7 +205,5 @@ class Memory {
         
         return stringBaseAddress + stringAddress
     }
-    
-    // MARK: Private Methods
     
 }

@@ -12,12 +12,14 @@ enum NavigatorErrorType {
     case syntax
     case semantic
     case compile
+    case runtime
     case other
 }
 
 class NavigatorError: Error {
     
     // MARK: - Properties
+    
     var type: NavigatorErrorType!
     var atLine: Int?
     var positionInLine: Int?
@@ -32,6 +34,8 @@ class NavigatorError: Error {
             }
         }
     }
+    
+    
     
     // MARK: - Initializers
     
