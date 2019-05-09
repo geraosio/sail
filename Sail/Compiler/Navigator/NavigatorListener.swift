@@ -665,14 +665,17 @@ class NavigatorListener: SailBaseListener {
     }
     override func exitTermP(_ ctx: SailParser.TermPContext) { }
     
-    override func enterFactor(_ ctx: SailParser.FactorContext) { }
-    override func exitFactor(_ ctx: SailParser.FactorContext) {
+    override func enterFactor(_ ctx: SailParser.FactorContext) {
         
         guard navigator.errors.isEmpty else { return }
         
         if ctx.OPEN_PARENTHESIS() != nil {
             navigator.operators.append(.falseBottom)
         }
+    }
+    override func exitFactor(_ ctx: SailParser.FactorContext) {
+        
+        guard navigator.errors.isEmpty else { return }
         
         if let id = ctx.varLiteral()?.IDENTIFIER() {
             guard let variable = navigator.getVariable(name: id.getText()) else {

@@ -20,17 +20,10 @@ class EditorViewController: UIViewController {
         super.viewDidLoad()
         editorTextView.text =
         """
-        var x[2]: Int;
-
-        func addOne() -> Void {
-            x[0] = x[0] + 1;
-            x[1] = x[1] + 1;
-        }
+        var result: Int;
 
         sail {
-            x[0] = 1;
-            x[1] = x[0] + 2;
-            addOne();
+            result = (5 + 10) * 8;
         }
         """
     }
