@@ -50,6 +50,9 @@ enum Operator: String {
     case returnValue        = "return"
     case endFunction        = "endFunc"
     
+    // MARK: - Arrays
+    case verify             = "verify"
+    
     // MARK: - End of Program
     case end                = "end"
     

@@ -223,7 +223,7 @@ extension Navigator {
         
         let emptyBlock = "_____"
         
-        for quadrupleNumber in 0 ..< quadruples.count {
+        for quadrupleNumber in 0..<quadruples.count {
             let quadruple = quadruples[quadrupleNumber]
             let leftOperand: String = quadruple.left?.description ?? emptyBlock
             let rightOperand: String = quadruple.right?.description ?? emptyBlock

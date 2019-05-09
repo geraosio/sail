@@ -20,23 +20,17 @@ class EditorViewController: UIViewController {
         super.viewDidLoad()
         editorTextView.text =
         """
-        var x: Int;
+        var x[2]: Int;
 
-        func addOne(a: Int) -> Int {
-            return a + 1;
-        }
-
-        func printInt(a: Int) -> Void {
-            print(a);
+        func addOne() -> Void {
+            x[0] = x[0] + 1;
+            x[1] = x[1] + 1;
         }
 
         sail {
-            x = 1;
-            while (x < 5) {
-                x = addOne(x);
-            }
-            x = 4 / 5 + 2;
-            printInt(x);
+            x[0] = 1;
+            x[1] = x[0] + 2;
+            addOne();
         }
         """
     }
@@ -69,7 +63,7 @@ class EditorViewController: UIViewController {
             consoleTextView.textColor = UIColor(red: 242/255, green: 135/255, blue: 39/255, alpha: 1)
             consoleTextView.text += "\(Navigator.shared.errors.count) error(s):\n"
             for error in Navigator.shared.errors {
-                consoleTextView.text += error.message + "\n"
+                consoleTextView.text += error.message + "\n\n"
             }
         }
     }
@@ -86,7 +80,7 @@ class EditorViewController: UIViewController {
         
         let emptyBlock = "_____"
         
-        for quadrupleNumber in 0 ..< Navigator.shared.quadruples.count {
+        for quadrupleNumber in 0..<Navigator.shared.quadruples.count {
             let quadruple = Navigator.shared.quadruples[quadrupleNumber]
             let leftOperand: String = quadruple.left?.description ?? emptyBlock
             let rightOperand: String = quadruple.right?.description ?? emptyBlock

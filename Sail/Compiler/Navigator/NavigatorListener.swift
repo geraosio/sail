@@ -67,17 +67,13 @@ class NavigatorListener: SailBaseListener {
             let variableName = idNode.getText()
             
             guard let variable = navigator.getVariable(name: variableName) else {
-                let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\(variableName) does not exists")
+                let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\(variableName) does not exist")
                 navigator.errors.append(error)
                 return
             }
             
-            if ctx.OPEN_BRACKET() != nil {
-                // TODO: Vector - Get vector address and add to operands
-            } else {
-                navigator.operands.append(variable.address)
-                navigator.operandDataTypes.append(variable.type)
-            }
+            navigator.operands.append(variable.address)
+            navigator.operandDataTypes.append(variable.type)
         }
     }
     override func exitAssignment(_ ctx: SailParser.AssignmentContext) {
@@ -92,7 +88,7 @@ class NavigatorListener: SailBaseListener {
         let assignmentDataType = SemanticCube.check(op: .assign, leftType: idDataType, rightType: resultDataType)
         
         if assignmentDataType == .error {
-            let error = NavigatorError.init(type: .semantic, atLine: ctx.ASSIGN()?.getSymbol()?.getLine(), positionInLine: ctx.ASSIGN()?.getSymbol()?.getCharPositionInLine(), description: "\(resultDataType.string) can not be assigned to a \(idDataType.string)")
+            let error = NavigatorError(type: .semantic, atLine: ctx.ASSIGN()?.getSymbol()?.getLine(), positionInLine: ctx.ASSIGN()?.getSymbol()?.getCharPositionInLine(), description: "\(resultDataType.string) can not be assigned to a \(idDataType.string)")
             navigator.errors.append(error)
             return
         } else {
@@ -196,23 +192,108 @@ class NavigatorListener: SailBaseListener {
         let variableName = ctx.IDENTIFIER()!.getText()
         
         if navigator.getVariable(name: variableName) != nil {
-            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(variableName)\" already exists")
+            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(variableName)\" already exists")
             navigator.errors.append(error)
             return
         }
         
         let variableType = navigator.getDataType(from: ctx.type()!)
         
-        // TODO: VECTOR
+        if let arraySizeText = ctx.CONSTANT_INT()?.getText() {
+            
+            // ARRAY
+            let arraySize = Int(arraySizeText)!
+            
+            do {
+                // Allocate the first block of memory for the array and get the address to save it in it's Variable object
+                let startAddress = try navigator.getAddress(for: variableType)
+                
+                // Allocate memory for the array size of the vector
+                for _ in 1..<arraySize {
+                    _ = try navigator.getAddress(for: variableType)
+                }
+                
+                let variable = Variable(name: variableName, type: variableType, address: startAddress, arraySize: arraySize)
+                navigator.currentFunction.save(variable: variable)
+                
+            } catch let error as NavigatorError {
+                error.atLine = ctx.getStart()?.getLine()
+                error.positionInLine = ctx.getStart()?.getCharPositionInLine()
+                navigator.errors.append(error)
+                return
+            } catch { }
+            
+        } else {
+            
+            // VARIABLE
+            do {
+                let variableAddress = try navigator.getAddress(for: variableType)
+                
+                let variable = Variable(name: variableName, type: variableType, address: variableAddress)
+                navigator.currentFunction.save(variable: variable)
+                
+            } catch let error as NavigatorError {
+                error.atLine = ctx.getStart()?.getLine()
+                error.positionInLine = ctx.getStart()?.getCharPositionInLine()
+                navigator.errors.append(error)
+                return
+            } catch { }
+        }
+    }
+    override func exitVariable(_ ctx: SailParser.VariableContext) { }
+    
+    override func enterType(_ ctx: SailParser.TypeContext) { }
+    override func exitType(_ ctx: SailParser.TypeContext) { }
+    
+    override func enterArray(_ ctx: SailParser.ArrayContext) {
         
-        // VARIABLE
+        guard navigator.errors.isEmpty else { return }
+        
+        let arrayName = ctx.IDENTIFIER()?.getText()
+        
+        guard navigator.getVariable(name: arrayName!) != nil else {
+            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(arrayName!)\" already exists")
+            navigator.errors.append(error)
+            return
+        }
+        
+        // If called in an expression create a scope expression-wise or if theres nesting.
+        navigator.operators.append(.falseBottom)
+    }
+    override func exitArray(_ ctx: SailParser.ArrayContext) {
+        
+        guard navigator.errors.isEmpty else { return }
+        
+        // After expression is done look for the index to access, get the data type of the result
+        let calculatedIndexAddress = navigator.operands.popLast()!
+        let calculatedIndexDataType = navigator.operandDataTypes.popLast()!
+        
+        guard calculatedIndexDataType == .int else {
+            let error = NavigatorError(type: .semantic, atLine: ctx.CLOSE_BRACKET()?.getSymbol()?.getLine(), positionInLine: ctx.CLOSE_BRACKET()?.getSymbol()?.getCharPositionInLine(), description: "Array index data type is \(calculatedIndexDataType.string), it must be an Int")
+            navigator.errors.append(error)
+            return
+        }
+        
+        let arrayName = ctx.IDENTIFIER()?.getText()
+        let array = navigator.getVariable(name: arrayName!)!
+        
+        let quadruple = Quadruple(op: .verify, left: nil, right: array.arraySize!, result: calculatedIndexAddress)
+        navigator.quadruples.append(quadruple)
+        
         do {
-            let variableAddress = try navigator.getAddress(for: variableType)
+            // Get an address for the real address it is trying to access
+            let indexAddress = try navigator.getTemporalAddress(for: .int)
             
-            let variable = Variable(name: variableName, type: variableType, address: variableAddress)
+            // Save the address of where the array starts
+            let startAddressArrayConstantAddress = navigator.constantsMemory.save(int: array.address)
             
-            navigator.currentFunction.save(variable: variable)
+            // Generate quadruple to calculate the real index address
+            let quadruple = Quadruple(op: .addition, left: calculatedIndexAddress, right: startAddressArrayConstantAddress, result: indexAddress)
+            navigator.quadruples.append(quadruple)
             
+            // Negative to distinguish that it is the address of an address
+            navigator.operands.append(-indexAddress)
+            navigator.operandDataTypes.append(array.type)
         } catch let error as NavigatorError {
             error.atLine = ctx.getStart()?.getLine()
             error.positionInLine = ctx.getStart()?.getCharPositionInLine()
@@ -220,11 +301,9 @@ class NavigatorListener: SailBaseListener {
             return
         } catch { }
         
+        // Remove false bottom inserted in enterArray
+        _ = navigator.operators.popLast()
     }
-    override func exitVariable(_ ctx: SailParser.VariableContext) { }
-    
-    override func enterType(_ ctx: SailParser.TypeContext) { }
-    override func exitType(_ ctx: SailParser.TypeContext) { }
     
     override func enterFunction(_ ctx: SailParser.FunctionContext) {
         
@@ -233,13 +312,13 @@ class NavigatorListener: SailBaseListener {
         let functionName = ctx.IDENTIFIER()?.getText()
         
         guard navigator.functionTable[functionName!] == nil else {
-            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Function \"\(functionName!)\" already defined")
+            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Function \"\(functionName!)\" already defined")
             navigator.errors.append(error)
             return
         }
         
         guard navigator.currentFunction.getVariable(name: functionName!) == nil else {
-            let error = NavigatorError.init(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(functionName!)\" is a variable")
+            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "\"\(functionName!)\" is a variable")
             navigator.errors.append(error)
             return
         }
@@ -318,7 +397,7 @@ class NavigatorListener: SailBaseListener {
         let parameterType = navigator.getDataType(from: ctx.type()!)
         
         guard navigator.getVariable(name: parameterName!) == nil else {
-            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Variable \"\(parameterName!)\" already exists")
+            let error = NavigatorError(type: .semantic, atLine: ctx.IDENTIFIER()?.getSymbol()?.getLine(), positionInLine: ctx.IDENTIFIER()?.getSymbol()?.getCharPositionInLine(), description: "Parameter \"\(parameterName!)\" already exists")
             navigator.errors.append(error)
             return
         }
@@ -374,8 +453,8 @@ class NavigatorListener: SailBaseListener {
         navigator.parameterCounter = 0
         // Add a pointer to the first parameter type in the parameter table
         
-        // Add a false bottom in the operators to begin fresh the expresions
-//        navigator.operators.append(.falseBottom)
+        // If called in an expression create a scope expression-wise.
+        navigator.operators.append(.falseBottom)
     }
     override func exitCall(_ ctx: SailParser.CallContext) {
         

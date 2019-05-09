@@ -22,7 +22,7 @@ declaration         : variable | function ;
 block               : OPEN_CURLY statement* CLOSE_CURLY ;
 statement           : assignment | condition | loop | printStmt | call SEMICOLON ;
 
-assignment          : IDENTIFIER (OPEN_BRACKET expression CLOSE_BRACKET)? ASSIGN (logicExp | letterLiteral) SEMICOLON ;
+assignment          : (IDENTIFIER | array) ASSIGN (logicExp | letterLiteral) SEMICOLON ;
 
 condition           : IF OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS conditionAction block (conditionElseAction ELSE block)? ;
 conditionAction     : ;
@@ -37,6 +37,7 @@ printStmt           : PRINT OPEN_PARENTHESIS (logicExp | letterLiteral) CLOSE_PA
 
 variable            : VAR IDENTIFIER (OPEN_BRACKET CONSTANT_INT CLOSE_BRACKET)? COLON type SEMICOLON ;
 type                : BOOL | INT | FLOAT | CHARACTER | STRING ;
+array               : IDENTIFIER OPEN_BRACKET expression CLOSE_BRACKET ;
 
 function            : FUNC IDENTIFIER OPEN_PARENTHESIS parameters? CLOSE_PARENTHESIS ARROW (type | VOID) OPEN_CURLY statement* (RETURN (logicExp | letterLiteral) SEMICOLON)? CLOSE_CURLY ;
 parameters          : parameter (COMMA parameter)* ;
@@ -64,7 +65,7 @@ termP               : (MULTIPLICATION | DIVISION) term ;
 factor              : varLiteral | (OPEN_PARENTHESIS logicExp CLOSE_PARENTHESIS) ;
 
 literal             : varLiteral | letterLiteral ;
-varLiteral          : call | IDENTIFIER | MINUS? CONSTANT_INT | MINUS? CONSTANT_FLOAT | CONSTANT_BOOLEAN ;
+varLiteral          : call | array | IDENTIFIER | MINUS? CONSTANT_INT | MINUS? CONSTANT_FLOAT | CONSTANT_BOOLEAN ;
 letterLiteral       : CONSTANT_CHAR | CONSTANT_STRING ;
 
 /*

@@ -210,6 +210,19 @@ open class SailBaseListener: SailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	open func enterArray(_ ctx: SailParser.ArrayContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitArray(_ ctx: SailParser.ArrayContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	open func enterFunction(_ ctx: SailParser.FunctionContext) { }
 	/**
 	 * {@inheritDoc}
