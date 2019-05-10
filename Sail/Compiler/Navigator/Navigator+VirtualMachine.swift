@@ -9,6 +9,11 @@
 import Foundation
 
 // MARK: - Virtual Machine
+// These are all the functions used for the execution of the intermediate code.
+// The functionality is an extension the Navigator class which handles the compilation process.
+// The Virtual Machine reuses the Memory from the compilation process to save calculated
+// values at runtime.
+
 extension Navigator {
     
     // MARK: - Utilities

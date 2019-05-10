@@ -8,6 +8,11 @@
 
 import Foundation
 
+// MARK: - Grammar Actions Helper Functions
+// These are utility functions for the grammar actions.
+// These are begin used in the NavigatorListener which is the class
+// that inserts an action in every each grammar rule.
+
 extension Navigator {
     
     // MARK: - Scope
@@ -76,6 +81,9 @@ extension Navigator {
     
     // MARK: - Quadruples
     
+    // MARK: Generate Expression Quadruple.
+    // Generate the next expression quadruple.
+    // This function is being used in the expression grammar actions.
     func generateExpressionQuadruple() throws {
         
         let rightOperand = operands.popLast()!

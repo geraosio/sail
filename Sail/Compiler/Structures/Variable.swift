@@ -8,6 +8,11 @@
 
 import Foundation
 
+// MARK: - Variable
+// This is the structure that holds the information of a variable
+// It is being used in the Function class to save all the variables
+// in it's scope as well as the parameters.
+
 class Variable {
     
     // MARK: - Properties

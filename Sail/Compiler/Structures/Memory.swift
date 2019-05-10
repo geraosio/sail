@@ -8,6 +8,11 @@
 
 import Foundation
 
+// MARK: - Memory
+// The most essential part of the virtual machine and the compilation process.
+// Manages address, returns addresses for each data type, saves each data type in
+// It's respective array and get's the value from each address.
+
 class Memory {
     
     // MARK: - Properties

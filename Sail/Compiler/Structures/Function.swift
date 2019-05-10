@@ -8,6 +8,11 @@
 
 import Foundation
 
+// MARK: - Function
+// Function class is being used all over the compiler.
+// It works as the scope by keeping track of the variables and parameters,
+// and keeps track of the return data type, quadruple index and function address.
+
 class Function {
     
     // MARK: - Properties
@@ -47,6 +52,9 @@ class Function {
         return name == "sail" || name == "Sail"
     }
     
+    // Get variable
+    // Returns either the parameter if it's a defined function or the variables if it's the global function
+    // This function is called from almost every action in the syntax and in some parts of the virtual machine.
     func getVariable(name: String) -> Variable? {
         if let parameters = self.parameters {
             for parameter in parameters {

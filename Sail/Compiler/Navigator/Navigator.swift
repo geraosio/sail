@@ -9,6 +9,11 @@
 import Foundation
 import Antlr4
 
+// MARK: - Navigator
+// The most important class of the whole app.
+// Manages all the compilation process using it's singleton.
+// It is being called in almost every part of the application.
+
 class Navigator {
 
     // MARK: - Singleton

@@ -20,31 +20,32 @@ class EditorViewController: UIViewController {
         super.viewDidLoad()
         editorTextView.text =
         """
-        var factorial: Int;
-        var iterator: Int;
-        
-        func factorialIterative(n: Int) -> Int {
-            factorial = 1;
-            iterator = 1;
-        
-            while(iterator <= n) {
-                factorial = factorial * iterator;
-                iterator = iterator + 1;
-            }
-        
-            return factorial;
-        }
-        
+        var hello: String;
+
         sail {
-            print(factorialIterative(5));
+            hello = "Hello World";
+            print(hello);
         }
         """
+
 //        """
-//        var hello: String;
+//        var factorial: Int;
+//        var iterator: Int;
+//
+//        func factorialIterative(n: Int) -> Int {
+//            factorial = 1;
+//            iterator = 1;
+//
+//            while(iterator <= n) {
+//                factorial = factorial * iterator;
+//                iterator = iterator + 1;
+//            }
+//
+//            return factorial;
+//        }
 //
 //        sail {
-//            hello = "Hello World";
-//            print(hello);
+//            print(factorialIterative(5));
 //        }
 //        """
     }
@@ -87,6 +88,7 @@ class EditorViewController: UIViewController {
     
     private func printQuadruplesInConsole() {
         
+        consoleTextView.text += "Quadruples\n"
         consoleTextView.text += "\n"
         consoleTextView.text += "".withCString{ String(format: "🔢%-2s", $0) }
         consoleTextView.text += "".withCString{ String(format: "👆%-5s ", $0) }

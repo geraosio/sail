@@ -8,6 +8,10 @@
 
 import Foundation
 
+// MARK: - Error Type
+// These class en enum are used to store complete information of the errors thrown
+// throughout the compilation and runtime processes.
+
 enum NavigatorErrorType {
     case syntax
     case semantic

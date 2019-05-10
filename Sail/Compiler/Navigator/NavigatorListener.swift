@@ -9,6 +9,11 @@
 import Foundation
 import Antlr4
 
+// MARK: - Grammar Actions
+// These are the grammar actions
+// They are being called every time the walker goes to each grammar rule.
+// To save all the information I used the Navigator singleton.
+
 class NavigatorListener: SailBaseListener {
     
     let navigator = Navigator.shared
