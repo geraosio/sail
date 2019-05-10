@@ -19,29 +19,32 @@ class EditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         editorTextView.text =
+        """
+        var factorial: Int;
+        var iterator: Int;
+        
+        func factorialIterative(n: Int) -> Int {
+            factorial = 1;
+            iterator = 1;
+        
+            while(iterator <= n) {
+                factorial = factorial * iterator;
+                iterator = iterator + 1;
+            }
+        
+            return factorial;
+        }
+        
+        sail {
+            print(factorialIterative(5));
+        }
+        """
 //        """
 //        var hello: String;
 //
 //        sail {
 //            hello = "Hello World";
 //            print(hello);
-//        }
-//        """
-        """
-        func hello(name: String) -> Void {
-            print("Hello");
-            print(name);
-        }
-        sail {
-            hello("Bob");
-        }
-        """
-        
-//        """
-//        var result: Int;
-//
-//        sail {
-//            result = (5 + 10) * 8;
 //        }
 //        """
     }
