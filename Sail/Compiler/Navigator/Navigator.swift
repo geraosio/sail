@@ -56,6 +56,8 @@ class Navigator {
     // MARK: Virtual Machine
     var savedMemories: [Memory]!
     var calledFunctionsAddresses: [Int]!
+    var savedRuntimeQuadrupleIndices: [Int]!
+    var savedFunctionsAddresses: [Int]!
     var runtimeFunctionLocalMemory: Memory!
     var runtimeFunctionTemporalMemory: Memory!
     
@@ -126,6 +128,8 @@ class Navigator {
         
         savedMemories = []
         calledFunctionsAddresses = []
+        savedRuntimeQuadrupleIndices = []
+        savedFunctionsAddresses = []
     }
     
 }
@@ -143,7 +147,7 @@ extension Navigator {
             return getValue(inAddress: arrayAddress as! Int)
         case ..<constantsBaseAddress:
             // Functions
-            let function = functionTable.values.first { (function) -> Bool in function.address == address }
+            let function = getFunction(address: address)
             let returnAddress = globalFunction.getVariable(name: (function?.name)!)?.address
             return getValue(inAddress: returnAddress!)
         case ..<globalBaseAddress:
@@ -172,7 +176,7 @@ extension Navigator {
             saveInMemory(value: value, inAddress: arrayAddress as! Int)
         case ..<constantsBaseAddress:
             // Functions
-            let function = functionTable.values.first { (function) -> Bool in function.address == address }
+            let function = getFunction(address: address)
             let returnAddress = globalFunction.getVariable(name: (function?.name)!)?.address
             saveInMemory(value: value, inAddress: returnAddress!)
         case ..<globalBaseAddress:
@@ -191,6 +195,24 @@ extension Navigator {
             // Temporal Local
             temporalLocalMemory.save(value: value, inAddress: address)
         }
+    }
+    
+    func save(memory: Memory) {
+        let memoryCopy = Memory(baseAddress: memory.baseAddress, addressSize: memory.addressSize)
+        memoryCopy.copy(contents: memory)
+        
+        savedMemories.append(memoryCopy)
+    }
+    
+    func getCopy(memory: Memory) -> Memory {
+        let newMemory = Memory(baseAddress: memory.baseAddress, addressSize: memory.addressSize)
+        newMemory.copy(contents: memory)
+        
+        return newMemory
+    }
+    
+    func getFunction(address: Int) -> Function? {
+        return functionTable.values.first { (function) -> Bool in function.address == address }
     }
     
     // MARK: - Sail through quadruples
@@ -259,13 +281,13 @@ extension Navigator {
                 
                 switch (leftType, rightType) {
                 case (.int, .int):
-                    saveInMemory(value: (leftValue as! Int) + (rightValue as! Int), inAddress: quadruple.result!)
+                    saveInMemory(value: (leftValue as! Int) * (rightValue as! Int), inAddress: quadruple.result!)
                 case (.int, .float):
-                    saveInMemory(value: Float(leftValue as! Int) + (rightValue as! Float), inAddress: quadruple.result!)
+                    saveInMemory(value: Float(leftValue as! Int) * (rightValue as! Float), inAddress: quadruple.result!)
                 case (.float, .int):
-                    saveInMemory(value: (leftValue as! Float) + Float(rightValue as! Int), inAddress: quadruple.result!)
+                    saveInMemory(value: (leftValue as! Float) * Float(rightValue as! Int), inAddress: quadruple.result!)
                 case (.float, .float):
-                    saveInMemory(value: (leftValue as! Float) + (rightValue as! Float), inAddress: quadruple.result!)
+                    saveInMemory(value: (leftValue as! Float) * (rightValue as! Float), inAddress: quadruple.result!)
                 default:
                     break
                 }
@@ -448,25 +470,65 @@ extension Navigator {
                 // Save in stack in the case there's nesting in function calls
                 calledFunctionsAddresses.append(quadruple.result!)
                 
-                // Create new Memorys with the Local and Local Temporal Memorys' baseAddress and addressSize
-                runtimeFunctionLocalMemory = Memory(baseAddress: localMemory.baseAddress, addressSize: localMemory.addressSize)
-                runtimeFunctionTemporalMemory = Memory(baseAddress: temporalLocalMemory.baseAddress, addressSize: temporalLocalMemory.addressSize)
+                // Create new Memorys with the Local and Local Temporal Memorys' baseAddress
+                runtimeFunctionLocalMemory = Memory(baseAddress: localMemory.baseAddress)
+                runtimeFunctionTemporalMemory = Memory(baseAddress: temporalLocalMemory.baseAddress)
                 
                 // Set all addresses to nil
                 runtimeFunctionLocalMemory.allocate()
                 runtimeFunctionTemporalMemory.allocate()
             // MARK: - Parameter
             case .parameter:
+                // Get the value that was passed as argument
+                let (argumentValue, _) = getValue(inAddress: quadruple.left!)
                 
+                runtimeFunctionLocalMemory.save(value: argumentValue, inAddress: quadruple.result!)
             // MARK: - GoSub
             case .gosub:
+                // Save current memory
+                save(memory: localMemory)
+                save(memory: temporalLocalMemory)
                 
+                // Set current memory with the runtime contents
+                localMemory = getCopy(memory: runtimeFunctionLocalMemory)
+                temporalLocalMemory = getCopy(memory: runtimeFunctionTemporalMemory)
+                
+                // Save index for the return
+                savedRuntimeQuadrupleIndices.append(sailIndex)
+                
+                // Get the function from the address
+                let function = getFunction(address: quadruple.result!)
+                
+                // Remove the last function, which will be accessed
+                _ = calledFunctionsAddresses.popLast()
+                
+                // Save function address
+                savedFunctionsAddresses.append(quadruple.result!)
+                
+                // Go to where the function starts the next loop iteration
+                sailIndex = (function?.quadrupleIndex)! - 1
             // MARK: - Return
             case .returnValue:
+                // Get the function name
+                let currentRuntimeFunctionAddress = savedFunctionsAddresses.last!
+                let currentRuntimeFunction = getFunction(address: currentRuntimeFunctionAddress)!
+                let returnVariable = globalFunction.getVariable(name: currentRuntimeFunction.name)
+                let returnAddress = returnVariable?.address
                 
+                let (returnValue, _) = getValue(inAddress: quadruple.result!)
+                
+                saveInMemory(value: returnValue, inAddress: returnAddress!)
             // MARK: - EndFunc
             case .endFunction:
+                // Get to the next quadruple after where the call was made
+                sailIndex = savedRuntimeQuadrupleIndices.popLast()!
                 
+                // Remove from function addresses
+                _ = savedFunctionsAddresses.popLast()
+                
+                // Restore Memorys
+                temporalLocalMemory = getCopy(memory: savedMemories.popLast()!)
+                localMemory = getCopy(memory: savedMemories.popLast()!)
             case .verify:
                 let (indexValue, _) = getValue(inAddress: quadruple.result!)
                 
@@ -477,8 +539,6 @@ extension Navigator {
                 }
             case .end:
                 sailIndex = quadruples.count
-            default:
-                break
             }
             
             sailIndex += 1

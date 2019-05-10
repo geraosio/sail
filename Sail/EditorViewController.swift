@@ -19,13 +19,31 @@ class EditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         editorTextView.text =
+//        """
+//        var hello: String;
+//
+//        sail {
+//            hello = "Hello World";
+//            print(hello);
+//        }
+//        """
         """
-        var result: Int;
-
+        func hello(name: String) -> Void {
+            print("Hello");
+            print(name);
+        }
         sail {
-            result = (5 + 10) * 8;
+            hello("Bob");
         }
         """
+        
+//        """
+//        var result: Int;
+//
+//        sail {
+//            result = (5 + 10) * 8;
+//        }
+//        """
     }
     
     // MARK: - Actions
