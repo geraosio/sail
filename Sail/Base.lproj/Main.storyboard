@@ -52,6 +52,11 @@ sail {
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Sail" id="qSe-Uj-U8q">
+                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="izF-i6-1aI">
+                            <connections>
+                                <action selector="showQuadruplesInConsole:" destination="BYZ-38-t0r" id="eyQ-mw-rPN"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="play" id="3Kp-K7-zID">
                             <connections>
                                 <action selector="runCode:" destination="BYZ-38-t0r" id="y8m-lX-tIO"/>
@@ -62,6 +67,7 @@ sail {
                         <outlet property="consoleTextView" destination="MOb-l3-7i6" id="daF-IW-19s"/>
                         <outlet property="editorTextView" destination="Y0P-m1-idr" id="ZHW-qI-g6E"/>
                         <outlet property="runBarButton" destination="3Kp-K7-zID" id="sbL-UZ-M0z"/>
+                        <outlet property="showQuadruplesBarButton" destination="izF-i6-1aI" id="6IX-Tx-wu6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

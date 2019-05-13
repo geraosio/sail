@@ -40,8 +40,6 @@ class NavigatorListener: SailBaseListener {
         let endQuadruple = Quadruple(op: .end)
         navigator.quadruples.append(endQuadruple)
         
-        navigator.printQuadruples()
-        
         // Go through the quadruples
         navigator.sail()
     }

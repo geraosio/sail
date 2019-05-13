@@ -340,10 +340,16 @@ extension Navigator {
                 sailIndex = quadruple.result! - 1
             // MARK: - GotoF
             case .gotoFalse:
-                sailIndex = quadruple.result! - 1
+                let (conditionResult, _) = getValue(inAddress: quadruple.left!)
+                if !(conditionResult as! Bool) {
+                    sailIndex = quadruple.result! - 1
+                }
             // MARK: - GotoT
             case .gotoTrue:
-                sailIndex = quadruple.result! - 1
+                let (conditionResult, _) = getValue(inAddress: quadruple.left!)
+                if conditionResult as! Bool {
+                    sailIndex = quadruple.result! - 1
+                }
             // MARK: - ERA
             case .era:
                 // Save in stack in the case there's nesting in function calls
