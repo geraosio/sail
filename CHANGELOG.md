@@ -8,13 +8,12 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.4.0] - 2019-05-09
 ### Added
-
-### Changed
+- Virtual Machine execution functions to Navigator
 
 ## [0.3.0] - 2019-05-09
 ### Added
-
-### Changed
+- Grammar actions to each grammar rule using a Listener
+- Memory management class for Compilation and Virtual Machine
 
 ## [0.2.0] - 2019-05-04
 ### Added
