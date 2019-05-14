@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Gerardo Osio">
+    <title>Sail - User Manual</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    
+    <nav class="site-header sticky-top py-1">
+      <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <a class="py-2" href="#top">
+          <img src="assets/Sail-white.png" alt="Sail">
+        </a>
+        <a class="py-2 d-none d-md-inline-block" href="https://github.com/geraosio/sail"><img src="assets/GitHub-Mark-Light-120px-plus.png" alt="Github"></a>
+      </div>
+    </nav>
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+      <div class="col-md-10 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">Sail</h1>
+        <p class="lead font-weight-normal">
+          Expressive, simple and easy to learn programming language.
+        </p>
+        <p>
+          <code>var name: String;</code><br>
+          <code>func sayHelloTo(name: String) -> Void {</code>
+          <code class="tab">print("Hello");</code>
+          <code class="tab">print(name);</code>
+          <code>}</code><br>
+          <code>sail {</code>
+          <code class="tab">name = "Sailer"</code>
+          <code class="tab">sayHelloTo(name)</code>
+          <code>}</code>
+        </p>
+        <div class="bg-primary p-3 text-white text-left">
+          <p class="font-weight-bold">
+            Hello Sailer
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <h2 class="display-5">Data Types</h2>
+        <div class="my-3 py-3">
+          <table class="table table-light table-borderless mt-4">
+            <thead>
+              <tr>
+                <th scope="col">Data Type</th>
+                <th scope="col">Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Boolean</td>
+                <td><code>Bool</code></td>
+              </tr>
+              <tr>
+                <td>Character</td>
+                <td><code>Character</code></td>
+              </tr>
+              <tr>
+                <td>Float</td>
+                <td><code>Float</code></td>
+              </tr>
+              <tr>
+                <td>Integer</td>
+                <td><code>Int</code></td>
+              </tr>
+              <tr>
+                <td>String</td>
+                <td><code>String</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <h2 class="display-5">Variables</h2>
+        <div class="my-3 p-3">
+          <code>var boatName: String;</code>
+          <code>boatName = "Navigator";</code>
+          <p class="lead mt-4">Arrays</p>
+          <code>var coordinates[2]: Float;</code>
+          <code>coordiantes[0] = 25.686613;</code>
+          <code>coordiantes[1] = -100.316116;</code>
+        </div>
+      </div>
+    </div>
+    
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <h2 class="display-5">Operators</h2>
+        <div class="row my-3 p-3">
+          <div class="col-md">
+            <p class="lead">Logic</p>
+            <table class="table table-light table-borderless mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Operator</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>And</td>
+                  <td><code>&&</code></td>
+                </tr>
+                <tr>
+                  <td>Or</td>
+                  <td><code>||</code></td>
+                </tr>
+                <tr>
+                  <td>Not</td>
+                  <td><code>!</code></td>
+                </tr>
+                <tr>
+                  <td>Equal to</td>
+                  <td><code>==</code></td>
+                </tr>
+                <tr>
+                  <td>Not equal to</td>
+                  <td><code>!=</code></td>
+                </tr>
+                <tr>
+                  <td>Greater than</td>
+                  <td><code>></code></td>
+                </tr>
+                <tr>
+                  <td>Less than</td>
+                  <td><code><</code></td>
+                </tr>
+                <tr>
+                  <td>Greater or equal than</td>
+                  <td><code>>=</code></td>
+                </tr>
+                <tr>
+                  <td>Less or equal than</td>
+                  <td><code><=</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md">
+            <p class="lead">Aritmetic</p>
+            <table class="table table-light table-borderless mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Operator</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Addition</td>
+                  <td><code>+</code></td>
+                </tr>
+                <tr>
+                  <td>Subtraction</td>
+                  <td><code>-</code></td>
+                </tr>
+                <tr>
+                  <td>Multiplication</td>
+                  <td><code>*</code></td>
+                </tr>
+                <tr>
+                  <td>Division</td>
+                  <td><code>/</code></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="lead">Other</p>
+            <table class="table table-light table-borderless mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Operator</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Assignment</td>
+                  <td><code>=</code></td>
+                </tr>
+                <tr>
+                  <td>Print value</td>
+                  <td><code>print(value)</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <h2 class="display-5">Conditionals</h2>
+        <div class="my-3 py-3">
+          <code>if(lightHouseOnSight == true) {</code>
+          <code class="tab">print("There's land near");</code>
+          <code>} else {</code>
+          <code class="tab">print("We are still far from land");</code>
+          <code>}</code>
+          
+        </div>
+      </div>
+      <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <h2 class="display-5">Loops</h2>
+        <div class="my-3 py-3">
+          <code>while(windBlowing == true) {</code>
+          <code class="tab">print("Keep the sails open");</code>
+          <code>}</code>
+          <code>print("There's no wind anymore, close the sails");</code>
+        </div>
+      </div>
+    </div>
+    
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <h2 class="display-5">Functions</h2>
+        <div class="row my-3 p-3">
+          <div class="col-md">
+            <p class="lead">Declaration</p>
+            <code>func adjustSailPosition(position: Float, by: Float) -> Float {</code>
+            <code class="tab">return position + by;</code>
+            <code>}</code><br>
+            <p class="lead">Call</p>
+            <code>newPosition = adjustSailPosition(10.847, -0.532);</code>
+          </div>
+          <div class="col-md">
+            <p class="lead">No returning value function definition</p>
+            <code>func printAdjustedSailPosition(position: Float, by: Float) -> Void {</code>
+            <code class="tab">print(position + by);</code>
+            <code>}</code><br>
+            <p class="lead">Call (Can't assign to a variable)</p>
+            <code>adjustSailPosition(10.847, -0.532);</code>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <h2 class="display-5">Code structure</h2>
+        <div class="row mt-3 p-3">
+          <div class="col-md-10">
+            <code>var boatName: String;</code>
+            <code>var boatCoordinates[2]: Float;</code>
+            <code>var destinationCoordinates[2]: Float;</code>
+          </div>
+          <div class="col-md text-right">
+            1. Variable definitions
+          </div>
+        </div>
+        <div class="row my-3 p-3">
+          <div class="col-md-10">
+            <code>func printCoordinateDifference(currentLat: Float, currentLong: Float, destinationLat: Float, destinationLong: Float) -> Void {</code>
+            <code class="tab">print("Latitude:");</code>
+            <code class="tab">print(destinationLat - currentLat);</code>
+            <code class="tab">print("Longitude:");</code>
+            <code class="tab">print(destinationLong - currentLong);</code>
+            <code>}</code>
+          </div>
+          <div class="col-md text-right">
+            2. Function Definitions
+          </div>
+        </div>
+        <div class="row my-3 p-3">
+          <div class="col-md-10">
+            <code>sail {</code>
+            <code class="tab">boatName = "Navigator";</code>
+            <code class="tab">boatCoordinates[0] = 102.423; // Latitude</code>
+            <code class="tab">boatCoordinates[1] = -52.123; // Longitude</code>
+            <code class="tab">destinationCoordinates[0] = 102.423; // Latitude</code>
+            <code class="tab">destinationCoordinates[1] = -52.123; // Longitude</code><br>
+            <code class="tab">print("Coordinate difference for boat:")</code>
+            <code class="tab">print(boatName)</code>
+            <code class="tab">printCoordinateDifference(boatCoordinates[0], boatCoordinates[1], destinationCoordinates[0], destinationCoordinates[1]);</code>
+            <code>}</code>
+          </div>
+          <div class="col-md text-right">
+            3. Code execution
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="container py-5">
+      <div class="row">
+        <div class="col-12 col-md">
+          <img src="assets/Sail.png" alt="Sail">
+          <small class="d-block mb-3 text-muted">&copy; 2019</small>
+        </div>
+        <div class="col-6 col-md">
+          <h5>View on:</h5>
+          <a href="https://github.com/geraosio/sail"><img src="assets/GitHub_Logo.png" alt="Github"></a>
+        </div>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
